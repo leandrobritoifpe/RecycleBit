@@ -1,0 +1,8 @@
+10.46.76.111     vpi-lab.valenet.valeglobal.net
+10.46.76.36      sql-int-custom-lab.database.windows.net
+10.45.132.4      sql-vpi-prod.database.windows.net
+10.46.12.110     vpi-qa.valenet.valeglobal.net
+10.46.76.41      sql-vpi-non-prod.database.windows.net
+127.0.0.1        kubernetes.docker.internal
+172.22.78.45     mailBR.valeglobal.net
+172.23.25.40     brvix5valedc002.valenet.valeglobal.net

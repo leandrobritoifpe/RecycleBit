@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<html lang="pt-br">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            @Html.ActionLink("RecycleBitBackEnd","Index","Home",new { area = "" },new { @class = "navbar-brand" })
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">@Html.ActionLink("Página Inicial","Index","Home",new { area = "" },new { @class = "nav-link" })</li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropLogs" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Logs
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                            <li class="nav-item">@Html.ActionLink("Logs","Logs","Logs",new { area = "" },new { @class = "nav-link" })</li>
+                            <li class="nav-item">@Html.ActionLink("Logs Files","LogsFiles","LogsFiles",new { area = "" },new { @class = "nav-link" })</li>
+                            <li class="nav-item">@Html.ActionLink("Logs Zip","LogsZip","LogsZip",new { area = "" },new { @class = "nav-link" })</li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropJobs" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Jobs
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                            <li class="nav-item">@Html.ActionLink("Job Executions","JobExecution","JobExecution",new { area = "" },new { @class = "nav-link" })</li>
+                            <!--<li class="nav-item">@Html.ActionLink("Jobs Manager","JobExecution","JobExecution",new { area = "" },new { @class = "nav-link" })</li> -->
+                            <li class="nav-item">@Html.ActionLink("Job Schedules","JobScheduleInfo","JobScheduleInfo",new { area = "" },new { @class = "nav-link" })</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - RecycleBitBackEnd</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts",required: false)
+</body>
+</html>

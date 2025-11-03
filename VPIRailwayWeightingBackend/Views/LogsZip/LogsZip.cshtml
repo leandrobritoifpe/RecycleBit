@@ -1,0 +1,66 @@
+﻿<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+    <link rel="stylesheet" href="~/Content/mdb.min.css" />
+    <link rel="stylesheet" href="~/Content/datatables2.min.css" />
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+</head>
+<div>
+    <h2 class='mb-3'>Arquivos de Logs Zip</h2>
+    <table id="dtBasicExample" class="table" width="100%">
+        <thead>
+            <tr>
+                <th style="text-align: center" class="th-sm">
+                    Directory
+                </th>
+                <th style="text-align: center" class="th-sm">
+                    FullName
+                </th>
+                <th style="text-align: center" class="th-sm">
+                    Extension
+                </th>
+                <th style="text-align: center" class="th-sm">
+                    Length Bytes
+                </th>
+                <th style="text-align: center" class="th-sm">
+                    LastWriteTime
+                </th>
+                <th style="text-align: center" class="th-sm">
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if(ViewBag.logList == null) {
+                <tr>
+                    <td colspan="9">No data found</td>
+                </tr>
+            } else {
+                foreach(var logFileCurrent in ViewBag.logList) {
+                    <tr>
+                        <td style="text-align: center">@logFileCurrent.Directory</td>
+                        <td style="text-align: center">@logFileCurrent.FullName</td>
+                        <td style="text-align: center">@logFileCurrent.Extension</td>
+                        <td style="text-align: center">@logFileCurrent.Length</td>
+                        <td style="text-align: center">@TimeZoneInfo.ConvertTime(logFileCurrent.LastWriteTime,RecycleBitBackEnd.Config.BusinessConfig.BRAZIL_TIMEZONE).ToString("dd/MM/yyyy HH:mm:ss")</td>
+                        <td style="text-align: center">
+                            <form id="@logFileCurrent.FullName" action="DownloadFile?fileFullName=@logFileCurrent.Name" method="post">
+                                <input class="btn btn-default" type="submit" value="Download">
+                            </form>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript" src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="~/Scripts/datatables2.min.js" defer></script>
+<script>
+    $(document).ready(function () {
+        $('#dtBasicExample').DataTable();
+        $('.dataTables_length').addClass('bs-select');
+    });
+</script>

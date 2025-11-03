@@ -1,0 +1,68 @@
+﻿<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+    <link rel="stylesheet" href="~/Content/mdb.min.css" />
+    <link rel="stylesheet" href="~/Content/datatables2.min.css" />
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+</head>
+<div>
+    <h2 class='mb-3'>Últimas 24 horas de logs</h2>
+    <table id="dtBasicExample" class="table" width="100%">
+        <thead>
+            <tr>
+                <th class="th-sm">
+                    ID
+                </th>
+                <th class="th-sm">
+                    Datetime
+                </th>
+                <th class="th-sm">
+                    Level
+                </th>
+                <th class="th-sm">
+                    Message
+                </th>
+                <th class="th-sm">
+                    Callsite
+                </th>
+                <th class="th-sm">
+                    StackTrace
+                </th>
+                <th class="th-sm">
+                    Exception Message
+                </th>
+                <th class="th-sm">
+                    Application Name
+                </th>
+                <th class="th-sm">
+                    Additional Info
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var logCurrent in ViewBag.Last24HoursLogsList) {
+                <tr>
+                    <td>@logCurrent.DPAA_LOG_ERROR_ID</td>
+                    <td>@logCurrent.DPAA_EXCEPTION_DATETIME</td>
+                    <td>@logCurrent.DPAA_LEVEL</td>
+                    <td>@logCurrent.DPAA_MESSAGE</td>
+                    <td>@logCurrent.DPAA_CALLSITE</td>
+                    <td>@logCurrent.DPAA_STACK_TRACE</td>
+                    <td>@logCurrent.DPAA_EXCEPTION_MESSAGE</td>
+                    <td>@logCurrent.DPAA_APPLICATION</td>
+                    <td>@logCurrent.DPAA_ADDITIONAL_INFO</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript" src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="~/Scripts/datatables2.min.js" defer></script>
+<script>
+    $(document).ready(function () {
+        $('#dtBasicExample').DataTable();
+        $('.dataTables_length').addClass('bs-select');
+    });
+</script>

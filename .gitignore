@@ -1,0 +1,36 @@
+# User-specific files
+*.suo
+*.user
+
+# Ide Files
+.vs/
+
+# Publish Web Output
+*.Publish.xml
+*.pubxml
+*.azurePubxml
+
+# NuGet Packages Directory
+packages/
+
+.sonarqube
+VPILotAndComposition/bin/
+VPILotAndComposition.Tests/bin/
+VPILotAndComposition/obj/
+VPILotAndComposition.Tests/obj/
+VPIRailwayWeightingBackend/bin/
+VPIRailwayWeightingBackend.Tests/bin/
+VPIRailwayWeightingBackend/obj/
+VPIRailwayWeightingBackend.Tests/obj/
+
+# e necessario manter a dll PesagemFerroviaria.WebUi versionada, portanto sera adicionada a excecao, as linhas a seguir referentes a pasta bin do front end nao devem ser modificadas
+VPIRailwayWeightingFrontend/bin/*
+!VPIRailwayWeightingFrontend/bin/
+!VPIRailwayWeightingFrontend/bin/PesagemFerroviaria.WebUi.dll
+# fim da excecao da dll
+
+VPIRailwayWeightingFrontend/obj/
+VPIWeightingCollect/bin/
+VPIWeightingCollect.Tests/bin/
+VPIWeightingCollect/obj/
+VPIWeightingCollect.Tests/obj/

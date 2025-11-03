@@ -1,0 +1,72 @@
+﻿<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+    <link rel="stylesheet" href="~/Content/mdb.min.css" />
+    <link rel="stylesheet" href="~/Content/datatables2.min.css" />
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+</head>
+<div>
+    <h2 class='mb-3'>Informações das rotinas automáticas da aplicação</h2>
+    <h6 class='mb-3'><b>Status: </b>@ViewBag.JobsRunning</h6>
+    <h6 class='mb-3'><b>Próxima execução: </b> @ViewBag.NextJobExecution</h6>
+    <table id="dtBasicExample" class="table" style="width: 100%">
+        <thead>
+            <tr>
+                <th style="text-align: center" class="th-sm">
+                    ID
+                </th>
+                <th style="text-align: center" class="th-sm">
+                    Job Name
+                </th>
+                <th style="text-align: center" class="th-sm">
+                    Status
+                </th>
+                <th style="text-align: center" class="th-sm">
+                    Start Execution
+                </th>
+                <th style="text-align: center" class="th-sm">
+                    End Execution
+                </th>
+                <th style="text-align: center" class="th-sm">
+                    Duration in Seconds
+                </th>
+                <th style="text-align: center" class="th-sm">
+                    Application Name
+                </th>
+                <th style="text-align: center" class="th-sm">
+                    Log Error ID
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if(ViewBag.Last24HoursLogsJobList == null) {
+                <tr>
+                    <td colspan="9">No data found</td>
+                </tr>
+            } else {
+                foreach(var logCurrent in ViewBag.Last24HoursLogsJobList) {
+                    <tr>
+                        <td style="text-align: center">@logCurrent.DPAB_JOB_EXECUTION_ID</td>
+                        <td style="text-align: center">@logCurrent.DPAB_JOB_NAME</td>
+                        <td style="text-align: center">@logCurrent.DPAB_STATUS</td>
+                        <td style="text-align: center">@logCurrent.DPAB_START_EXECUTION_DATETIME.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                        <td style="text-align: center">@logCurrent.DPAB_END_EXECUTION_DATETIME.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                        <td style="text-align: center">@logCurrent.DPAB_DURATION_SECONDS</td>
+                        <td style="text-align: center">@logCurrent.DPAB_APPLICATION</td>
+                        <td style="text-align: center">@logCurrent.DPAB_LOG_ERROR_ID</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript" src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="~/Scripts/datatables2.min.js" defer></script>
+<script>
+    $(document).ready(function () {
+        $('#dtBasicExample').DataTable();
+        $('.dataTables_length').addClass('bs-select');
+    });
+</script>

@@ -1,0 +1,55 @@
+﻿<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+    <link rel="stylesheet" href="~/Content/mdb.min.css" />
+    <link rel="stylesheet" href="~/Content/datatables2.min.css" />
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+</head>
+<div>
+    <h2 class='mb-3'>Job Schedules</h2>
+    <table id="dtBasicExample" class="table" style="width: 100%">
+        <caption style="display:none">Jobs Schedulers</caption>
+        <thead>
+            <tr>
+                <th style="text-align: center" class="th-sm">
+                    Job Name
+                </th>
+                <th style="text-align: center" class="th-sm">
+                    Status
+                </th>
+                <th style="text-align: center" class="th-sm">
+                    Next Execution
+                </th>
+                <th style="text-align: center" class="th-sm">
+                    Scheduled Time
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if(ViewBag.AllJobsInfo == null) {
+                <tr>
+                    <td colspan="9">No data found</td>
+                </tr>
+            } else {
+                foreach(var jobCurrent in ViewBag.AllJobsInfo) {
+                    <tr>
+                        <td style="text-align: center">@jobCurrent.name</td>
+                        <td style="text-align: center">@jobCurrent.running</td>
+                        <td style="text-align: center">@jobCurrent.NextExecution</td>
+                        <td style="text-align: center">@jobCurrent.ScheduledTime</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript" src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="~/Scripts/datatables2.min.js" defer></script>
+<script>
+    $(document).ready(function () {
+        $('#dtBasicExample').DataTable();
+        $('.dataTables_length').addClass('bs-select');
+    });
+</script>

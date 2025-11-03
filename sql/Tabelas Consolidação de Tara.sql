@@ -1,0 +1,56 @@
+/*==============================================================*/
+/* Table: DUART_TARE_CONSOLIDATION_CONFIG                      */
+/*==============================================================*/
+
+create table [BDVPIPESAGEM].[DUART_TARE_CONSOLIDATION_CONFIG] (
+	[DUART_TARE_CONSOLIDATION_CONFIG_ID] int IDENTITY (1,1) NOT NULL,
+	[DUAR_WEIGHING_CONFIG_ID] int not null unique,
+	[DUAR_PIPOINT_TOTALIZER] varchar(120) not null unique,
+	[DUAR_CURRENT_COMPOSITION] varchar(120),
+	[DUAR_CURRENT_COMPOSITION_TOTAL_WAGONS] int,
+	[DUAR_LAST_COMPOSITION] varchar(120),
+	[DUAR_LAST_COMPOSITION_END_DATETIME] datetime,
+	[DUAR_LAST_TARE_CONSOLIDATION] float not null,	
+	[DUAR_TARE_CONSOLIDATION_TOTAL] float not null,	
+	[DUAR_LAST_PIPOINT_UPDATE] datetime,
+	[DUAR_PROCESSING] bit not null
+	Constraint DUARI_PK Primary Key (DUART_TARE_CONSOLIDATION_CONFIG_ID),
+	Constraint DUAHR_DUAR1 Foreign Key ([DUAR_WEIGHING_CONFIG_ID]) References [BDVPIPESAGEM].[DUAHT_WEIGHING_CONFIG] (DUAH_WEIGHING_CONFIG_ID)
+);
+go
+
+grant INSERT,DELETE,UPDATE on [BDVPIPESAGEM].[DUART_TARE_CONSOLIDATION_CONFIG] to AVPIPESAGEM
+go
+
+grant SELECT on [BDVPIPESAGEM].[DUART_TARE_CONSOLIDATION_CONFIG] to CVPIPESAGEM
+go
+
+/*==============================================================*/
+/* Table: DUAST_TARE_CONSOLIDATION                              */
+/*==============================================================*/
+
+create table [BDVPIPESAGEM].[DUAST_TARE_CONSOLIDATION] (
+	[DUAST_TARE_CONSOLIDATION_ID] int IDENTITY (1,1) NOT NULL,
+	[DUAS_TARE_CONSOLIDATION_CONFIG_ID] int not null,
+	[DUAS_PIPOINT_TOTALIZER] varchar(120) not null,
+	[DUAS_COMPOSITION] varchar(120) not null,
+	[DUAS_COMPOSITION_END_DATETIME] datetime not null,
+	[DUAS_TARE_CONSOLIDATION] float not null,	
+	[DUAS_TARE_CONSOLIDATION_TOTAL] float not null,	
+	[DUAS_CONSOLIDATION_DATETIME] datetime not null
+	Constraint DUASI_PK Primary Key (DUAST_TARE_CONSOLIDATION_ID),
+	Constraint DUAR_DUAS1 Foreign Key ([DUAS_TARE_CONSOLIDATION_CONFIG_ID]) References [BDVPIPESAGEM].[DUART_TARE_CONSOLIDATION_CONFIG] (DUART_TARE_CONSOLIDATION_CONFIG_ID)
+);
+go
+
+grant INSERT,DELETE,UPDATE on [BDVPIPESAGEM].[DUAST_TARE_CONSOLIDATION] to AVPIPESAGEM
+go
+
+grant SELECT on [BDVPIPESAGEM].[DUAST_TARE_CONSOLIDATION] to CVPIPESAGEM
+go
+
+create nonclustered index DUAST_01 on [BDVPIPESAGEM].[DUAST_TARE_CONSOLIDATION] ([DUAS_COMPOSITION] ASC)
+go
+
+create nonclustered index DUAST_02 on [BDVPIPESAGEM].[DUAST_TARE_CONSOLIDATION] ([DUAS_COMPOSITION] ASC,[DUAS_COMPOSITION_END_DATETIME] DESC)
+go

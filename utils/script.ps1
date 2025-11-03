@@ -1,0 +1,1 @@
+(Get-Content 'C:\Windows\System32\inetsrv\config\applicationhost.config') | Foreach-Object {$_ -replace '<add name="DefaultAppPool">', '<add name="DefaultAppPool" autoStart="true" startMode="AlwaysRunning">'} | Set-Content 'C:\Windows\System32\inetsrv\config\applicationhost.config'

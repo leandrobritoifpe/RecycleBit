@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="137ec1daf60a4fb39fc887b0a4d325fa" Name="Diagram1">
+        <EntityTypeShape EntityType="EntityModel.AGENDAMENTO" Width="1.5" PointX="5.25" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.EMPRESA" Width="1.5" PointX="0.75" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.ENDERECO" Width="1.5" PointX="0.75" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.MATERIAL" Width="1.5" PointX="3" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.MATERIAL_AGENDAMENTO" Width="1.5" PointX="7.5" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.MATERIAL_PONTO_COLETA" Width="1.5" PointX="5.25" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.PERFIL" Width="1.5" PointX="3" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.PONTO_COLETA" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.PUBLICACAO" Width="1.5" PointX="5.25" PointY="14.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.USUARIO" Width="1.5" PointX="3" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.USUARIO_AUDIT" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.USUARIO_PERFIL" Width="1.5" PointX="5.25" PointY="11.375" IsExpanded="true" />
+        <AssociationConnector Association="EntityModel.FK_AGENDA_PONTO" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.FK_AGENDA_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.FK_MAT_AG_AGENDAMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.FK_PONTO_EMPRESA" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.FK_PONTO_ENDERECO" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.FK_USUARIO_ENDERECO" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.FK_MAP_MATERIAL" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.FK_MAT_AG_MATERIAL" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.FK_MAP_PONTO" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.FK_UP_PERFIL" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.FK_PUBLIC_PONTO" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.FK_UP_USUARIO" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
