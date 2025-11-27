@@ -1,0 +1,17 @@
+﻿{
+  "Environment": "DEV",
+  "Version": "1.1",
+  "ApplicationName": "RecycleBit-BackEnd",
+  "Properties": {
+    "SQLDBName": "RECYCLEBIT",
+    "SQLInstanceName": "C11-173U33CRLAS\\SQLEXPRESS",
+    "EnvSQLUser": "recyclebit",
+    "EnvSQLUserPassword": "1234",
+    "StartJob": "FALSE",
+    "CronExpression": "0 0/30 * 1/1 * ? *",
+    "LogFilePath": "c:\\RecycleBit\\Logs\\",
+    "NLogMaxArchiveDays": "3",
+    "NLogMinLevel": "Info",
+    "NLogMaxLevel": "Fatal"
+  }
+}

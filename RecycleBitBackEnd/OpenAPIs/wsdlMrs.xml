@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions name="IntegracaoPesagensExternasService" targetNamespace="WCFIntegracaoPesagensExternas" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="WCFIntegracaoPesagensExternas" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing">
+	<wsdl:types>
+		<xs:schema elementFormDefault="qualified" targetNamespace="WCFIntegracaoPesagensExternas" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+			<xs:import namespace="http://schemas.datacontract.org/2004/07/WCFIntegracaoPesagens.Modelo" />
+			<xs:element name="GravarPesagem">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="Pesagem" nillable="true" type="q1:Pesagem" xmlns:q1="http://schemas.datacontract.org/2004/07/WCFIntegracaoPesagens.Modelo" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="GravarPesagemResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="GravarPesagemResult" type="xs:boolean" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:schema>
+		<xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/">
+			<xs:element name="anyType" nillable="true" type="xs:anyType" />
+			<xs:element name="anyURI" nillable="true" type="xs:anyURI" />
+			<xs:element name="base64Binary" nillable="true" type="xs:base64Binary" />
+			<xs:element name="boolean" nillable="true" type="xs:boolean" />
+			<xs:element name="byte" nillable="true" type="xs:byte" />
+			<xs:element name="dateTime" nillable="true" type="xs:dateTime" />
+			<xs:element name="decimal" nillable="true" type="xs:decimal" />
+			<xs:element name="double" nillable="true" type="xs:double" />
+			<xs:element name="float" nillable="true" type="xs:float" />
+			<xs:element name="int" nillable="true" type="xs:int" />
+			<xs:element name="long" nillable="true" type="xs:long" />
+			<xs:element name="QName" nillable="true" type="xs:QName" />
+			<xs:element name="short" nillable="true" type="xs:short" />
+			<xs:element name="string" nillable="true" type="xs:string" />
+			<xs:element name="unsignedByte" nillable="true" type="xs:unsignedByte" />
+			<xs:element name="unsignedInt" nillable="true" type="xs:unsignedInt" />
+			<xs:element name="unsignedLong" nillable="true" type="xs:unsignedLong" />
+			<xs:element name="unsignedShort" nillable="true" type="xs:unsignedShort" />
+			<xs:element name="char" nillable="true" type="tns:char" />
+			<xs:simpleType name="char">
+				<xs:restriction base="xs:int" />
+			</xs:simpleType>
+			<xs:element name="duration" nillable="true" type="tns:duration" />
+			<xs:simpleType name="duration">
+				<xs:restriction base="xs:duration">
+					<xs:pattern value="\-?P(\d*D)?(T(\d*H)?(\d*M)?(\d*(\.\d*)?S)?)?" />
+					<xs:minInclusive value="-P10675199DT2H48M5.4775808S" />
+					<xs:maxInclusive value="P10675199DT2H48M5.4775807S" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:element name="guid" nillable="true" type="tns:guid" />
+			<xs:simpleType name="guid">
+				<xs:restriction base="xs:string">
+					<xs:pattern value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:attribute name="FactoryType" type="xs:QName" />
+			<xs:attribute name="Id" type="xs:ID" />
+			<xs:attribute name="Ref" type="xs:IDREF" />
+		</xs:schema>
+		<xs:schema elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/WCFIntegracaoPesagens.Modelo" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.datacontract.org/2004/07/WCFIntegracaoPesagens.Modelo">
+			<xs:complexType name="Pesagem">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="Destino" nillable="true" type="xs:string" />
+					<xs:element minOccurs="0" name="Eixos" nillable="true" type="tns:ArrayOfEixo" />
+					<xs:element minOccurs="0" name="ListaVeiculos" nillable="true" type="tns:ArrayOfVeiculo" />
+					<xs:element minOccurs="0" name="Operador" nillable="true" type="xs:string" />
+					<xs:element minOccurs="0" name="Prefixo" nillable="true" type="xs:string" />
+					<xs:element name="TipoBalanca" nillable="true" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="Pesagem" nillable="true" type="tns:Pesagem" />
+			<xs:complexType name="ArrayOfEixo">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="Eixo" nillable="true" type="tns:Eixo" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="ArrayOfEixo" nillable="true" type="tns:ArrayOfEixo" />
+			<xs:complexType name="Eixo">
+				<xs:sequence>
+					<xs:element name="_x003C_Data_x003E_k__BackingField" type="xs:dateTime" />
+					<xs:element name="_x003C_Id_x003E_k__BackingField" type="xs:int" />
+					<xs:element name="_x003C_NumeroEixo_x003E_k__BackingField" type="xs:int" />
+					<xs:element name="_x003C_Rodas_x003E_k__BackingField" nillable="true" type="tns:ArrayOfRoda" />
+					<xs:element name="_x003C_Velocidade_x003E_k__BackingField" type="xs:double" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="Eixo" nillable="true" type="tns:Eixo" />
+			<xs:complexType name="ArrayOfRoda">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="Roda" nillable="true" type="tns:Roda" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="ArrayOfRoda" nillable="true" type="tns:ArrayOfRoda" />
+			<xs:complexType name="Roda">
+				<xs:sequence>
+					<xs:element name="Peso" type="xs:double" />
+					<xs:element minOccurs="0" name="PesoLiquido" type="xs:double" />
+					<xs:element minOccurs="0" name="PesoTara" type="xs:double" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="Roda" nillable="true" type="tns:Roda" />
+			<xs:complexType name="ArrayOfVeiculo">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="Veiculo" nillable="true" type="tns:Veiculo" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="ArrayOfVeiculo" nillable="true" type="tns:ArrayOfVeiculo" />
+			<xs:complexType name="Veiculo">
+				<xs:sequence>
+					<xs:element name="Data" type="xs:dateTime" />
+					<xs:element name="Estado" nillable="true" type="xs:string" />
+					<xs:element name="Identificacao" nillable="true" type="xs:string" />
+					<xs:element name="ListaRodas" nillable="true" type="tns:ArrayOfRoda" />
+					<xs:element name="NumeroVeiculo" type="xs:int" />
+					<xs:element minOccurs="0" name="Produto" nillable="true" type="xs:string" />
+					<xs:element name="TipoVeiculo" nillable="true" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="Veiculo" nillable="true" type="tns:Veiculo" />
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="IntegracaoPesagensExternasContract_GravarPesagem_InputMessage">
+		<wsdl:part name="parameters" element="tns:GravarPesagem" />
+	</wsdl:message>
+	<wsdl:message name="IntegracaoPesagensExternasContract_GravarPesagem_OutputMessage">
+		<wsdl:part name="parameters" element="tns:GravarPesagemResponse" />
+	</wsdl:message>
+	<wsdl:portType name="IntegracaoPesagensExternasContract">
+		<wsdl:operation name="GravarPesagem">
+			<wsdl:input wsaw:Action="WCFIntegracaoPesagensExternas/IntegracaoPesagensExternasContract/GravarPesagem" message="tns:IntegracaoPesagensExternasContract_GravarPesagem_InputMessage" />
+			<wsdl:output wsaw:Action="WCFIntegracaoPesagensExternas/IntegracaoPesagensExternasContract/GravarPesagemResponse" message="tns:IntegracaoPesagensExternasContract_GravarPesagem_OutputMessage" />
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="binding_IntegracaoPesagensExternasContract" type="tns:IntegracaoPesagensExternasContract">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="GravarPesagem">
+			<soap:operation soapAction="WCFIntegracaoPesagensExternas/IntegracaoPesagensExternasContract/GravarPesagem" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="IntegracaoPesagensExternasService">
+		<wsdl:port name="binding_IntegracaoPesagensExternasContract" binding="tns:binding_IntegracaoPesagensExternasContract">
+			<soap:address location="https://edi2.mrs.com.br:2444/gtwPro/services/PesagemTremClientes" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
+PesagemExternasWS.xml
+Exibindo PesagemExternasWS.xml…

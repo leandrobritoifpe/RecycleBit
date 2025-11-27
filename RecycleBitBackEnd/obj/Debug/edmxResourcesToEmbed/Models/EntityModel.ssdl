@@ -1,0 +1,331 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="RecycleBitModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ADDRESS">
+    <Key>
+      <PropertyRef Name="ADDRESS_ID" />
+    </Key>
+    <Property Name="ADDRESS_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ZIP_CODE" Type="varchar" MaxLength="11" Nullable="false" />
+    <Property Name="LONGITUDE" Type="decimal" Precision="9" Scale="6" />
+    <Property Name="LATITUDE" Type="decimal" Precision="9" Scale="6" />
+    <Property Name="STREET" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="NUMBER" Type="int" Nullable="false" />
+    <Property Name="NEIGHBORHOOD" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="CITY" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="STATE" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="STATE_ABBR" Type="char" MaxLength="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="COLLECTION_POINT">
+    <Key>
+      <PropertyRef Name="POINT_ID" />
+    </Key>
+    <Property Name="POINT_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NAME" Type="varchar" MaxLength="60" Nullable="false" />
+    <Property Name="DESCRIPTION" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="ADDRESS_ID" Type="int" Nullable="false" />
+    <Property Name="COMPANY_ID" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="MAX_HAZARD_LEVEL" Type="int" />
+    <Property Name="STATUS" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="COMPANY">
+    <Key>
+      <PropertyRef Name="CNPJ" />
+    </Key>
+    <Property Name="CNPJ" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="CORPORATE_NAME" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="RESPONSIBLE" Type="varchar" MaxLength="80" Nullable="false" />
+    <Property Name="STATUS" Type="bit" Nullable="false" />
+    <Property Name="ADDRESS_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MATERIAL">
+    <Key>
+      <PropertyRef Name="MATERIAL_ID" />
+    </Key>
+    <Property Name="MATERIAL_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="STATUS" Type="bit" Nullable="false" />
+    <Property Name="MATERIAL_NAME" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="DESCRIPTION" Type="varchar" MaxLength="300" Nullable="false" />
+    <Property Name="HAZARD_LEVEL" Type="int" />
+    <Property Name="REQUIRES_SPECIAL_TRANSPORT" Type="bit" />
+    <Property Name="HANDLING_INSTRUCTIONS" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="MATERIAL_COLLECTION_POINT">
+    <Key>
+      <PropertyRef Name="MATERIAL_COLLECTION_ID" />
+    </Key>
+    <Property Name="MATERIAL_COLLECTION_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="POINT_ID" Type="int" Nullable="false" />
+    <Property Name="MATERIAL_ID" Type="int" Nullable="false" />
+    <Property Name="ESTIMATED_QUANTITY" Type="int" />
+  </EntityType>
+  <EntityType Name="MATERIAL_SCHEDULE">
+    <Key>
+      <PropertyRef Name="MATERIAL_SCHEDULE_ID" />
+    </Key>
+    <Property Name="MATERIAL_SCHEDULE_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MATERIAL_ID" Type="int" Nullable="false" />
+    <Property Name="SCHEDULE_ID" Type="int" Nullable="false" />
+    <Property Name="QUANTITY" Type="int" />
+  </EntityType>
+  <EntityType Name="PUBLICATION">
+    <Key>
+      <PropertyRef Name="PUBLICATION_ID" />
+    </Key>
+    <Property Name="PUBLICATION_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="POINT_ID" Type="int" Nullable="false" />
+    <Property Name="IMAGE_PUBLICATION_PATH" Type="varchar" MaxLength="200" />
+    <Property Name="STATUS" Type="bit" Nullable="false" />
+    <Property Name="DESCRIPTION" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="TITLE" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="DATE_TIME" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ROLE">
+    <Key>
+      <PropertyRef Name="ROLE_ID" />
+    </Key>
+    <Property Name="ROLE_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NAME" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="STATUS" Type="bit" Nullable="false" />
+    <Property Name="DESCRIPTION" Type="varchar" MaxLength="200" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SCHEDULE">
+    <Key>
+      <PropertyRef Name="SCHEDULE_ID" />
+    </Key>
+    <Property Name="SCHEDULE_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="USER_ID" Type="int" Nullable="false" />
+    <Property Name="POINT_ID" Type="int" Nullable="false" />
+    <Property Name="DATE_TIME" Type="datetime" Nullable="false" />
+    <Property Name="TOTAL_QUANTITY" Type="int" />
+  </EntityType>
+  <EntityType Name="USER">
+    <Key>
+      <PropertyRef Name="USER_ID" />
+    </Key>
+    <Property Name="USER_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ADDRESS_ID" Type="int" Nullable="false" />
+    <Property Name="CPF" Type="varchar" MaxLength="11" Nullable="false" />
+    <Property Name="STATUS" Type="bit" Nullable="false" />
+    <Property Name="NAME" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="PASSWORD" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="EMAIL" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="PHONE" Type="varchar" MaxLength="20" />
+    <Property Name="ROLE_ID" Type="int" Nullable="false" />
+    <Property Name="BIRTH_DATE" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="USER_AUDIT">
+    <Key>
+      <PropertyRef Name="AUDIT_ID" />
+    </Key>
+    <Property Name="AUDIT_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="USER_ID" Type="int" />
+    <Property Name="OPERATION" Type="varchar" MaxLength="10" />
+    <Property Name="DATE_TIME" Type="datetime" />
+    <Property Name="DATA" Type="nvarchar(max)" />
+  </EntityType>
+  <Association Name="FK_COMPANY_ADDRESS">
+    <End Role="ADDRESS" Type="Self.ADDRESS" Multiplicity="1" />
+    <End Role="COMPANY" Type="Self.COMPANY" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ADDRESS">
+        <PropertyRef Name="ADDRESS_ID" />
+      </Principal>
+      <Dependent Role="COMPANY">
+        <PropertyRef Name="ADDRESS_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MCP_MATERIAL">
+    <End Role="MATERIAL" Type="Self.MATERIAL" Multiplicity="1" />
+    <End Role="MATERIAL_COLLECTION_POINT" Type="Self.MATERIAL_COLLECTION_POINT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MATERIAL">
+        <PropertyRef Name="MATERIAL_ID" />
+      </Principal>
+      <Dependent Role="MATERIAL_COLLECTION_POINT">
+        <PropertyRef Name="MATERIAL_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MCP_POINT">
+    <End Role="COLLECTION_POINT" Type="Self.COLLECTION_POINT" Multiplicity="1" />
+    <End Role="MATERIAL_COLLECTION_POINT" Type="Self.MATERIAL_COLLECTION_POINT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COLLECTION_POINT">
+        <PropertyRef Name="POINT_ID" />
+      </Principal>
+      <Dependent Role="MATERIAL_COLLECTION_POINT">
+        <PropertyRef Name="POINT_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MS_MATERIAL">
+    <End Role="MATERIAL" Type="Self.MATERIAL" Multiplicity="1" />
+    <End Role="MATERIAL_SCHEDULE" Type="Self.MATERIAL_SCHEDULE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MATERIAL">
+        <PropertyRef Name="MATERIAL_ID" />
+      </Principal>
+      <Dependent Role="MATERIAL_SCHEDULE">
+        <PropertyRef Name="MATERIAL_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MS_SCHEDULE">
+    <End Role="SCHEDULE" Type="Self.SCHEDULE" Multiplicity="1" />
+    <End Role="MATERIAL_SCHEDULE" Type="Self.MATERIAL_SCHEDULE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SCHEDULE">
+        <PropertyRef Name="SCHEDULE_ID" />
+      </Principal>
+      <Dependent Role="MATERIAL_SCHEDULE">
+        <PropertyRef Name="SCHEDULE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_POINT_ADDRESS">
+    <End Role="ADDRESS" Type="Self.ADDRESS" Multiplicity="1" />
+    <End Role="COLLECTION_POINT" Type="Self.COLLECTION_POINT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ADDRESS">
+        <PropertyRef Name="ADDRESS_ID" />
+      </Principal>
+      <Dependent Role="COLLECTION_POINT">
+        <PropertyRef Name="ADDRESS_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_POINT_COMPANY">
+    <End Role="COMPANY" Type="Self.COMPANY" Multiplicity="1" />
+    <End Role="COLLECTION_POINT" Type="Self.COLLECTION_POINT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COMPANY">
+        <PropertyRef Name="CNPJ" />
+      </Principal>
+      <Dependent Role="COLLECTION_POINT">
+        <PropertyRef Name="COMPANY_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PUBLICATION_POINT">
+    <End Role="COLLECTION_POINT" Type="Self.COLLECTION_POINT" Multiplicity="1" />
+    <End Role="PUBLICATION" Type="Self.PUBLICATION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COLLECTION_POINT">
+        <PropertyRef Name="POINT_ID" />
+      </Principal>
+      <Dependent Role="PUBLICATION">
+        <PropertyRef Name="POINT_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SCHEDULE_POINT">
+    <End Role="COLLECTION_POINT" Type="Self.COLLECTION_POINT" Multiplicity="1" />
+    <End Role="SCHEDULE" Type="Self.SCHEDULE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COLLECTION_POINT">
+        <PropertyRef Name="POINT_ID" />
+      </Principal>
+      <Dependent Role="SCHEDULE">
+        <PropertyRef Name="POINT_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SCHEDULE_USER">
+    <End Role="USER" Type="Self.USER" Multiplicity="1" />
+    <End Role="SCHEDULE" Type="Self.SCHEDULE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USER">
+        <PropertyRef Name="USER_ID" />
+      </Principal>
+      <Dependent Role="SCHEDULE">
+        <PropertyRef Name="USER_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_USER_ADDRESS">
+    <End Role="ADDRESS" Type="Self.ADDRESS" Multiplicity="1" />
+    <End Role="USER" Type="Self.USER" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ADDRESS">
+        <PropertyRef Name="ADDRESS_ID" />
+      </Principal>
+      <Dependent Role="USER">
+        <PropertyRef Name="ADDRESS_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_USER_ROLE">
+    <End Role="ROLE" Type="Self.ROLE" Multiplicity="1" />
+    <End Role="USER" Type="Self.USER" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ROLE">
+        <PropertyRef Name="ROLE_ID" />
+      </Principal>
+      <Dependent Role="USER">
+        <PropertyRef Name="ROLE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="RecycleBitModelStoreContainer">
+    <EntitySet Name="ADDRESS" EntityType="Self.ADDRESS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="COLLECTION_POINT" EntityType="Self.COLLECTION_POINT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="COMPANY" EntityType="Self.COMPANY" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MATERIAL" EntityType="Self.MATERIAL" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MATERIAL_COLLECTION_POINT" EntityType="Self.MATERIAL_COLLECTION_POINT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MATERIAL_SCHEDULE" EntityType="Self.MATERIAL_SCHEDULE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PUBLICATION" EntityType="Self.PUBLICATION" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ROLE" EntityType="Self.ROLE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SCHEDULE" EntityType="Self.SCHEDULE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="USER" EntityType="Self.USER" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="USER_AUDIT" EntityType="Self.USER_AUDIT" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_COMPANY_ADDRESS" Association="Self.FK_COMPANY_ADDRESS">
+      <End Role="ADDRESS" EntitySet="ADDRESS" />
+      <End Role="COMPANY" EntitySet="COMPANY" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MCP_MATERIAL" Association="Self.FK_MCP_MATERIAL">
+      <End Role="MATERIAL" EntitySet="MATERIAL" />
+      <End Role="MATERIAL_COLLECTION_POINT" EntitySet="MATERIAL_COLLECTION_POINT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MCP_POINT" Association="Self.FK_MCP_POINT">
+      <End Role="COLLECTION_POINT" EntitySet="COLLECTION_POINT" />
+      <End Role="MATERIAL_COLLECTION_POINT" EntitySet="MATERIAL_COLLECTION_POINT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MS_MATERIAL" Association="Self.FK_MS_MATERIAL">
+      <End Role="MATERIAL" EntitySet="MATERIAL" />
+      <End Role="MATERIAL_SCHEDULE" EntitySet="MATERIAL_SCHEDULE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MS_SCHEDULE" Association="Self.FK_MS_SCHEDULE">
+      <End Role="SCHEDULE" EntitySet="SCHEDULE" />
+      <End Role="MATERIAL_SCHEDULE" EntitySet="MATERIAL_SCHEDULE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_POINT_ADDRESS" Association="Self.FK_POINT_ADDRESS">
+      <End Role="ADDRESS" EntitySet="ADDRESS" />
+      <End Role="COLLECTION_POINT" EntitySet="COLLECTION_POINT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_POINT_COMPANY" Association="Self.FK_POINT_COMPANY">
+      <End Role="COMPANY" EntitySet="COMPANY" />
+      <End Role="COLLECTION_POINT" EntitySet="COLLECTION_POINT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PUBLICATION_POINT" Association="Self.FK_PUBLICATION_POINT">
+      <End Role="COLLECTION_POINT" EntitySet="COLLECTION_POINT" />
+      <End Role="PUBLICATION" EntitySet="PUBLICATION" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SCHEDULE_POINT" Association="Self.FK_SCHEDULE_POINT">
+      <End Role="COLLECTION_POINT" EntitySet="COLLECTION_POINT" />
+      <End Role="SCHEDULE" EntitySet="SCHEDULE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SCHEDULE_USER" Association="Self.FK_SCHEDULE_USER">
+      <End Role="USER" EntitySet="USER" />
+      <End Role="SCHEDULE" EntitySet="SCHEDULE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_USER_ADDRESS" Association="Self.FK_USER_ADDRESS">
+      <End Role="ADDRESS" EntitySet="ADDRESS" />
+      <End Role="USER" EntitySet="USER" />
+    </AssociationSet>
+    <AssociationSet Name="FK_USER_ROLE" Association="Self.FK_USER_ROLE">
+      <End Role="ROLE" EntitySet="ROLE" />
+      <End Role="USER" EntitySet="USER" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

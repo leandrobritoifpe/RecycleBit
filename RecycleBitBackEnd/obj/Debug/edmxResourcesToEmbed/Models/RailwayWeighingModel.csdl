@@ -1,0 +1,583 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="RailwayWeighingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="DUAAT_COMPOSITION">
+    <Key>
+      <PropertyRef Name="DUAA_COMPOSITION_ID" />
+    </Key>
+    <Property Name="DUAA_COMPOSITION_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DUAA_LOAD_POINT" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAA_OPERATIONAL_UNIT" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAA_COMPOSITION_GPV_ID" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAA_TRAIN_CODE" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAA_COMPOSITION_VALID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAA_STATUS_TRAIN" Type="Int32" Nullable="false" />
+    <Property Name="DUAA_WAGON_MAX_LOAD" Type="Double" Nullable="false" />
+    <Property Name="DUAA_CAR_NUMBER" Type="Int32" Nullable="false" />
+    <Property Name="DUAA_CAR_SERIAL_NUMBER" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAA_CAR_TYPE" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAA_TARE_WEIGHT" Type="Double" Nullable="false" />
+    <Property Name="DUAA_STATUS_SEND" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAA_DATE" Type="DateTime" Nullable="false" Precision="7" />
+  </EntityType>
+  <EntityType Name="DUABT_LOT">
+    <Key>
+      <PropertyRef Name="DUAB_LOT_ID" />
+    </Key>
+    <Property Name="DUAB_LOT_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DUAB_LOT_GPV_ID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAB_LOAD_POINT" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAB_OPERATIONAL_UNIT" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAB_ASSOCIATED" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAB_PRODUCT_CODE" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAB_SITE_ID" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAB_EXPECTED_WAGONS_QUANTITY" Type="Int32" Nullable="false" />
+    <Property Name="DUAB_SITUATION" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAB_EXPECTED_INITIAL_DATE" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DUAB_REGISTRY_TIME" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="DUACT_USER">
+    <Key>
+      <PropertyRef Name="DUAC_USER_ID" />
+    </Key>
+    <Property Name="DUAC_USER_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DUAC_USER" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAC_USER_NAME" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+    <Property Name="DUAC_USER_EMAIL" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+    <Property Name="DUAC_TYPE" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+    <Property Name="DUAC_ROLE" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Name="DUAC_SEND_TO_SUPERVISORY" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="DUAC_SUPERVISORY_CODE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="DUAC_ACTIVE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="DUAC_WEIGHING_USER" Type="Boolean" Nullable="false" />
+    <Property Name="DUAC_SEND_MRS" Type="Boolean" Nullable="false" />
+    <Property Name="DUAC_ACCESS_ROLES" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="DUADT_WEIGHING">
+    <Key>
+      <PropertyRef Name="DUAD_WEIGHING_ID" />
+    </Key>
+    <Property Name="DUAD_WEIGHING_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DUAD_LOAD_POINT_CODE" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAD_OPERATIONAL_UNIT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAD_REGISTER_TIME" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DUAD_REGISTRY_TIME" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DUAD_ID_COMPOSITION" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAD_CAR_NUMBER" Type="Int32" Nullable="false" />
+    <Property Name="DUAD_AXIS_NUMBER" Type="Int32" Nullable="false" />
+    <Property Name="DUAD_CAR_TYPE" Type="Int32" />
+    <Property Name="DUAD_ID_PRODUCT" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="DUAD_LOT_GPV_ID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="DUAD_RIGHT_WHEEL_TARE" Type="Double" />
+    <Property Name="DUAD_LEFT_WHEEL_TARE" Type="Double" />
+    <Property Name="DUAD_TRUCK_TARE" Type="Double" />
+    <Property Name="DUAD_AXIS_TARE" Type="Double" />
+    <Property Name="DUAD_TARE_WEIGHT" Type="Double" />
+    <Property Name="DUAD_RIGHT_WHEEL_GROSS" Type="Double" />
+    <Property Name="DUAD_LEFT_WHEEL_GROSS" Type="Double" />
+    <Property Name="DUAD_TRUCK_GROSS" Type="Double" />
+    <Property Name="DUAD_AXIS_GROSS" Type="Double" />
+    <Property Name="DUAD_GROSS_WEIGHT" Type="Double" />
+    <Property Name="DUAD_RIGHT_WHEEL_NET" Type="Double" />
+    <Property Name="DUAD_LEFT_WHEEL_NET" Type="Double" />
+    <Property Name="DUAD_TRUCK_NET" Type="Double" />
+    <Property Name="DUAD_AXIS_NET" Type="Double" />
+    <Property Name="DUAD_NET_WEIGHT" Type="Double" />
+    <Property Name="DUAD_INTER_WHEIGHT" Type="Double" />
+    <Property Name="DUAD_LOAD_REMOVER" Type="Double" />
+    <Property Name="DUAD_SPEED" Type="Double" />
+    <Property Name="DUAD_SPEED_EXCEEDED" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DUAD_DATA_TYPE" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+    <Property Name="DUAD_DATA_WEIGHING_SOURCE" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="DUAD_CONCH" Type="Int32" />
+    <Property Name="DUAD_OVERLOAD_WEIGHT" Type="Double" />
+    <Property Name="DUAD_GROSS_OVERLOAD" Type="Double" />
+    <Property Name="DUAD_OVERLOAD_STATUS" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Name="DUAD_JUSTIFICATION" Type="String" MaxLength="600" FixedLength="false" Unicode="false" />
+    <Property Name="DUAD_OPERATOR_WEIGHT" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="DUAD_OPERATOR_ID" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="DUAD_LAST_REGISTRY_VALID" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAD_QUALITY_STATUS" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DUAET_REVIWED_WEIGHING">
+    <Key>
+      <PropertyRef Name="DUAE_REVIWED_WEIGHING_ID" />
+    </Key>
+    <Property Name="DUAE_REVIWED_WEIGHING_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DUAE_LOAD_POINT_CODE" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAE_OPERATIONAL_UNIT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAE_REGISTER_TIME" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DUAE_REGISTRY_TIME" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DUAE_ID_COMPOSITION" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAE_CAR_NUMBER" Type="Int32" Nullable="false" />
+    <Property Name="DUAE_AXIS_NUMBER" Type="Int32" Nullable="false" />
+    <Property Name="DUAE_CAR_TYPE" Type="Int32" />
+    <Property Name="DUAE_ID_PRODUCT" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="DUAE_LOT_GPV_ID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="DUAE_RIGHT_WHEEL_TARE" Type="Double" />
+    <Property Name="DUAE_LEFT_WHEEL_TARE" Type="Double" />
+    <Property Name="DUAE_TRUCK_TARE" Type="Double" />
+    <Property Name="DUAE_AXIS_TARE" Type="Double" />
+    <Property Name="DUAE_TARE_WEIGHT" Type="Double" />
+    <Property Name="DUAE_RIGHT_WHEEL_GROSS" Type="Double" />
+    <Property Name="DUAE_LEFT_WHEEL_GROSS" Type="Double" />
+    <Property Name="DUAE_TRUCK_GROSS" Type="Double" />
+    <Property Name="DUAE_AXIS_GROSS" Type="Double" />
+    <Property Name="DUAE_GROSS_WEIGHT" Type="Double" />
+    <Property Name="DUAE_RIGHT_WHEEL_NET" Type="Double" />
+    <Property Name="DUAE_LEFT_WHEEL_NET" Type="Double" />
+    <Property Name="DUAE_TRUCK_NET" Type="Double" />
+    <Property Name="DUAE_AXIS_NET" Type="Double" />
+    <Property Name="DUAE_NET_WEIGHT" Type="Double" />
+    <Property Name="DUAE_INTER_WHEIGHT" Type="Double" />
+    <Property Name="DUAE_LOAD_REMOVER" Type="Double" />
+    <Property Name="DUAE_SPEED" Type="Double" />
+    <Property Name="DUAE_SPEED_EXCEEDED" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DUAE_DATA_TYPE" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+    <Property Name="DUAE_DATA_WEIGHING_SOURCE" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="DUAE_CONCH" Type="Int32" />
+    <Property Name="DUAE_OVERLOAD_WEIGHT" Type="Double" />
+    <Property Name="DUAE_GROSS_OVERLOAD" Type="Double" />
+    <Property Name="DUAE_OVERLOAD_STATUS" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Name="DUAE_JUSTIFICATION" Type="String" MaxLength="600" FixedLength="false" Unicode="false" />
+    <Property Name="DUAE_OPERATOR_WEIGHT" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="DUAE_OPERATOR_ID" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="DUAE_LAST_REGISTRY_VALID" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAE_QUALITY_STATUS" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAE_WEIGHING_DESTINATION_ID" Type="Int32" Nullable="false" />
+    <Property Name="DUAE_WAGON_CAPACITY" Type="Double" />
+    <Property Name="DUAE_ID_FLOW_COMPOSITION" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="DUANT_WEIGHING_DESTINATION" Relationship="Self.DUANR_DUAE1" FromRole="DUAET_REVIWED_WEIGHING" ToRole="DUANT_WEIGHING_DESTINATION" />
+  </EntityType>
+  <EntityType Name="DUAFT_WAGON_PARAMETER">
+    <Key>
+      <PropertyRef Name="DUAF_WAGON_PARAMETER_ID" />
+    </Key>
+    <Property Name="DUAF_WAGON_PARAMETER_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DUAF_WAGON_TYPE" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAF_DEFAULT_TARE" Type="Double" Nullable="false" />
+    <Property Name="DUAF_WAGON_GROUP" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DUAGT_JUSTIFICATION">
+    <Key>
+      <PropertyRef Name="DUAG_JUSTIFICATION_ID" />
+    </Key>
+    <Property Name="DUAG_JUSTIFICATION_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DUAG_DESCRIPTION" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAG_NORMAL_JUSTIFICATION" Type="Boolean" Nullable="false" />
+    <Property Name="DUAG_FLOW_JUSTIFICATION" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DUAHT_WEIGHING_CONFIG">
+    <Key>
+      <PropertyRef Name="DUAH_WEIGHING_CONFIG_ID" />
+    </Key>
+    <Property Name="DUAH_WEIGHING_CONFIG_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DUAH_LOAD_POINT_CODE" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAH_OPERATIONAL_UNIT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAH_DATA_SOURCE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAH_WEIGHING_LOCATION" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAH_TARE_WEIGHT_MIN" Type="Double" Nullable="false" />
+    <Property Name="DUAH_TARE_WEIGHT_MAX" Type="Double" Nullable="false" />
+    <Property Name="DUAH_GROSS_WEIGHT_MIN" Type="Double" />
+    <Property Name="DUAH_GROSS_WEIGHT_MAX" Type="Double" />
+    <Property Name="DUAH_ACCEPT_ABNORMAL" Type="Boolean" />
+    <Property Name="DUAH_WEIGHING_ADJUSTMENT" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="DUAH_ADJUSTMENT_PERCENT" Type="Double" />
+    <Property Name="DUAH_GDU_LIMIT_GROSS" Type="Double" />
+    <Property Name="DUAH_GDT_LIMIT_GROSS" Type="Double" />
+    <Property Name="DUAH_HAT_LIMIT_GROSS" Type="Double" />
+    <Property Name="DUAH_WAGON_TYPE_TOLERANCE" Type="Int32" />
+    <Property Name="DUAH_TOLERANCE_LIMIT_GROSS" Type="Double" />
+    <Property Name="DUAH_GDU_LIMIT_TARE" Type="Double" />
+    <Property Name="DUAH_GDT_LIMIT_TARE" Type="Double" />
+    <Property Name="DUAH_HAT_LIMIT_TARE" Type="Double" />
+    <Property Name="DUAH_TOLERANCE_LIMIT_TARE" Type="Double" />
+    <Property Name="DUAH_OVERLOAD" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="DUAH_BATCH_ENABLE" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="DUAH_DISABLE_EXCEL_FILE" Type="Boolean" />
+    <Property Name="DUAH_WAGON_GROUP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DUAH_HAS_TOLERANCE" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="DUAH_PROCESSING" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="DUAH_WAGONS_DELAY_QTY" Type="Int32" />
+    <Property Name="DUAH_DESTINATION_HOST_WS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="DUAH_DESTINATION_PORT_WS" Type="Int32" />
+    <Property Name="DUAH_WEB_SERVICE_NAME_WS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DUAH_CONTINGENCY_FLOW_TAG" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="DUAH_COMPANY" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAH_REPORT_WEIGHING" Type="Boolean" Nullable="false" />
+    <Property Name="DUAH_CONTIGENCY_BALANCE_POINT" Type="Boolean" Nullable="false" />
+    <Property Name="DUAH_USE_LIMITS_BY_WAGON_TYPE" Type="Boolean" Nullable="false" />
+    <Property Name="DUAH_VALIDATE_OVERLOAD_CONSISTENCY" Type="Boolean" Nullable="false" />
+    <Property Name="DUAH_VALIDATE_EVEN_ODD_WAGON_CONSISTENCY" Type="Boolean" Nullable="false" />
+    <Property Name="DUAH_ALLOW_MANY_LOTS" Type="Boolean" Nullable="false" />
+    <Property Name="DUAH_CONFIRM_BEFORE_SEND_WEIGHING" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="DUAQT_WEIGHING_CONFIG_DESTINATION" Relationship="Self.DUAHR_DUAQ1" FromRole="DUAHT_WEIGHING_CONFIG" ToRole="DUAQT_WEIGHING_CONFIG_DESTINATION" />
+    <NavigationProperty Name="DUART_TARE_CONSOLIDATION_CONFIG" Relationship="Self.DUAHR_DUAR1" FromRole="DUAHT_WEIGHING_CONFIG" ToRole="DUART_TARE_CONSOLIDATION_CONFIG" />
+  </EntityType>
+  <EntityType Name="DUAIT_TOLERANCE">
+    <Key>
+      <PropertyRef Name="DUAI_TOLERANCE_ID" />
+    </Key>
+    <Property Name="DUAI_TOLERANCE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DUAI_RULE_ENABLE" Type="Boolean" Nullable="false" />
+    <Property Name="DUAI_GROSS_WEIGHT_TOL" Type="Double" Nullable="false" />
+    <Property Name="DUAI_MAX_CAR_IN_RULE" Type="Int32" Nullable="false" />
+    <Property Name="DUAI_LOAD_POINT_CODE" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DUAJT_LOAD_POINT">
+    <Key>
+      <PropertyRef Name="DUAJ_LOAD_POINT_ID" />
+    </Key>
+    <Property Name="DUAJ_LOAD_POINT_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DUAJ_LOAD_POINT_CODE" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAJ_ENDPOINT" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DUAKT_LOG_SEND_WEIGHING">
+    <Key>
+      <PropertyRef Name="DUAK_LOG_SEND_WEIGHING_ID" />
+    </Key>
+    <Property Name="DUAK_LOG_SEND_WEIGHING_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DUAK_LOAD_POINT_CODE" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAK_MESSAGE_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DUAK_SEND_TIME" Type="DateTime" Precision="3" />
+    <Property Name="DUAK_RETURN_TIME" Type="DateTime" Precision="3" />
+    <Property Name="DUAK_EXECUTION_STATUS" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="DUAK_RETURN_MESSAGE" Type="String" MaxLength="800" FixedLength="false" Unicode="false" />
+    <Property Name="DUAK_ERROR_CODE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="DUAK_ERROR_TYPE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="DUAK_REQUEST_ERROR_TOTAL" Type="Int32" Nullable="false" />
+    <Property Name="DUAK_REQUEST_SUCCESS_TOTAL" Type="Int32" Nullable="false" />
+    <Property Name="DUAK_REQUEST_DURATION" Type="Int32" Nullable="false" />
+    <Property Name="DUAK_MESSAGE_SIZE" Type="Int32" Nullable="false" />
+    <Property Name="DUAK_CARS_SEND" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="DUAK_COMPOSITION_CODE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="DUAK_WEIGHING_DESTINATION_ID" Type="Int32" />
+    <NavigationProperty Name="DUANT_WEIGHING_DESTINATION" Relationship="Self.DUANR_DUAK1" FromRole="DUAKT_LOG_SEND_WEIGHING" ToRole="DUANT_WEIGHING_DESTINATION" />
+  </EntityType>
+  <EntityType Name="DUALT_OPC_CONFIG">
+    <Key>
+      <PropertyRef Name="DUAL_OPC_CONFIG_ID" />
+    </Key>
+    <Property Name="DUAL_OPC_CONFIG_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DUAL_CAR_TAG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DUAL_CAR_TYPE_TAG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DUAL_COMPOSITION_TAG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DUAL_TARE_WEIGHT_TAG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DUAL_GROSS_WEIGHT_TAG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DUAL_NET_WEIGHT_TAG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DUAL_INTER_WEIGHT_TAG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DUAL_PRODUCT_TAG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DUAL_LOAD_REMOVER_TAG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DUAL_OPERATOR_ID_TAG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DUAL_DEFAULT_TARE_WEIGHT" Type="Double" />
+    <Property Name="DUAL_DEFAULT_GROSS_WEIGHT" Type="Double" />
+    <Property Name="DUAL_DEFAULT_PRODUCT" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="DUAL_MAX_CAR_NUMBER" Type="Int32" />
+    <Property Name="DUAL_ADJUST_WAGON_STATUS" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="DUAL_TYPE_WAGON" Type="Int32" />
+    <Property Name="DUAL_TYPE_LOCOMOTIVE" Type="Int32" />
+    <Property Name="DUAL_WAGON_MIN_TARE_WEIGHT" Type="Double" />
+    <Property Name="DUAL_WAGON_MIN_GROSS_WEIGHT" Type="Double" />
+    <Property Name="DUAL_COMPOSITION_ACRO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="DUAL_LOAD_POINT_CODE" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="DUAMT_OVERLOAD_CONFIG">
+    <Key>
+      <PropertyRef Name="DUAM_OVERLOAD_CONFIG_ID" />
+    </Key>
+    <Property Name="DUAM_OVERLOAD_CONFIG_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DUAM_RECORD_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DUAM_LOAD_POINT_CODE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DUAM_OPERATION_UNIT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DUAM_BIN_NAME_TAG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DUAM_COMPOSITION_NAME_TAG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DUAM_DESTINY_WAGON_TAG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DUAM_ORIGIN_WAGON_TAG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DUAM_WEIGTH_WAGON_MOVED_TAG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DUAM_LAST_WEIGHINH_TAG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DUAM_BIN_NUMBER" Type="Int32" />
+    <Property Name="DUAM_CRANE_LAST_USAGE" Type="DateTime" Precision="3" />
+    <Property Name="DUAM_PROCESSING" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="DUAM_BIN_PROCESSING" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+  </EntityType>
+  <EntityType Name="DUANT_WEIGHING_DESTINATION">
+    <Key>
+      <PropertyRef Name="DUAN_WEIGHING_DESTINATION_ID" />
+    </Key>
+    <Property Name="DUAN_WEIGHING_DESTINATION_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DUAN_WEIGHING_DESTINATION_CODE" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAN_WEIGHING_DESTINATION_DESCRIPTION" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="DUAET_REVIWED_WEIGHING" Relationship="Self.DUANR_DUAE1" FromRole="DUANT_WEIGHING_DESTINATION" ToRole="DUAET_REVIWED_WEIGHING" />
+    <NavigationProperty Name="DUAKT_LOG_SEND_WEIGHING" Relationship="Self.DUANR_DUAK1" FromRole="DUANT_WEIGHING_DESTINATION" ToRole="DUAKT_LOG_SEND_WEIGHING" />
+    <NavigationProperty Name="DUAQT_WEIGHING_CONFIG_DESTINATION" Relationship="Self.DUANR_DUAQ2" FromRole="DUANT_WEIGHING_DESTINATION" ToRole="DUAQT_WEIGHING_CONFIG_DESTINATION" />
+  </EntityType>
+  <EntityType Name="DUAOT_WEIGHING_RECEIVED">
+    <Key>
+      <PropertyRef Name="DUAO_WEIGHING_RECEIVED_ID" />
+    </Key>
+    <Property Name="DUAO_WEIGHING_RECEIVED_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DUAO_RECEIVED_STATUS" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAO_COMPANY" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="DUAO_MESSAGE_ID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAO_FILE_NAME" Type="String" MaxLength="900" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAO_COMPOSITION_ID" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAO_RECEIVED_DATETIME" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DUAO_PROCESSED_DATETIME" Type="DateTime" Precision="3" />
+    <Property Name="DUAO_PROCESSING_STATUS" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAO_WAGONS_INSERTED" Type="String" MaxLength="900" FixedLength="false" Unicode="false" />
+    <Property Name="DUAO_WAGONS_UPDATED" Type="String" MaxLength="900" FixedLength="false" Unicode="false" />
+    <Property Name="DUAO_EMPTY_WAGONS" Type="String" MaxLength="900" FixedLength="false" Unicode="false" />
+    <Property Name="DUAO_WAGONS_TOTAL" Type="Int32" Nullable="false" />
+    <Property Name="DUAO_ADDITIONAL_INFO" Type="String" MaxLength="900" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="DUAPT_QUEUE_STATUS">
+    <Key>
+      <PropertyRef Name="DUAP_QUEUE_STATUS_ID" />
+    </Key>
+    <Property Name="DUAP_QUEUE_STATUS_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DUAP_DATETIME" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DUAP_STATUS" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAP_STATUS_DESCRIPTION" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAP_QUEUE_HOST" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="DUAQT_WEIGHING_CONFIG_DESTINATION">
+    <Key>
+      <PropertyRef Name="DUAQ_WEIGHING_CONFIG_DESTINATION_ID" />
+    </Key>
+    <Property Name="DUAQ_WEIGHING_CONFIG_DESTINATION_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DUAQ_WEIGHING_CONFIG_ID" Type="Int32" Nullable="false" />
+    <Property Name="DUAQ_WEIGHING_DESTINATION_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="DUAHT_WEIGHING_CONFIG" Relationship="Self.DUAHR_DUAQ1" FromRole="DUAQT_WEIGHING_CONFIG_DESTINATION" ToRole="DUAHT_WEIGHING_CONFIG" />
+    <NavigationProperty Name="DUANT_WEIGHING_DESTINATION" Relationship="Self.DUANR_DUAQ2" FromRole="DUAQT_WEIGHING_CONFIG_DESTINATION" ToRole="DUANT_WEIGHING_DESTINATION" />
+  </EntityType>
+  <EntityType Name="DUART_TARE_CONSOLIDATION_CONFIG">
+    <Key>
+      <PropertyRef Name="DUART_TARE_CONSOLIDATION_CONFIG_ID" />
+    </Key>
+    <Property Name="DUART_TARE_CONSOLIDATION_CONFIG_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DUAR_WEIGHING_CONFIG_ID" Type="Int32" Nullable="false" />
+    <Property Name="DUAR_PIPOINT_TOTALIZER" Type="String" MaxLength="120" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAR_CURRENT_COMPOSITION" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+    <Property Name="DUAR_CURRENT_COMPOSITION_TOTAL_WAGONS" Type="Int32" />
+    <Property Name="DUAR_LAST_COMPOSITION" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+    <Property Name="DUAR_LAST_COMPOSITION_END_DATETIME" Type="DateTime" Precision="3" />
+    <Property Name="DUAR_LAST_TARE_CONSOLIDATION" Type="Double" Nullable="false" />
+    <Property Name="DUAR_TARE_CONSOLIDATION_TOTAL" Type="Double" Nullable="false" />
+    <Property Name="DUAR_LAST_PIPOINT_UPDATE" Type="DateTime" Precision="3" />
+    <Property Name="DUAR_PROCESSING" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="DUAHT_WEIGHING_CONFIG" Relationship="Self.DUAHR_DUAR1" FromRole="DUART_TARE_CONSOLIDATION_CONFIG" ToRole="DUAHT_WEIGHING_CONFIG" />
+    <NavigationProperty Name="DUAST_TARE_CONSOLIDATION" Relationship="Self.DUAR_DUAS1" FromRole="DUART_TARE_CONSOLIDATION_CONFIG" ToRole="DUAST_TARE_CONSOLIDATION" />
+  </EntityType>
+  <EntityType Name="DUAST_TARE_CONSOLIDATION">
+    <Key>
+      <PropertyRef Name="DUAST_TARE_CONSOLIDATION_ID" />
+    </Key>
+    <Property Name="DUAST_TARE_CONSOLIDATION_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DUAS_TARE_CONSOLIDATION_CONFIG_ID" Type="Int32" Nullable="false" />
+    <Property Name="DUAS_PIPOINT_TOTALIZER" Type="String" MaxLength="120" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAS_COMPOSITION" Type="String" MaxLength="120" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAS_COMPOSITION_END_DATETIME" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DUAS_TARE_CONSOLIDATION" Type="Double" Nullable="false" />
+    <Property Name="DUAS_TARE_CONSOLIDATION_TOTAL" Type="Double" Nullable="false" />
+    <Property Name="DUAS_CONSOLIDATION_DATETIME" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="DUART_TARE_CONSOLIDATION_CONFIG" Relationship="Self.DUAR_DUAS1" FromRole="DUAST_TARE_CONSOLIDATION" ToRole="DUART_TARE_CONSOLIDATION_CONFIG" />
+  </EntityType>
+  <EntityType Name="DUATT_SUPERVISORS">
+    <Key>
+      <PropertyRef Name="DUAT_SUPERVISOR_ID" />
+    </Key>
+    <Property Name="DUAT_SUPERVISOR_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DUAT_USER" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAT_NAME" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAT_LOCATION" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAT_ACTIVE" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DUAUT_WAGONS_CAPACITY">
+    <Key>
+      <PropertyRef Name="DUAU_WAGON_CAPACITY_ID" />
+    </Key>
+    <Property Name="DUAU_WAGON_CAPACITY_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DUAU_LOCATION" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAU_TYPE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAU_CAPACITY" Type="Int32" Nullable="false" />
+    <Property Name="DUAU_ACTIVE" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DUAVT_OPC_FLOW_CONFIG">
+    <Key>
+      <PropertyRef Name="DUAV_OPC_FLOW_CONFIG_ID" />
+    </Key>
+    <Property Name="DUAV_OPC_FLOW_CONFIG_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DUAV_MANUAL_START_DATETIME_TAG" Type="String" MaxLength="120" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAV_COMPOSITION_NUMBER_TAG" Type="String" MaxLength="120" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAV_ORIGIN_TAG" Type="String" MaxLength="120" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAV_PREFIX_ORIGIN_TAG" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+    <Property Name="DUAV_DESTINATION_TAG" Type="String" MaxLength="120" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAV_PRODUCT_TAG" Type="String" MaxLength="120" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAV_WAGON_TYPE_TAG" Type="String" MaxLength="120" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAV_WAGONS_NUMBER_TAG" Type="String" MaxLength="120" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAV_TIME_BETWEEN_WAGONS_TAG" Type="String" MaxLength="120" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAV_NET_WEIGHT_TAG" Type="String" MaxLength="120" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAV_TARE_WEIGHT_TAG" Type="String" MaxLength="120" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAV_START_COMPOSITION_TAG" Type="String" MaxLength="120" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAV_END_COMPOSITION_TAG" Type="String" MaxLength="120" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAV_MAX_CAR_NUMBER" Type="Int32" Nullable="false" />
+    <Property Name="DUAV_LOAD_POINT_CODE" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAV_PISYSTEM_SOURCE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAV_IDENTITY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAV_NET_WEIGHT_CONST_CONVERT" Type="Int32" Nullable="false" />
+    <Property Name="DUAV_TARE_WEIGHT_CONST_CONVERT" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DUAWT_ODBC_CONFIG">
+    <Key>
+      <PropertyRef Name="DUAW_ODBC_CONFIG_ID" />
+    </Key>
+    <Property Name="DUAW_ODBC_CONFIG_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DUAW_LOAD_POINT_CODE" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAW_HOST_ADDRESS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAW_LOCOMOTIVE_INITIAL" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAW_PROTOCOL" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAW_SERVER" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAW_SERVICE_NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAW_TABLE_CARS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAW_TABLE_COMPOSITION" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAW_TABLE_WHEELS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAW_USER_ID_SECRET" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAW_PASSWORD_SECRET" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAW_PORT" Type="Int32" Nullable="false" />
+    <Property Name="DUAW_PROCESSING" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DUAXT_AUDIT">
+    <Key>
+      <PropertyRef Name="DUAX_AUDIT_ID" />
+    </Key>
+    <Property Name="DUAX_AUDIT_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DUAX_DATETIME" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DUAX_MODIFIED_BY" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAX_OBJECT" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DUAX_OLD_VERSION" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="DUAX_NEW_VERSION" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="DUAX_CHANGE_TYPE" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="DUAX_ADDITIONAL_INFO" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <Association Name="DUANR_DUAE1">
+    <End Role="DUANT_WEIGHING_DESTINATION" Type="Self.DUANT_WEIGHING_DESTINATION" Multiplicity="1" />
+    <End Role="DUAET_REVIWED_WEIGHING" Type="Self.DUAET_REVIWED_WEIGHING" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DUANT_WEIGHING_DESTINATION">
+        <PropertyRef Name="DUAN_WEIGHING_DESTINATION_ID" />
+      </Principal>
+      <Dependent Role="DUAET_REVIWED_WEIGHING">
+        <PropertyRef Name="DUAE_WEIGHING_DESTINATION_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DUAHR_DUAQ1">
+    <End Role="DUAHT_WEIGHING_CONFIG" Type="Self.DUAHT_WEIGHING_CONFIG" Multiplicity="1" />
+    <End Role="DUAQT_WEIGHING_CONFIG_DESTINATION" Type="Self.DUAQT_WEIGHING_CONFIG_DESTINATION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DUAHT_WEIGHING_CONFIG">
+        <PropertyRef Name="DUAH_WEIGHING_CONFIG_ID" />
+      </Principal>
+      <Dependent Role="DUAQT_WEIGHING_CONFIG_DESTINATION">
+        <PropertyRef Name="DUAQ_WEIGHING_CONFIG_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DUAHR_DUAR1">
+    <End Role="DUAHT_WEIGHING_CONFIG" Type="Self.DUAHT_WEIGHING_CONFIG" Multiplicity="1" />
+    <End Role="DUART_TARE_CONSOLIDATION_CONFIG" Type="Self.DUART_TARE_CONSOLIDATION_CONFIG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DUAHT_WEIGHING_CONFIG">
+        <PropertyRef Name="DUAH_WEIGHING_CONFIG_ID" />
+      </Principal>
+      <Dependent Role="DUART_TARE_CONSOLIDATION_CONFIG">
+        <PropertyRef Name="DUAR_WEIGHING_CONFIG_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DUANR_DUAK1">
+    <End Role="DUANT_WEIGHING_DESTINATION" Type="Self.DUANT_WEIGHING_DESTINATION" Multiplicity="0..1" />
+    <End Role="DUAKT_LOG_SEND_WEIGHING" Type="Self.DUAKT_LOG_SEND_WEIGHING" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DUANT_WEIGHING_DESTINATION">
+        <PropertyRef Name="DUAN_WEIGHING_DESTINATION_ID" />
+      </Principal>
+      <Dependent Role="DUAKT_LOG_SEND_WEIGHING">
+        <PropertyRef Name="DUAK_WEIGHING_DESTINATION_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DUANR_DUAQ2">
+    <End Role="DUANT_WEIGHING_DESTINATION" Type="Self.DUANT_WEIGHING_DESTINATION" Multiplicity="1" />
+    <End Role="DUAQT_WEIGHING_CONFIG_DESTINATION" Type="Self.DUAQT_WEIGHING_CONFIG_DESTINATION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DUANT_WEIGHING_DESTINATION">
+        <PropertyRef Name="DUAN_WEIGHING_DESTINATION_ID" />
+      </Principal>
+      <Dependent Role="DUAQT_WEIGHING_CONFIG_DESTINATION">
+        <PropertyRef Name="DUAQ_WEIGHING_DESTINATION_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DUAR_DUAS1">
+    <End Role="DUART_TARE_CONSOLIDATION_CONFIG" Type="Self.DUART_TARE_CONSOLIDATION_CONFIG" Multiplicity="1" />
+    <End Role="DUAST_TARE_CONSOLIDATION" Type="Self.DUAST_TARE_CONSOLIDATION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DUART_TARE_CONSOLIDATION_CONFIG">
+        <PropertyRef Name="DUART_TARE_CONSOLIDATION_CONFIG_ID" />
+      </Principal>
+      <Dependent Role="DUAST_TARE_CONSOLIDATION">
+        <PropertyRef Name="DUAS_TARE_CONSOLIDATION_CONFIG_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="DUAAT_COMPOSITION" EntityType="Self.DUAAT_COMPOSITION" />
+    <EntitySet Name="DUABT_LOT" EntityType="Self.DUABT_LOT" />
+    <EntitySet Name="DUACT_USER" EntityType="Self.DUACT_USER" />
+    <EntitySet Name="DUADT_WEIGHING" EntityType="Self.DUADT_WEIGHING" />
+    <EntitySet Name="DUAET_REVIWED_WEIGHING" EntityType="Self.DUAET_REVIWED_WEIGHING" />
+    <EntitySet Name="DUAFT_WAGON_PARAMETER" EntityType="Self.DUAFT_WAGON_PARAMETER" />
+    <EntitySet Name="DUAGT_JUSTIFICATION" EntityType="Self.DUAGT_JUSTIFICATION" />
+    <EntitySet Name="DUAHT_WEIGHING_CONFIG" EntityType="Self.DUAHT_WEIGHING_CONFIG" />
+    <EntitySet Name="DUAIT_TOLERANCE" EntityType="Self.DUAIT_TOLERANCE" />
+    <EntitySet Name="DUAJT_LOAD_POINT" EntityType="Self.DUAJT_LOAD_POINT" />
+    <EntitySet Name="DUAKT_LOG_SEND_WEIGHING" EntityType="Self.DUAKT_LOG_SEND_WEIGHING" />
+    <EntitySet Name="DUALT_OPC_CONFIG" EntityType="Self.DUALT_OPC_CONFIG" />
+    <EntitySet Name="DUAMT_OVERLOAD_CONFIG" EntityType="Self.DUAMT_OVERLOAD_CONFIG" />
+    <EntitySet Name="DUANT_WEIGHING_DESTINATION" EntityType="Self.DUANT_WEIGHING_DESTINATION" />
+    <EntitySet Name="DUAOT_WEIGHING_RECEIVED" EntityType="Self.DUAOT_WEIGHING_RECEIVED" />
+    <EntitySet Name="DUAPT_QUEUE_STATUS" EntityType="Self.DUAPT_QUEUE_STATUS" />
+    <EntitySet Name="DUAQT_WEIGHING_CONFIG_DESTINATION" EntityType="Self.DUAQT_WEIGHING_CONFIG_DESTINATION" />
+    <EntitySet Name="DUART_TARE_CONSOLIDATION_CONFIG" EntityType="Self.DUART_TARE_CONSOLIDATION_CONFIG" />
+    <EntitySet Name="DUAST_TARE_CONSOLIDATION" EntityType="Self.DUAST_TARE_CONSOLIDATION" />
+    <EntitySet Name="DUATT_SUPERVISORS" EntityType="Self.DUATT_SUPERVISORS" />
+    <EntitySet Name="DUAUT_WAGONS_CAPACITY" EntityType="Self.DUAUT_WAGONS_CAPACITY" />
+    <EntitySet Name="DUAVT_OPC_FLOW_CONFIG" EntityType="Self.DUAVT_OPC_FLOW_CONFIG" />
+    <EntitySet Name="DUAWT_ODBC_CONFIG" EntityType="Self.DUAWT_ODBC_CONFIG" />
+    <EntitySet Name="DUAXT_AUDIT" EntityType="Self.DUAXT_AUDIT" />
+    <AssociationSet Name="DUANR_DUAE1" Association="Self.DUANR_DUAE1">
+      <End Role="DUANT_WEIGHING_DESTINATION" EntitySet="DUANT_WEIGHING_DESTINATION" />
+      <End Role="DUAET_REVIWED_WEIGHING" EntitySet="DUAET_REVIWED_WEIGHING" />
+    </AssociationSet>
+    <AssociationSet Name="DUAHR_DUAQ1" Association="Self.DUAHR_DUAQ1">
+      <End Role="DUAHT_WEIGHING_CONFIG" EntitySet="DUAHT_WEIGHING_CONFIG" />
+      <End Role="DUAQT_WEIGHING_CONFIG_DESTINATION" EntitySet="DUAQT_WEIGHING_CONFIG_DESTINATION" />
+    </AssociationSet>
+    <AssociationSet Name="DUAHR_DUAR1" Association="Self.DUAHR_DUAR1">
+      <End Role="DUAHT_WEIGHING_CONFIG" EntitySet="DUAHT_WEIGHING_CONFIG" />
+      <End Role="DUART_TARE_CONSOLIDATION_CONFIG" EntitySet="DUART_TARE_CONSOLIDATION_CONFIG" />
+    </AssociationSet>
+    <AssociationSet Name="DUANR_DUAK1" Association="Self.DUANR_DUAK1">
+      <End Role="DUANT_WEIGHING_DESTINATION" EntitySet="DUANT_WEIGHING_DESTINATION" />
+      <End Role="DUAKT_LOG_SEND_WEIGHING" EntitySet="DUAKT_LOG_SEND_WEIGHING" />
+    </AssociationSet>
+    <AssociationSet Name="DUANR_DUAQ2" Association="Self.DUANR_DUAQ2">
+      <End Role="DUANT_WEIGHING_DESTINATION" EntitySet="DUANT_WEIGHING_DESTINATION" />
+      <End Role="DUAQT_WEIGHING_CONFIG_DESTINATION" EntitySet="DUAQT_WEIGHING_CONFIG_DESTINATION" />
+    </AssociationSet>
+    <AssociationSet Name="DUAR_DUAS1" Association="Self.DUAR_DUAS1">
+      <End Role="DUART_TARE_CONSOLIDATION_CONFIG" EntitySet="DUART_TARE_CONSOLIDATION_CONFIG" />
+      <End Role="DUAST_TARE_CONSOLIDATION" EntitySet="DUAST_TARE_CONSOLIDATION" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

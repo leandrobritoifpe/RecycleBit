@@ -1,0 +1,2082 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NLog.Targets.ConcurrentFile</name>
+    </assembly>
+    <members>
+        <member name="T:NLog.Targets.ArchiveNumberingMode">
+            <summary>
+            Specifies the way archive numbering is performed.
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.ArchiveNumberingMode.Sequence">
+            <summary>
+            Sequence style numbering. The most recent archive has the highest number.
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.ArchiveNumberingMode.Rolling">
+            <summary>
+            Rolling style numbering (the most recent is always #0 then #1, ..., #N.
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.ArchiveNumberingMode.Date">
+            <summary>
+            Date style numbering.  Archives will be stamped with the prior period
+            (Year, Month, Day, Hour, Minute) datetime.
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.ArchiveNumberingMode.DateAndSequence">
+            <summary>
+            Date and sequence style numbering.
+            Archives will be stamped with the prior period (Year, Month, Day) datetime.
+            The most recent archive has the highest number (in combination with the date).
+            </summary>
+        </member>
+        <member name="T:NLog.Targets.ConcurrentFileTarget">
+            <summary>
+            Writes log messages to one or more files.
+            </summary>
+            <remarks>
+            <a href="https://github.com/nlog/nlog/wiki/File-target">See NLog Wiki</a>
+            </remarks>
+            <seealso href="https://github.com/nlog/nlog/wiki/File-target">Documentation on NLog Wiki</seealso>
+        </member>
+        <member name="F:NLog.Targets.ConcurrentFileTarget.InitializedFilesCleanupPeriod">
+            <summary>
+            Default clean up period of the initialized files. When a file exceeds the clean up period is removed from the list.
+            </summary>
+            <remarks>Clean up period is defined in days.</remarks>
+        </member>
+        <member name="F:NLog.Targets.ConcurrentFileTarget.ArchiveAboveSizeDisabled">
+            <summary>
+            This value disables file archiving based on the size.
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.ConcurrentFileTarget._initializedFiles">
+            <summary>
+            Holds the initialized files each given time by the <see cref="T:NLog.Targets.ConcurrentFileTarget"/> instance. Against each file, the last write time is stored.
+            </summary>
+            <remarks>Last write time is store in local time (no UTC).</remarks>
+        </member>
+        <member name="F:NLog.Targets.ConcurrentFileTarget._fileAppenderCache">
+            <summary>
+            List of the associated file appenders with the <see cref="T:NLog.Targets.ConcurrentFileTarget"/> instance.
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.ConcurrentFileTarget._initializedFilesCounter">
+            <summary>
+            The number of initialized files at any one time.
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.ConcurrentFileTarget._maxArchiveFiles">
+            <summary>
+            The maximum number of archive files that should be kept.
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.ConcurrentFileTarget._maxArchiveDays">
+            <summary>
+            The maximum days of archive files that should be kept.
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.ConcurrentFileTarget._fullFileName">
+            <summary>
+            The filename as target
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.ConcurrentFileTarget._fullArchiveFileName">
+            <summary>
+            The archive file name as target
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.ConcurrentFileTarget._previousLogEventTimestamp">
+            <summary>
+            The date of the previous log event.
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.ConcurrentFileTarget._previousLogFileName">
+            <summary>
+            The file name of the previous log event.
+            </summary>
+        </member>
+        <member name="M:NLog.Targets.ConcurrentFileTarget.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.ConcurrentFileTarget" /> class.
+            </summary>
+            <remarks>
+            The default value of the layout is: <code>${longdate}|${level:uppercase=true}|${logger}|${message:withexception=true}</code>
+            </remarks>
+        </member>
+        <member name="M:NLog.Targets.ConcurrentFileTarget.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.ConcurrentFileTarget" /> class.
+            </summary>
+            <remarks>
+            The default value of the layout is: <code>${longdate}|${level:uppercase=true}|${logger}|${message:withexception=true}</code>
+            </remarks>
+            <param name="name">Name of the target.</param>
+        </member>
+        <member name="P:NLog.Targets.ConcurrentFileTarget.FileName">
+            <summary>
+            Gets or sets the name of the file to write to.
+            </summary>
+            <remarks>
+            This FileName string is a layout which may include instances of layout renderers.
+            This lets you use a single target to write to multiple files.
+            </remarks>
+            <example>
+            The following value makes NLog write logging events to files based on the log level in the directory where
+            the application runs.
+            <code>${basedir}/${level}.log</code>
+            All <c>Debug</c> messages will go to <c>Debug.log</c>, all <c>Info</c> messages will go to <c>Info.log</c> and so on.
+            You can combine as many of the layout renderers as you want to produce an arbitrary log file name.
+            </example>
+            <docgen category='General Options' order='2' />
+        </member>
+        <member name="P:NLog.Targets.ConcurrentFileTarget.CleanupFileName">
+            <summary>
+            Cleanup invalid values in a filename, e.g. slashes in a filename. If set to <c>true</c>, this can impact the performance of massive writes.
+            If set to <c>false</c>, nothing gets written when the filename is wrong.
+            </summary>
+            <docgen category='Output Options' order='100' />
+        </member>
+        <member name="P:NLog.Targets.ConcurrentFileTarget.FileNameKind">
+            <summary>
+            Is the  <see cref="P:NLog.Targets.ConcurrentFileTarget.FileName"/> an absolute or relative path?
+            </summary>
+            <docgen category='Output Options' order='100' />
+        </member>
+        <member name="P:NLog.Targets.ConcurrentFileTarget.CreateDirs">
+            <summary>
+            Gets or sets a value indicating whether to create directories if they do not exist.
+            </summary>
+            <remarks>
+            Setting this to false may improve performance a bit, but you'll receive an error
+            when attempting to write to a directory that's not present.
+            </remarks>
+            <docgen category='Output Options' order='50' />
+        </member>
+        <member name="P:NLog.Targets.ConcurrentFileTarget.DeleteOldFileOnStartup">
+            <summary>
+            Gets or sets a value indicating whether to delete old log file on startup.
+            </summary>
+            <remarks>
+            This option works only when the "FileName" parameter denotes a single file.
+            </remarks>
+            <docgen category='Output Options' order='50' />
+        </member>
+        <member name="P:NLog.Targets.ConcurrentFileTarget.ReplaceFileContentsOnEachWrite">
+            <summary>
+            Gets or sets a value indicating whether to replace file contents on each write instead of appending log message at the end.
+            </summary>
+            <docgen category='Output Options' order='100' />
+        </member>
+        <member name="P:NLog.Targets.ConcurrentFileTarget.KeepFileOpen">
+            <summary>
+            Gets or sets a value indicating whether to keep log file open instead of opening and closing it on each logging event.
+            </summary>
+            <remarks>
+            KeepFileOpen = true gives the best performance, and ensure the file-lock is not lost to other applications.<br/>
+            KeepFileOpen = false gives the best compability, but slow performance and lead to file-locking issues with other applications.
+            </remarks>
+            <docgen category='Performance Tuning Options' order='10' />
+        </member>
+        <member name="P:NLog.Targets.ConcurrentFileTarget.EnableFileDelete">
+            <summary>
+            Gets or sets a value indicating whether to enable log file(s) to be deleted.
+            </summary>
+            <docgen category='Output Options' order='50' />
+        </member>
+        <member name="P:NLog.Targets.ConcurrentFileTarget.FileAttributes">
+            <summary>
+            Gets or sets the file attributes (Windows only).
+            </summary>
+            <docgen category='Output Options' order='100' />
+        </member>
+        <member name="P:NLog.Targets.ConcurrentFileTarget.LineEnding">
+            <summary>
+            Gets or sets the line ending mode.
+            </summary>
+            <docgen category='Output Options' order='100' />
+        </member>
+        <member name="P:NLog.Targets.ConcurrentFileTarget.AutoFlush">
+            <summary>
+            Gets or sets a value indicating whether to automatically flush the file buffers after each log message.
+            </summary>
+            <docgen category='Performance Tuning Options' order='50' />
+        </member>
+        <member name="P:NLog.Targets.ConcurrentFileTarget.OpenFileCacheSize">
+            <summary>
+            Gets or sets the number of files to be kept open. Setting this to a higher value may improve performance
+            in a situation where a single File target is writing to many files
+            (such as splitting by level or by logger).
+            </summary>
+            <remarks>
+            The files are managed on a LRU (least recently used) basis, which flushes
+            the files that have not been used for the longest period of time should the
+            cache become full. As a rule of thumb, you shouldn't set this parameter to
+            a very high value. A number like 10-15 shouldn't be exceeded, because you'd
+            be keeping a large number of files open which consumes system resources.
+            </remarks>
+            <docgen category='Performance Tuning Options' order='10' />
+        </member>
+        <member name="P:NLog.Targets.ConcurrentFileTarget.OpenFileCacheTimeout">
+            <summary>
+            Gets or sets the maximum number of seconds that files are kept open. Zero or negative means disabled.
+            </summary>
+            <docgen category='Performance Tuning Options' order='50' />
+        </member>
+        <member name="P:NLog.Targets.ConcurrentFileTarget.OpenFileFlushTimeout">
+            <summary>
+            Gets or sets the maximum number of seconds before open files are flushed. Zero or negative means disabled.
+            </summary>
+            <docgen category='Performance Tuning Options' order='50' />
+        </member>
+        <member name="P:NLog.Targets.ConcurrentFileTarget.BufferSize">
+            <summary>
+            Gets or sets the log file buffer size in bytes.
+            </summary>
+            <docgen category='Performance Tuning Options' order='50' />
+        </member>
+        <member name="P:NLog.Targets.ConcurrentFileTarget.Encoding">
+            <summary>
+            Gets or sets the file encoding.
+            </summary>
+            <docgen category='Output Options' order='10' />
+        </member>
+        <member name="P:NLog.Targets.ConcurrentFileTarget.DiscardAll">
+            <summary>
+            Gets or sets whether or not this target should just discard all data that its asked to write.
+            Mostly used for when testing NLog Stack except final write
+            </summary>
+            <docgen category='Performance Tuning Options' order='100' />
+        </member>
+        <member name="P:NLog.Targets.ConcurrentFileTarget.ConcurrentWrites">
+            <summary>
+            Gets or sets a value indicating whether concurrent writes to the log file by multiple processes on the same host.
+            </summary>
+            <remarks>
+            This makes multi-process logging possible. NLog uses a special technique
+            that lets it keep the files open for writing.
+            </remarks>
+            <docgen category='Performance Tuning Options' order='10' />
+        </member>
+        <member name="P:NLog.Targets.ConcurrentFileTarget.NetworkWrites">
+            <summary>
+            Obsolete and replaced by <see cref="P:NLog.Targets.ConcurrentFileTarget.KeepFileOpen"/> = <c>false</c> with NLog v5.3.
+            Gets or sets a value indicating whether concurrent writes to the log file by multiple processes on different network hosts.
+            </summary>
+            <remarks>
+            This effectively prevents files from being kept open.
+            </remarks>
+            <docgen category='Performance Tuning Options' order='50' />
+        </member>
+        <member name="P:NLog.Targets.ConcurrentFileTarget.WriteBom">
+             <summary>
+             Gets or sets a value indicating whether to write BOM (byte order mark) in created files.
+            
+             Defaults to true for UTF-16 and UTF-32
+             </summary>
+             <docgen category='Output Options' order='50' />
+        </member>
+        <member name="P:NLog.Targets.ConcurrentFileTarget.ConcurrentWriteAttempts">
+            <summary>
+            Gets or sets the number of times the write is appended on the file before NLog
+            discards the log message.
+            </summary>
+            <docgen category='Performance Tuning Options' order='100' />
+        </member>
+        <member name="P:NLog.Targets.ConcurrentFileTarget.ConcurrentWriteAttemptDelay">
+            <summary>
+            Gets or sets the delay in milliseconds to wait before attempting to write to the file again.
+            </summary>
+            <remarks>
+            The actual delay is a random value between 0 and the value specified
+            in this parameter. On each failed attempt the delay base is doubled
+            up to <see cref="P:NLog.Targets.ConcurrentFileTarget.ConcurrentWriteAttempts" /> times.
+            </remarks>
+            <example>
+            Assuming that ConcurrentWriteAttemptDelay is 10 the time to wait will be:<p/>
+            a random value between 0 and 10 milliseconds - 1st attempt<br/>
+            a random value between 0 and 20 milliseconds - 2nd attempt<br/>
+            a random value between 0 and 40 milliseconds - 3rd attempt<br/>
+            a random value between 0 and 80 milliseconds - 4th attempt<br/>
+            ...<p/>
+            and so on.
+            </example>
+            <docgen category='Performance Tuning Options' order='100' />
+        </member>
+        <member name="P:NLog.Targets.ConcurrentFileTarget.ArchiveOldFileOnStartup">
+            <summary>
+            Gets or sets a value indicating whether to archive old log file on startup.
+            </summary>
+            <remarks>
+            This option works only when the "FileName" parameter denotes a single file.
+            After archiving the old file, the current log file will be empty.
+            </remarks>
+            <docgen category='Archival Options' order='50' />
+        </member>
+        <member name="P:NLog.Targets.ConcurrentFileTarget.WriteHeaderWhenInitialFileNotEmpty">
+            <summary>
+            Gets or sets whether to write the Header on initial creation of file appender, even if the file is not empty.
+            Default value is <see langword="false"/>, which means only write header when initial file is empty (Ex. ensures valid CSV files)
+            </summary>
+            <remarks>
+            Alternative use <see cref="P:NLog.Targets.ConcurrentFileTarget.ArchiveOldFileOnStartup"/> to ensure each application session gets individual log-file.
+            </remarks>
+        </member>
+        <member name="P:NLog.Targets.ConcurrentFileTarget.ArchiveOldFileOnStartupAboveSize">
+            <summary>
+            Gets or sets a value of the file size threshold to archive old log file on startup.
+            </summary>
+            <remarks>
+            This option won't work if <see cref="P:NLog.Targets.ConcurrentFileTarget.ArchiveOldFileOnStartup"/> is set to <c>false</c>
+            Default value is 0 which means that the file is archived as soon as archival on
+            startup is enabled.
+            </remarks>
+            <docgen category='Archival Options' order='50' />
+        </member>
+        <member name="P:NLog.Targets.ConcurrentFileTarget.ArchiveDateFormat">
+            <summary>
+            Gets or sets a value specifying the date format to use when archiving files.
+            </summary>
+            <remarks>
+            This option works only when the "ArchiveNumbering" parameter is set either to Date or DateAndSequence.
+            </remarks>
+            <docgen category='Archival Options' order='50' />
+        </member>
+        <member name="P:NLog.Targets.ConcurrentFileTarget.ArchiveAboveSize">
+            <summary>
+            Gets or sets the size in bytes above which log files will be automatically archived.
+            </summary>
+            <remarks>
+            Notice when combined with <see cref="F:NLog.Targets.ArchiveNumberingMode.Date"/> then it will attempt to append to any existing
+            archive file if grown above size multiple times. New archive file will be created when using <see cref="F:NLog.Targets.ArchiveNumberingMode.DateAndSequence"/>
+            </remarks>
+            <docgen category='Archival Options' order='50' />
+        </member>
+        <member name="P:NLog.Targets.ConcurrentFileTarget.ArchiveEvery">
+            <summary>
+            Gets or sets a value indicating whether to automatically archive log files every time the specified time passes.
+            </summary>
+            <remarks>
+            Files are moved to the archive as part of the write operation if the current period of time changes. For example
+            if the current <c>hour</c> changes from 10 to 11, the first write that will occur
+            on or after 11:00 will trigger the archiving.
+            </remarks>
+            <docgen category='Archival Options' order='50' />
+        </member>
+        <member name="P:NLog.Targets.ConcurrentFileTarget.ArchiveFileKind">
+            <summary>
+            Is the  <see cref="P:NLog.Targets.ConcurrentFileTarget.ArchiveFileName"/> an absolute or relative path?
+            </summary>
+            <docgen category='Archival Options' order='50' />
+        </member>
+        <member name="P:NLog.Targets.ConcurrentFileTarget.ArchiveFileName">
+            <summary>
+            Gets or sets the name of the file to be used for an archive.
+            </summary>
+            <remarks>
+            It may contain a special placeholder {#####}
+            that will be replaced with a sequence of numbers depending on
+            the archiving strategy. The number of hash characters used determines
+            the number of numerical digits to be used for numbering files.
+            </remarks>
+            <docgen category='Archival Options' order='50' />
+        </member>
+        <member name="P:NLog.Targets.ConcurrentFileTarget.MaxArchiveFiles">
+            <summary>
+            Gets or sets the maximum number of archive files that should be kept.
+            </summary>
+            <docgen category='Archival Options' order='50' />
+        </member>
+        <member name="P:NLog.Targets.ConcurrentFileTarget.MaxArchiveDays">
+            <summary>
+            Gets or sets the maximum days of archive files that should be kept.
+            </summary>
+            <docgen category='Archival Options' order='50' />
+        </member>
+        <member name="P:NLog.Targets.ConcurrentFileTarget.ArchiveNumbering">
+            <summary>
+            Gets or sets the way file archives are numbered.
+            </summary>
+            <docgen category='Archival Options' order='50' />
+        </member>
+        <member name="P:NLog.Targets.ConcurrentFileTarget.FileCompressor">
+            <summary>
+            Used to compress log files during archiving.
+            This may be used to provide your own implementation of a zip file compressor,
+            on platforms other than .Net4.5.
+            Defaults to ZipArchiveFileCompressor on .Net4.5 and to null otherwise.
+            </summary>
+            <docgen category='Archival Options' order='50' />
+        </member>
+        <member name="P:NLog.Targets.ConcurrentFileTarget.EnableArchiveFileCompression">
+            <summary>
+            Gets or sets a value indicating whether to compress archive files into the zip archive format.
+            </summary>
+            <docgen category='Archival Options' order='50' />
+        </member>
+        <member name="P:NLog.Targets.ConcurrentFileTarget.ForceManaged">
+            <summary>
+            Gets or set a value indicating whether a managed file stream is forced, instead of using the native implementation.
+            </summary>
+            <docgen category='Output Options' order='100' />
+        </member>
+        <member name="P:NLog.Targets.ConcurrentFileTarget.ForceMutexConcurrentWrites">
+            <summary>
+            Gets or sets a value indicating whether file creation calls should be synchronized by a system global mutex.
+            </summary>
+            <docgen category='Output Options' order='100' />
+        </member>
+        <member name="P:NLog.Targets.ConcurrentFileTarget.WriteFooterOnArchivingOnly">
+            <summary>
+            Gets or sets a value indicating whether the footer should be written only when the file is archived.
+            </summary>
+            <docgen category='Archival Options' order='50' />
+        </member>
+        <member name="P:NLog.Targets.ConcurrentFileTarget.NewLineChars">
+            <summary>
+            Gets the characters that are appended after each line.
+            </summary>
+        </member>
+        <member name="M:NLog.Targets.ConcurrentFileTarget.RefreshArchiveFilePatternToWatch(System.String,NLog.LogEventInfo)">
+            <summary>
+            Refresh the ArchiveFilePatternToWatch option of the <see cref="T:NLog.Internal.FileAppenders.FileAppenderCache" />.
+            The log file must be watched for archiving when multiple processes are writing to the same
+            open file.
+            </summary>
+        </member>
+        <member name="M:NLog.Targets.ConcurrentFileTarget.CleanupInitializedFiles">
+            <summary>
+            Removes records of initialized files that have not been
+            accessed in the last two days.
+            </summary>
+            <remarks>
+            Files are marked 'initialized' for the purpose of writing footers when the logging finishes.
+            </remarks>
+        </member>
+        <member name="M:NLog.Targets.ConcurrentFileTarget.CleanupInitializedFiles(System.DateTime)">
+            <summary>
+            Removes records of initialized files that have not been
+            accessed after the specified date.
+            </summary>
+            <param name="cleanupThreshold">The cleanup threshold.</param>
+            <remarks>
+            Files are marked 'initialized' for the purpose of writing footers when the logging finishes.
+            </remarks>
+        </member>
+        <member name="M:NLog.Targets.ConcurrentFileTarget.FlushAsync(NLog.Common.AsyncContinuation)">
+            <summary>
+            Flushes all pending file operations.
+            </summary>
+            <param name="asyncContinuation">The asynchronous continuation.</param>
+            <remarks>
+            The timeout parameter is ignored, because file APIs don't provide
+            the needed functionality.
+            </remarks>
+        </member>
+        <member name="M:NLog.Targets.ConcurrentFileTarget.GetFileAppenderFactory">
+             <summary>
+             Returns the suitable appender factory ( <see cref="T:NLog.Internal.FileAppenders.IFileAppenderFactory"/>) to be used to generate the file
+             appenders associated with the <see cref="T:NLog.Targets.ConcurrentFileTarget"/> instance.
+            
+             The type of the file appender factory returned depends on the values of various <see cref="T:NLog.Targets.ConcurrentFileTarget"/> properties.
+             </summary>
+             <returns><see cref="T:NLog.Internal.FileAppenders.IFileAppenderFactory"/> suitable for this instance.</returns>
+        </member>
+        <member name="M:NLog.Targets.ConcurrentFileTarget.InitializeTarget">
+            <summary>
+            Initializes file logging by creating data structures that
+            enable efficient multi-file logging.
+            </summary>
+        </member>
+        <member name="M:NLog.Targets.ConcurrentFileTarget.CloseTarget">
+            <summary>
+            Closes the file(s) opened for writing.
+            </summary>
+        </member>
+        <member name="M:NLog.Targets.ConcurrentFileTarget.Write(NLog.LogEventInfo)">
+            <summary>
+            Writes the specified logging event to a file specified in the FileName
+            parameter.
+            </summary>
+            <param name="logEvent">The logging event.</param>
+        </member>
+        <member name="M:NLog.Targets.ConcurrentFileTarget.GetFullFileName(NLog.LogEventInfo)">
+            <summary>
+            Get full filename (=absolute) and cleaned if needed.
+            </summary>
+            <param name="logEvent"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NLog.Targets.ConcurrentFileTarget.Write(System.Collections.Generic.IList{NLog.Common.AsyncLogEventInfo})">
+            <summary>
+            Writes the specified array of logging events to a file specified in the FileName
+            parameter.
+            </summary>
+            <param name="logEvents">An array of <see cref="T:NLog.Common.AsyncLogEventInfo"/> objects.</param>
+            <remarks>
+            This function makes use of the fact that the events are batched by sorting
+            the requests by filename. This optimizes the number of open/close calls
+            and can help improve performance.
+            </remarks>
+        </member>
+        <member name="M:NLog.Targets.ConcurrentFileTarget.GetFormattedMessage(NLog.LogEventInfo)">
+            <summary>
+            Obsolete and replaced by <see cref="M:NLog.Targets.ConcurrentFileTarget.RenderFormattedMessage(NLog.LogEventInfo,System.Text.StringBuilder)"/> with NLog v5.
+            Formats the log event for write.
+            </summary>
+            <param name="logEvent">The log event to be formatted.</param>
+            <returns>A string representation of the log event.</returns>
+        </member>
+        <member name="M:NLog.Targets.ConcurrentFileTarget.GetBytesToWrite(NLog.LogEventInfo)">
+            <summary>
+            Obsolete and replaced by <see cref="M:NLog.Targets.ConcurrentFileTarget.RenderFormattedMessage(NLog.LogEventInfo,System.Text.StringBuilder)"/> with NLog v5.
+            Gets the bytes to be written to the file.
+            </summary>
+            <param name="logEvent">Log event.</param>
+            <returns>Array of bytes that are ready to be written.</returns>
+        </member>
+        <member name="M:NLog.Targets.ConcurrentFileTarget.TransformBytes(System.Byte[])">
+            <summary>
+            Obsolete and replaced by <see cref="M:NLog.Targets.ConcurrentFileTarget.TransformStream(NLog.LogEventInfo,System.IO.MemoryStream)"/> with NLog v5.
+            Modifies the specified byte array before it gets sent to a file.
+            </summary>
+            <param name="value">The byte array.</param>
+            <returns>The modified byte array. The function can do the modification in-place.</returns>
+        </member>
+        <member name="M:NLog.Targets.ConcurrentFileTarget.RenderFormattedMessageToStream(NLog.LogEventInfo,System.Text.StringBuilder,System.Char[],System.IO.MemoryStream)">
+            <summary>
+            Gets the bytes to be written to the file.
+            </summary>
+            <param name="logEvent">The log event to be formatted.</param>
+            <param name="formatBuilder"><see cref="T:System.Text.StringBuilder"/> to help format log event.</param>
+            <param name="transformBuffer">Optional temporary char-array to help format log event.</param>
+            <param name="streamTarget">Destination <see cref="T:System.IO.MemoryStream"/> for the encoded result.</param>
+        </member>
+        <member name="M:NLog.Targets.ConcurrentFileTarget.RenderFormattedMessage(NLog.LogEventInfo,System.Text.StringBuilder)">
+            <summary>
+            Formats the log event for write.
+            </summary>
+            <param name="logEvent">The log event to be formatted.</param>
+            <param name="target"><see cref="T:System.Text.StringBuilder"/> for the result.</param>
+        </member>
+        <member name="M:NLog.Targets.ConcurrentFileTarget.TransformStream(NLog.LogEventInfo,System.IO.MemoryStream)">
+            <summary>
+            Modifies the specified byte array before it gets sent to a file.
+            </summary>
+            <param name="logEvent">The LogEvent being written</param>
+            <param name="stream">The byte array.</param>
+        </member>
+        <member name="M:NLog.Targets.ConcurrentFileTarget.ArchiveFile(System.String,System.String)">
+            <summary>
+            Archives fileName to archiveFileName.
+            </summary>
+            <param name="fileName">File name to be archived.</param>
+            <param name="archiveFileName">Name of the archive file.</param>
+        </member>
+        <member name="M:NLog.Targets.ConcurrentFileTarget.GetArchiveDateFormatString(System.String)">
+             <summary>
+             Gets the correct formatting <see langword="String"/> to be used based on the value of <see
+             cref="P:NLog.Targets.ConcurrentFileTarget.ArchiveEvery"/> for converting <see langword="DateTime"/> values which will be inserting into file
+             names during archiving.
+            
+             This value will be computed only when a empty value or <see langword="null"/> is passed into <paramref name="defaultFormat"/>
+             </summary>
+             <param name="defaultFormat">Date format to used irrespectively of <see cref="P:NLog.Targets.ConcurrentFileTarget.ArchiveEvery"/> value.</param>
+             <returns>Formatting <see langword="String"/> for dates.</returns>
+        </member>
+        <member name="M:NLog.Targets.ConcurrentFileTarget.CalculateNextWeekday(System.DateTime,System.DayOfWeek)">
+            <summary>
+            Calculate the DateTime of the requested day of the week.
+            </summary>
+            <param name="previousLogEventTimestamp">The DateTime of the previous log event.</param>
+            <param name="dayOfWeek">The next occurring day of the week to return a DateTime for.</param>
+            <returns>The DateTime of the next occurring dayOfWeek.</returns>
+            <remarks>For example: if previousLogEventTimestamp is Thursday 2017-03-02 and dayOfWeek is Sunday, this will return
+             Sunday 2017-03-05. If dayOfWeek is Thursday, this will return *next* Thursday 2017-03-09.</remarks>
+        </member>
+        <member name="M:NLog.Targets.ConcurrentFileTarget.DoAutoArchive(System.String,NLog.LogEventInfo,System.DateTime,System.Boolean)">
+            <summary>
+            Invokes the archiving process after determining when and which type of archiving is required.
+            </summary>
+            <param name="fileName">File name to be checked and archived.</param>
+            <param name="eventInfo">Log event that the <see cref="T:NLog.Targets.ConcurrentFileTarget"/> instance is currently processing.</param>
+            <param name="previousLogEventTimestamp">The DateTime of the previous log event for this file.</param>
+            <param name="initializedNewFile">File has just been opened.</param>
+        </member>
+        <member name="M:NLog.Targets.ConcurrentFileTarget.GetArchiveFileNamePattern(System.String,NLog.LogEventInfo)">
+            <summary>
+            Gets the pattern that archive files will match
+            </summary>
+            <param name="fileName">Filename of the log file</param>
+            <param name="eventInfo">Log event that the <see cref="T:NLog.Targets.ConcurrentFileTarget"/> instance is currently processing.</param>
+            <returns>A string with a pattern that will match the archive filenames</returns>
+        </member>
+        <member name="M:NLog.Targets.ConcurrentFileTarget.TryArchiveFile(System.String,NLog.LogEventInfo,System.Int32,System.DateTime,System.Boolean)">
+            <summary>
+            Archives the file if it should be archived.
+            </summary>
+            <param name="fileName">The file name to check for.</param>
+            <param name="ev">Log event that the <see cref="T:NLog.Targets.ConcurrentFileTarget"/> instance is currently processing.</param>
+            <param name="upcomingWriteSize">The size in bytes of the next chunk of data to be written in the file.</param>
+            <param name="previousLogEventTimestamp">The DateTime of the previous log event for this file.</param>
+            <param name="initializedNewFile">File has just been opened.</param>
+            <returns>True when archive operation of the file was completed (by this target or a concurrent target)</returns>
+        </member>
+        <member name="M:NLog.Targets.ConcurrentFileTarget.TryCloseFileAppenderBeforeArchive(System.String,System.String)">
+            <summary>
+            Closes any active file-appenders that matches the input filenames.
+            File-appender is requested to invalidate/close its filehandle, but keeping its archive-mutex alive
+            </summary>
+        </member>
+        <member name="M:NLog.Targets.ConcurrentFileTarget.GetArchiveFileName(System.String,NLog.LogEventInfo,System.Int32,System.DateTime,System.Boolean)">
+            <summary>
+            Indicates if the automatic archiving process should be executed.
+            </summary>
+            <param name="fileName">File name to be written.</param>
+            <param name="ev">Log event that the <see cref="T:NLog.Targets.ConcurrentFileTarget"/> instance is currently processing.</param>
+            <param name="upcomingWriteSize">The size in bytes of the next chunk of data to be written in the file.</param>
+            <param name="previousLogEventTimestamp">The DateTime of the previous log event for this file.</param>
+            <param name="initializedNewFile">File has just been opened.</param>
+            <returns>Filename to archive. If <c>null</c>, then nothing to archive.</returns>
+        </member>
+        <member name="M:NLog.Targets.ConcurrentFileTarget.GetPotentialFileForArchiving(System.String)">
+            <summary>
+            Returns the correct filename to archive
+            </summary>
+        </member>
+        <member name="M:NLog.Targets.ConcurrentFileTarget.GetArchiveFileNameBasedOnFileSize(System.String,System.Int32,System.Boolean)">
+            <summary>
+            Gets the file name for archiving, or null if archiving should not occur based on file size.
+            </summary>
+            <param name="fileName">File name to be written.</param>
+            <param name="upcomingWriteSize">The size in bytes of the next chunk of data to be written in the file.</param>
+            <param name="initializedNewFile">File has just been opened.</param>
+            <returns>Filename to archive. If <c>null</c>, then nothing to archive.</returns>
+        </member>
+        <member name="M:NLog.Targets.ConcurrentFileTarget.TryFallbackToPreviousLogFileName(System.String,System.Boolean)">
+            <summary>
+            Check if archive operation should check previous filename, because FileAppenderCache tells us current filename no longer exists
+            </summary>
+        </member>
+        <member name="M:NLog.Targets.ConcurrentFileTarget.GetArchiveFileNameBasedOnTime(System.String,NLog.LogEventInfo,System.DateTime,System.Boolean)">
+            <summary>
+            Returns the file name for archiving, or null if archiving should not occur based on date/time.
+            </summary>
+            <param name="fileName">File name to be written.</param>
+            <param name="logEvent">Log event that the <see cref="T:NLog.Targets.ConcurrentFileTarget"/> instance is currently processing.</param>
+            <param name="previousLogEventTimestamp">The DateTime of the previous log event for this file.</param>
+            <param name="initializedNewFile">File has just been opened.</param>
+            <returns>Filename to archive. If <c>null</c>, then nothing to archive.</returns>
+        </member>
+        <member name="M:NLog.Targets.ConcurrentFileTarget.TruncateArchiveTime(System.DateTime,NLog.Targets.FileArchiveEveryPeriod)">
+            <summary>
+            Truncates the input-time, so comparison of low resolution times (like dates) are not affected by ticks
+            </summary>
+            <param name="input">High resolution Time</param>
+            <param name="resolution">Time Resolution Level</param>
+            <returns>Truncated Low Resolution Time</returns>
+        </member>
+        <member name="M:NLog.Targets.ConcurrentFileTarget.WriteToFile(System.String,System.ArraySegment{System.Byte},System.Boolean)">
+            <summary>
+            Evaluates which parts of a file should be written (header, content, footer) based on various properties of
+            <see cref="T:NLog.Targets.ConcurrentFileTarget"/> instance and writes them.
+            </summary>
+            <param name="fileName">File name to be written.</param>
+            <param name="bytes">Raw sequence of <see langword="byte"/> to be written into the content part of the file.</param>
+            <param name="initializedNewFile">File has just been opened.</param>
+        </member>
+        <member name="M:NLog.Targets.ConcurrentFileTarget.InitializeFile(System.String,NLog.LogEventInfo)">
+            <summary>
+            Initialize a file to be used by the <see cref="T:NLog.Targets.ConcurrentFileTarget"/> instance. Based on the number of initialized
+            files and the values of various instance properties clean up and/or archiving processes can be invoked.
+            </summary>
+            <param name="fileName">File name to be written.</param>
+            <param name="logEvent">Log event that the <see cref="T:NLog.Targets.ConcurrentFileTarget"/> instance is currently processing.</param>
+            <returns>The DateTime of the previous log event for this file (DateTime.MinValue if just initialized).</returns>
+        </member>
+        <member name="M:NLog.Targets.ConcurrentFileTarget.FinalizeFile(System.String,System.Boolean)">
+            <summary>
+            Writes the file footer and finalizes the file in <see cref="T:NLog.Targets.ConcurrentFileTarget"/> instance internal structures.
+            </summary>
+            <param name="fileName">File name to close.</param>
+            <param name="isArchiving">Indicates if the file is being finalized for archiving.</param>
+        </member>
+        <member name="M:NLog.Targets.ConcurrentFileTarget.WriteFooter(System.String)">
+            <summary>
+            Writes the footer information to a file.
+            </summary>
+            <param name="fileName">The file path to write to.</param>
+        </member>
+        <member name="M:NLog.Targets.ConcurrentFileTarget.ShouldArchiveOldFileOnStartup(System.String)">
+            <summary>
+            Decision logic whether to archive logfile on startup.
+            <see cref="P:NLog.Targets.ConcurrentFileTarget.ArchiveOldFileOnStartup"/> and <see cref="P:NLog.Targets.ConcurrentFileTarget.ArchiveOldFileOnStartupAboveSize"/> properties.
+            </summary>
+            <param name="fileName">File name to be written.</param>
+            <returns>Decision whether to archive or not.</returns>
+        </member>
+        <member name="M:NLog.Targets.ConcurrentFileTarget.PrepareForNewFile(System.String,NLog.LogEventInfo)">
+            <summary>
+            Invokes the archiving and clean up of older archive file based on the values of
+            <see cref="P:NLog.Targets.ConcurrentFileTarget.ArchiveOldFileOnStartup"/> and
+            <see cref="P:NLog.Targets.ConcurrentFileTarget.DeleteOldFileOnStartup"/> properties respectively.
+            </summary>
+            <param name="fileName">File name to be written.</param>
+            <param name="logEvent">Log event that the <see cref="T:NLog.Targets.ConcurrentFileTarget"/> instance is currently processing.</param>
+        </member>
+        <member name="M:NLog.Targets.ConcurrentFileTarget.ReplaceFileContent(System.String,System.ArraySegment{System.Byte},System.Boolean)">
+            <summary>
+            Creates the file specified in <paramref name="fileName"/> and writes the file content in each entirety i.e.
+            Header, Content and Footer.
+            </summary>
+            <param name="fileName">The name of the file to be written.</param>
+            <param name="bytes">Sequence of <see langword="byte"/> to be written in the content section of the file.</param>
+            <param name="firstAttempt">First attempt to write?</param>
+            <remarks>This method is used when the content of the log file is re-written on every write.</remarks>
+        </member>
+        <member name="M:NLog.Targets.ConcurrentFileTarget.WriteHeaderAndBom(NLog.Internal.FileAppenders.BaseFileAppender)">
+            <summary>
+            Writes the header information and byte order mark to a file.
+            </summary>
+            <param name="appender">File appender associated with the file.</param>
+        </member>
+        <member name="M:NLog.Targets.ConcurrentFileTarget.GetLayoutBytes(NLog.Layouts.Layout)">
+            <summary>
+            The sequence of <see langword="byte"/> to be written in a file after applying any formatting and any
+            transformations required from the <see cref="T:NLog.Layouts.Layout"/>.
+            </summary>
+            <param name="layout">The layout used to render output message.</param>
+            <returns>Sequence of <see langword="byte"/> to be written.</returns>
+            <remarks>Usually it is used to render the header and hooter of the files.</remarks>
+        </member>
+        <member name="T:NLog.Targets.FileArchiveEveryPeriod">
+            <summary>
+            Modes of archiving files based on time.
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.FileArchiveEveryPeriod.None">
+            <summary>
+            Don't archive based on time.
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.FileArchiveEveryPeriod.Year">
+            <summary>
+            Archive every new year.
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.FileArchiveEveryPeriod.Month">
+            <summary>
+            Archive every new month.
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.FileArchiveEveryPeriod.Day">
+            <summary>
+            Archive every new day.
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.FileArchiveEveryPeriod.Hour">
+            <summary>
+            Archive every new hour.
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.FileArchiveEveryPeriod.Minute">
+            <summary>
+            Archive every new minute.
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.FileArchiveEveryPeriod.Sunday">
+            <summary>
+            Archive every Sunday.
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.FileArchiveEveryPeriod.Monday">
+            <summary>
+            Archive every Monday.
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.FileArchiveEveryPeriod.Tuesday">
+            <summary>
+            Archive every Tuesday.
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.FileArchiveEveryPeriod.Wednesday">
+            <summary>
+            Archive every Wednesday.
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.FileArchiveEveryPeriod.Thursday">
+            <summary>
+            Archive every Thursday.
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.FileArchiveEveryPeriod.Friday">
+            <summary>
+            Archive every Friday.
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.FileArchiveEveryPeriod.Saturday">
+            <summary>
+            Archive every Saturday.
+            </summary>
+        </member>
+        <member name="M:NLog.Targets.FileArchiveModes.FileArchiveModeBase.AttemptCleanupOnInitializeFile(System.String,System.Int32,System.Int32)">
+             <summary>
+             Check if cleanup should be performed on initialize new file
+            
+             Skip cleanup when initializing new file, just after having performed archive operation
+             </summary>
+             <param name="archiveFilePath">Base archive file pattern</param>
+             <param name="maxArchiveFiles">Maximum number of archive files that should be kept</param>
+             <param name="maxArchiveDays">Maximum days of archive files that should be kept</param>
+             <returns>True, when archive cleanup is needed</returns>
+        </member>
+        <member name="F:NLog.Targets.FileArchiveModes.FileArchiveModeBase.FileNameTemplate.PatternStartCharacters">
+            <summary>
+            Characters determining the start of the <see cref="P:NLog.Targets.FileArchiveModes.FileArchiveModeBase.FileNameTemplate.Template"/>.
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.FileArchiveModes.FileArchiveModeBase.FileNameTemplate.PatternEndCharacters">
+            <summary>
+            Characters determining the end of the <see cref="P:NLog.Targets.FileArchiveModes.FileArchiveModeBase.FileNameTemplate.Template"/>.
+            </summary>
+        </member>
+        <member name="P:NLog.Targets.FileArchiveModes.FileArchiveModeBase.FileNameTemplate.Template">
+            <summary>
+            File name which is used as template for matching and replacements.
+            It is expected to contain a pattern to match.
+            </summary>
+        </member>
+        <member name="P:NLog.Targets.FileArchiveModes.FileArchiveModeBase.FileNameTemplate.BeginAt">
+            <summary>
+            The beginning position of the <see cref="F:NLog.Targets.FileArchiveModes.FileArchiveModeBase.FileNameTemplate.PatternStartCharacters"/>
+            within the <see cref="P:NLog.Targets.FileArchiveModes.FileArchiveModeBase.FileNameTemplate.Template"/>. -1 is returned
+            when no pattern can be found.
+            </summary>
+        </member>
+        <member name="P:NLog.Targets.FileArchiveModes.FileArchiveModeBase.FileNameTemplate.EndAt">
+            <summary>
+            The ending position of the <see cref="F:NLog.Targets.FileArchiveModes.FileArchiveModeBase.FileNameTemplate.PatternEndCharacters"/>
+            within the <see cref="P:NLog.Targets.FileArchiveModes.FileArchiveModeBase.FileNameTemplate.Template"/>. -1 is returned
+            when no pattern can be found.
+            </summary>
+        </member>
+        <member name="M:NLog.Targets.FileArchiveModes.FileArchiveModeBase.FileNameTemplate.ReplacePattern(System.String)">
+            <summary>
+            Replace the pattern with the specified String.
+            </summary>
+            <param name="replacementValue"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NLog.Targets.FileArchiveModes.FileArchiveModeDate">
+             <summary>
+             Archives the log-files using a date style numbering. Archives will be stamped with the
+             prior period (Year, Month, Day, Hour, Minute) datetime.
+            
+             When the number of archive files exceed <see cref="P:NLog.Targets.ConcurrentFileTarget.MaxArchiveFiles"/> the obsolete archives are deleted.
+             When the age of archive files exceed <see cref="P:NLog.Targets.ConcurrentFileTarget.MaxArchiveDays"/> the obsolete archives are deleted.
+             </summary>
+        </member>
+        <member name="T:NLog.Targets.FileArchiveModes.FileArchiveModeDateAndSequence">
+             <summary>
+             Archives the log-files using a date and sequence style numbering. Archives will be stamped
+             with the prior period (Year, Month, Day) datetime. The most recent archive has the highest number (in
+             combination with the date).
+            
+             When the number of archive files exceed <see cref="P:NLog.Targets.ConcurrentFileTarget.MaxArchiveFiles"/> the obsolete archives are deleted.
+             When the age of archive files exceed <see cref="P:NLog.Targets.ConcurrentFileTarget.MaxArchiveDays"/> the obsolete archives are deleted.
+             </summary>
+        </member>
+        <member name="M:NLog.Targets.FileArchiveModes.FileArchiveModeDateAndSequence.TryParseDateAndSequence(System.String,System.String,NLog.Targets.FileArchiveModes.FileArchiveModeBase.FileNameTemplate,System.DateTime@,System.Int32@)">
+            <summary>
+            Parse filename with date and sequence pattern
+            </summary>
+            <param name="archiveFileNameWithoutPath"></param>
+            <param name="dateFormat">dateformat for archive</param>
+            <param name="fileTemplate"></param>
+            <param name="date">the found pattern. When failed, then default</param>
+            <param name="sequence">the found pattern. When failed, then default</param>
+            <returns></returns>
+        </member>
+        <member name="T:NLog.Targets.FileArchiveModes.FileArchiveModeDynamicSequence">
+             <summary>
+             Archives the log-files using the provided base-archive-filename. If the base-archive-filename causes
+             duplicate archive filenames, then sequence-style is automatically enforced.
+            
+             Example:
+                 Base Filename     trace.log
+                 Next Filename     trace.0.log
+            
+             The most recent archive has the highest number.
+            
+             When the number of archive files exceed <see cref="P:NLog.Targets.ConcurrentFileTarget.MaxArchiveFiles"/> the obsolete archives are deleted.
+             When the age of archive files exceed <see cref="P:NLog.Targets.ConcurrentFileTarget.MaxArchiveDays"/> the obsolete archives are deleted.
+             </summary>
+        </member>
+        <member name="T:NLog.Targets.FileArchiveModes.FileArchiveModeDynamicTemplate">
+            <summary>
+            Dynamically converts a non-template archiveFilePath into a correct archiveFilePattern.
+            Before called the original IFileArchiveMode, that has been wrapped by this
+            </summary>
+        </member>
+        <member name="M:NLog.Targets.FileArchiveModes.FileArchiveModeFactory.ContainsFileNamePattern(System.String)">
+             <summary>
+             Determines if the file name as <see cref="T:System.String"/> contains a numeric pattern i.e. {#} in it.
+            
+             Example:
+                 trace{#}.log        Contains the numeric pattern.
+                 trace{###}.log      Contains the numeric pattern.
+                 trace{#X#}.log      Contains the numeric pattern (See remarks).
+                 trace.log           Does not contain the pattern.
+             </summary>
+             <remarks>Occasionally, this method can identify the existence of the {#} pattern incorrectly.</remarks>
+             <param name="fileName">File name to be checked.</param>
+             <returns><see langword="true"/> when the pattern is found; <see langword="false"/> otherwise.</returns>
+        </member>
+        <member name="T:NLog.Targets.FileArchiveModes.FileArchiveModeRolling">
+             <summary>
+             Archives the log-files using a rolling style numbering (the most recent is always #0 then
+             #1, ..., #N.
+            
+             When the number of archive files exceed <see cref="P:NLog.Targets.ConcurrentFileTarget.MaxArchiveFiles"/> the obsolete archives
+             are deleted.
+             </summary>
+        </member>
+        <member name="M:NLog.Targets.FileArchiveModes.FileArchiveModeRolling.ReplaceNumberPattern(System.String,System.Int32)">
+            <summary>
+            Replaces the numeric pattern i.e. {#} in a file name with the <paramref name="value"/> parameter value.
+            </summary>
+            <param name="pattern">File name which contains the numeric pattern.</param>
+            <param name="value">Value which will replace the numeric pattern.</param>
+            <returns>File name with the value of <paramref name="value"/> in the position of the numeric pattern.</returns>
+        </member>
+        <member name="T:NLog.Targets.FileArchiveModes.FileArchiveModeSequence">
+             <summary>
+             Archives the log-files using a sequence style numbering. The most recent archive has the highest number.
+            
+             When the number of archive files exceed <see cref="P:NLog.Targets.ConcurrentFileTarget.MaxArchiveFiles"/> the obsolete archives are deleted.
+             When the age of archive files exceed <see cref="P:NLog.Targets.ConcurrentFileTarget.MaxArchiveDays"/> the obsolete archives are deleted.
+             </summary>
+        </member>
+        <member name="M:NLog.Targets.IFileArchiveMode.AttemptCleanupOnInitializeFile(System.String,System.Int32,System.Int32)">
+            <summary>
+            Check if cleanup should be performed on initialize new file
+            </summary>
+            <param name="archiveFilePath">Base archive file pattern</param>
+            <param name="maxArchiveFiles">Maximum number of archive files that should be kept</param>
+            <param name="maxArchiveDays">Maximum days of archive files that should be kept</param>
+            <returns>True, when archive cleanup is needed</returns>
+        </member>
+        <member name="M:NLog.Targets.IFileArchiveMode.GenerateFileNameMask(System.String)">
+            <summary>
+            Create a wildcard file-mask that allows one to find all files belonging to the same archive.
+            </summary>
+            <param name="archiveFilePath">Base archive file pattern</param>
+            <returns>Wildcard file-mask</returns>
+        </member>
+        <member name="M:NLog.Targets.IFileArchiveMode.GetExistingArchiveFiles(System.String)">
+            <summary>
+            Search directory for all existing files that are part of the same archive.
+            </summary>
+            <param name="archiveFilePath">Base archive file pattern</param>
+            <returns></returns>
+        </member>
+        <member name="M:NLog.Targets.IFileArchiveMode.GenerateArchiveFileName(System.String,System.DateTime,System.Collections.Generic.List{NLog.Targets.DateAndSequenceArchive})">
+            <summary>
+            Generate the next archive filename for the archive.
+            </summary>
+            <param name="archiveFilePath">Base archive file pattern</param>
+            <param name="archiveDate">File date of archive</param>
+            <param name="existingArchiveFiles">Existing files in the same archive</param>
+            <returns></returns>
+        </member>
+        <member name="M:NLog.Targets.IFileArchiveMode.CheckArchiveCleanup(System.String,System.Collections.Generic.List{NLog.Targets.DateAndSequenceArchive},System.Int32,System.Int32)">
+            <summary>
+            Return all files that should be removed from the provided archive.
+            </summary>
+            <param name="archiveFilePath">Base archive file pattern</param>
+            <param name="existingArchiveFiles">Existing files in the same archive</param>
+            <param name="maxArchiveFiles">Maximum number of archive files that should be kept</param>
+            <param name="maxArchiveDays">Maximum days of archive files that should be kept</param>
+        </member>
+        <member name="T:NLog.Targets.FilePathKind">
+            <summary>
+            Type of filepath
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.FilePathKind.Unknown">
+            <summary>
+            Detect of relative or absolute
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.FilePathKind.Relative">
+            <summary>
+            Relative path
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.FilePathKind.Absolute">
+            <summary>
+            Absolute path
+            </summary>
+            <remarks>Best for performance</remarks>
+        </member>
+        <member name="T:NLog.Targets.IArchiveFileCompressor">
+            <summary>
+            <see cref="T:NLog.Targets.ConcurrentFileTarget"/> may be configured to compress archived files in a custom way
+            by setting <see cref="P:NLog.Targets.ConcurrentFileTarget.FileCompressor"/> before logging your first event.
+            </summary>
+        </member>
+        <member name="M:NLog.Targets.IArchiveFileCompressor.CompressFile(System.String,System.String,System.String)">
+            <summary>
+            Create archiveFileName by compressing fileName.
+            </summary>
+            <param name="fileName">Absolute path to the log file to compress.</param>
+            <param name="archiveFileName">Absolute path to the compressed archive file to create.</param>
+            <param name="entryName">The name of the file inside the archive.</param>
+        </member>
+        <member name="T:NLog.Targets.IFileCompressor">
+            <summary>
+            <see cref="T:NLog.Targets.ConcurrentFileTarget"/> may be configured to compress archived files in a custom way
+            by setting <see cref="P:NLog.Targets.ConcurrentFileTarget.FileCompressor"/> before logging your first event.
+            </summary>
+        </member>
+        <member name="M:NLog.Targets.IFileCompressor.CompressFile(System.String,System.String)">
+            <summary>
+            Create archiveFileName by compressing fileName.
+            </summary>
+            <param name="fileName">Absolute path to the log file to compress.</param>
+            <param name="archiveFileName">Absolute path to the compressed archive file to create.</param>
+        </member>
+        <member name="T:NLog.Targets.DateAndSequenceArchive">
+            <summary>
+            A descriptor for an archive created with the DateAndSequence numbering mode.
+            </summary>
+        </member>
+        <member name="P:NLog.Targets.DateAndSequenceArchive.FileName">
+            <summary>
+            The full name of the archive file.
+            </summary>
+        </member>
+        <member name="P:NLog.Targets.DateAndSequenceArchive.Date">
+            <summary>
+            The parsed date contained in the file name.
+            </summary>
+        </member>
+        <member name="P:NLog.Targets.DateAndSequenceArchive.Sequence">
+            <summary>
+            The parsed sequence number contained in the file name.
+            </summary>
+        </member>
+        <member name="M:NLog.Targets.DateAndSequenceArchive.HasSameFormattedDate(System.DateTime)">
+            <summary>
+            Determines whether <paramref name="date"/> produces the same string as the current instance's date once formatted with the current instance's date format.
+            </summary>
+            <param name="date">The date to compare the current object's date to.</param>
+            <returns><c>True</c> if the formatted dates are equal, otherwise <c>False</c>.</returns>
+        </member>
+        <member name="M:NLog.Targets.DateAndSequenceArchive.#ctor(System.String,System.DateTime,System.String,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.DateAndSequenceArchive"/> class.
+            </summary>
+        </member>
+        <member name="M:NLog.Targets.StringHelpers.IsNullOrWhiteSpace(System.String)">
+            <summary>
+            IsNullOrWhiteSpace, including for .NET 3.5
+            </summary>
+        </member>
+        <member name="M:NLog.Targets.StringHelpers.EqualTo(System.Text.StringBuilder,System.String)">
+            <summary>
+            Compares the contents of a StringBuilder and a String
+            </summary>
+            <returns>True when content is the same</returns>
+        </member>
+        <member name="T:NLog.Targets.ZipArchiveFileCompressor">
+            <summary>
+            Builtin IFileCompressor implementation utilizing the .Net4.5 specific <see cref="T:System.IO.Compression.ZipArchive"/>
+            and is used as the default value for <see cref="P:NLog.Targets.ConcurrentFileTarget.FileCompressor"/> on .Net4.5.
+            So log files created via <see cref="T:NLog.Targets.ConcurrentFileTarget"/> can be zipped when archived
+            w/o 3rd party zip library when run on .Net4.5 or higher.
+            </summary>
+        </member>
+        <member name="M:NLog.Targets.ZipArchiveFileCompressor.CompressFile(System.String,System.String)">
+            <summary>
+            Implements <see cref="M:NLog.Targets.IFileCompressor.CompressFile(System.String,System.String)"/> using the .Net4.5 specific <see cref="T:System.IO.Compression.ZipArchive"/>
+            </summary>
+        </member>
+        <member name="T:NLog.Targets.Win32FileAttributes">
+            <summary>
+            Win32 file attributes.
+            </summary>
+            <remarks>
+            For more information see <a href="https://msdn.microsoft.com/library/default.asp?url=/library/en-us/fileio/fs/createfile.asp">https://msdn.microsoft.com/library/default.asp?url=/library/en-us/fileio/fs/createfile.asp</a>.
+            </remarks>
+        </member>
+        <member name="F:NLog.Targets.Win32FileAttributes.ReadOnly">
+            <summary>
+            Read-only file.
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.Win32FileAttributes.Hidden">
+            <summary>
+            Hidden file.
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.Win32FileAttributes.System">
+            <summary>
+            System file.
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.Win32FileAttributes.Archive">
+            <summary>
+            File should be archived.
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.Win32FileAttributes.Device">
+            <summary>
+            Device file.
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.Win32FileAttributes.Normal">
+            <summary>
+            Normal file.
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.Win32FileAttributes.Temporary">
+            <summary>
+            File is temporary (should be kept in cache and not
+            written to disk if possible).
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.Win32FileAttributes.SparseFile">
+            <summary>
+            Sparse file.
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.Win32FileAttributes.ReparsePoint">
+            <summary>
+            Reparse point.
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.Win32FileAttributes.Compressed">
+            <summary>
+            Compress file contents.
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.Win32FileAttributes.NotContentIndexed">
+            <summary>
+            File should not be indexed by the content indexing service.
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.Win32FileAttributes.Encrypted">
+            <summary>
+            Encrypted file.
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.Win32FileAttributes.WriteThrough">
+            <summary>
+            The system writes through any intermediate cache and goes directly to disk.
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.Win32FileAttributes.NoBuffering">
+            <summary>
+            The system opens a file with no system caching.
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.Win32FileAttributes.DeleteOnClose">
+            <summary>
+            Delete file after it is closed.
+            </summary>
+        </member>
+        <member name="F:NLog.Targets.Win32FileAttributes.PosixSemantics">
+            <summary>
+            A file is accessed according to POSIX rules.
+            </summary>
+        </member>
+        <member name="T:NLog.Internal.FileAppenders.BaseFileAppender">
+            <summary>
+            Base class for optimized file appenders.
+            </summary>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.BaseFileAppender.#ctor(System.String,NLog.Internal.FileAppenders.ICreateFileParameters)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Internal.FileAppenders.BaseFileAppender" /> class.
+            </summary>
+            <param name="fileName">Name of the file.</param>
+            <param name="createParameters">The create parameters.</param>
+        </member>
+        <member name="P:NLog.Internal.FileAppenders.BaseFileAppender.FileName">
+            <summary>
+            Gets the path of the file, including file extension.
+            </summary>
+            <value>The name of the file.</value>
+        </member>
+        <member name="P:NLog.Internal.FileAppenders.BaseFileAppender.CreationTimeUtc">
+            <summary>
+            Gets or sets the creation time for a file associated with the appender. The time returned is in Coordinated
+            Universal Time [UTC] standard.
+            </summary>
+            <returns>The creation time of the file.</returns>
+        </member>
+        <member name="P:NLog.Internal.FileAppenders.BaseFileAppender.CreationTimeSource">
+            <summary>
+            Gets or sets the creation time for a file associated with the appender. Synchronized by <see cref="P:NLog.Internal.FileAppenders.BaseFileAppender.CreationTimeUtc"/>
+            The time format is based on <see cref="T:NLog.Time.TimeSource" />
+            </summary>
+        </member>
+        <member name="P:NLog.Internal.FileAppenders.BaseFileAppender.OpenTimeUtc">
+            <summary>
+            Gets the last time the file associated with the appender is opened. The time returned is in Coordinated
+            Universal Time [UTC] standard.
+            </summary>
+            <returns>The time the file was last opened.</returns>
+        </member>
+        <member name="P:NLog.Internal.FileAppenders.BaseFileAppender.CreateFileParameters">
+            <summary>
+            Gets the file creation parameters.
+            </summary>
+            <value>The file creation parameters.</value>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.BaseFileAppender.Write(System.Byte[])">
+            <summary>
+            Writes the specified bytes.
+            </summary>
+            <param name="bytes">The bytes.</param>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.BaseFileAppender.Write(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Writes the specified bytes to a file.
+            </summary>
+            <param name="bytes">The bytes array.</param>
+            <param name="offset">The bytes array offset.</param>
+            <param name="count">The number of bytes.</param>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.BaseFileAppender.Flush">
+            <summary>
+            Flushes this file-appender instance.
+            </summary>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.BaseFileAppender.Close">
+            <summary>
+            Closes this file-appender instance.
+            </summary>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.BaseFileAppender.GetFileCreationTimeUtc">
+            <summary>
+            Gets the creation time for a file associated with the appender. The time returned is in Coordinated Universal
+            Time [UTC] standard.
+            </summary>
+            <returns>The file creation time.</returns>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.BaseFileAppender.GetFileLength">
+            <summary>
+            Gets the length in bytes of the file associated with the appender.
+            </summary>
+            <returns>A long value representing the length of the file in bytes.</returns>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.BaseFileAppender.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.BaseFileAppender.Dispose(System.Boolean)">
+            <summary>
+            Releases unmanaged and - optionally - managed resources.
+            </summary>
+            <param name="disposing">True to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.BaseFileAppender.CreateFileStream(System.Boolean,System.Int32)">
+            <summary>
+            Creates the file stream.
+            </summary>
+            <param name="allowFileSharedWriting">If set to <c>true</c> sets the file stream to allow shared writing.</param>
+            <param name="overrideBufferSize">If larger than 0 then it will be used instead of the default BufferSize for the FileStream.</param>
+            <returns>A <see cref="T:System.IO.FileStream"/> object which can be used to write to the file.</returns>
+        </member>
+        <member name="T:NLog.Internal.FileAppenders.BaseMutexFileAppender">
+             <summary>
+             Base class for optimized file appenders which require the usage of a mutex.
+            
+             It is possible to use this class as replacement of BaseFileAppender and the mutex functionality
+             is not enforced to the implementing subclasses.
+             </summary>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.BaseMutexFileAppender.#ctor(System.String,NLog.Internal.FileAppenders.ICreateFileParameters)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Internal.FileAppenders.BaseMutexFileAppender" /> class.
+            </summary>
+            <param name="fileName">Name of the file.</param>
+            <param name="createParameters">The create parameters.</param>
+        </member>
+        <member name="P:NLog.Internal.FileAppenders.BaseMutexFileAppender.ArchiveMutex">
+            <summary>
+            Gets the mutually-exclusive lock for archiving files.
+            </summary>
+            <value>The mutex for archiving.</value>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.BaseMutexFileAppender.Dispose(System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.BaseMutexFileAppender.CreateSharableMutex(System.String)">
+            <summary>
+            Creates a mutex that is sharable by more than one process.
+            </summary>
+            <param name="mutexNamePrefix">The prefix to use for the name of the mutex.</param>
+            <returns>A <see cref="T:System.Threading.Mutex"/> object which is sharable by multiple processes.</returns>
+        </member>
+        <member name="T:NLog.Internal.FileAppenders.CountingSingleProcessFileAppender">
+            <summary>
+            Implementation of <see cref="T:NLog.Internal.FileAppenders.BaseFileAppender"/> which caches
+            file information.
+            </summary>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.CountingSingleProcessFileAppender.#ctor(System.String,NLog.Internal.FileAppenders.ICreateFileParameters)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Internal.FileAppenders.CountingSingleProcessFileAppender" /> class.
+            </summary>
+            <param name="fileName">Name of the file.</param>
+            <param name="parameters">The parameters.</param>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.CountingSingleProcessFileAppender.Close">
+            <inheritdoc/>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.CountingSingleProcessFileAppender.Flush">
+            <inheritdoc/>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.CountingSingleProcessFileAppender.GetFileCreationTimeUtc">
+            <inheritdoc/>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.CountingSingleProcessFileAppender.GetFileLength">
+            <inheritdoc/>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.CountingSingleProcessFileAppender.Write(System.Byte[],System.Int32,System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="T:NLog.Internal.FileAppenders.CountingSingleProcessFileAppender.Factory">
+            <summary>
+            Factory class which creates <see cref="T:NLog.Internal.FileAppenders.CountingSingleProcessFileAppender"/> objects.
+            </summary>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.CountingSingleProcessFileAppender.Factory.NLog#Internal#FileAppenders#IFileAppenderFactory#Open(System.String,NLog.Internal.FileAppenders.ICreateFileParameters)">
+            <inheritdoc/>
+        </member>
+        <member name="T:NLog.Internal.FileAppenders.FileAppenderCache">
+            <summary>
+            Maintains a collection of file appenders usually associated with file targets.
+            </summary>
+        </member>
+        <member name="F:NLog.Internal.FileAppenders.FileAppenderCache.Empty">
+            <summary>
+            An "empty" instance of the <see cref="T:NLog.Internal.FileAppenders.FileAppenderCache"/> class with zero size and empty list of appenders.
+            </summary>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.FileAppenderCache.#ctor">
+            <summary>
+            Initializes a new "empty" instance of the <see cref="T:NLog.Internal.FileAppenders.FileAppenderCache"/> class with zero size and empty
+            list of appenders.
+            </summary>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.FileAppenderCache.#ctor(System.Int32,NLog.Internal.FileAppenders.IFileAppenderFactory,NLog.Internal.FileAppenders.ICreateFileParameters)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Internal.FileAppenders.FileAppenderCache"/> class.
+            </summary>
+            <remarks>
+            The size of the list should be positive. No validations are performed during initialization as it is an
+            internal class.
+            </remarks>
+            <param name="size">Total number of appenders allowed in list.</param>
+            <param name="appenderFactory">Factory used to create each appender.</param>
+            <param name="createFileParams">Parameters used for creating a file.</param>
+        </member>
+        <member name="P:NLog.Internal.FileAppenders.FileAppenderCache.ArchiveFilePatternToWatch">
+            <summary>
+            The archive file path pattern that is used to detect when archiving occurs.
+            </summary>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.FileAppenderCache.InvalidateAppendersForArchivedFiles">
+            <summary>
+            Invalidates appenders for all files that were archived.
+            </summary>
+        </member>
+        <member name="P:NLog.Internal.FileAppenders.FileAppenderCache.CreateFileParameters">
+            <summary>
+            Gets the parameters which will be used for creating a file.
+            </summary>
+        </member>
+        <member name="P:NLog.Internal.FileAppenders.FileAppenderCache.Factory">
+            <summary>
+            Gets the file appender factory used by all the appenders in this list.
+            </summary>
+        </member>
+        <member name="P:NLog.Internal.FileAppenders.FileAppenderCache.Size">
+            <summary>
+            Gets the number of appenders which the list can hold.
+            </summary>
+        </member>
+        <member name="E:NLog.Internal.FileAppenders.FileAppenderCache.CheckCloseAppenders">
+            <summary>
+            Subscribe to background monitoring of active file appenders
+            </summary>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.FileAppenderCache.AllocateAppender(System.String)">
+            <summary>
+            It allocates the first slot in the list when the file name does not already in the list and clean up any
+            unused slots.
+            </summary>
+            <param name="fileName">File name associated with a single appender.</param>
+            <returns>The allocated appender.</returns>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.FileAppenderCache.CloseAppenders(System.String)">
+            <summary>
+            Close all the allocated appenders.
+            </summary>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.FileAppenderCache.CloseExpiredAppenders(System.DateTime)">
+            <summary>
+            Close the allocated appenders initialized before the supplied time.
+            </summary>
+            <param name="expireTimeUtc">The time which prior the appenders considered expired</param>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.FileAppenderCache.FlushAppenders">
+            <summary>
+            Flush all the allocated appenders.
+            </summary>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.FileAppenderCache.GetFileLastWriteTimeUtc(System.String)">
+            <summary>
+            File Archive Logic uses the File-Creation-TimeStamp to detect if time to archive, and the File-LastWrite-Timestamp to name the archive-file.
+            </summary>
+            <remarks>
+            NLog always closes all relevant appenders during archive operation, so no need to lookup file-appender
+            </remarks>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.FileAppenderCache.InvalidateAppender(System.String)">
+            <summary>
+            Closes the specified appender and removes it from the list.
+            </summary>
+            <param name="filePath">File name of the appender to be closed.</param>
+            <returns>File Appender that matched the filePath (null if none found)</returns>
+        </member>
+        <member name="T:NLog.Internal.FileAppenders.ICreateFileParameters">
+            <summary>
+            Interface that provides parameters for create file function.
+            </summary>
+        </member>
+        <member name="P:NLog.Internal.FileAppenders.ICreateFileParameters.FileOpenRetryCount">
+            <summary>
+            Gets or sets the number of times the write is attempted on the file before NLog
+            discards the log message.
+            </summary>
+        </member>
+        <member name="P:NLog.Internal.FileAppenders.ICreateFileParameters.FileOpenRetryDelay">
+            <summary>
+            Gets or sets the delay in milliseconds to wait before attempting to write to the file again.
+            </summary>
+        </member>
+        <member name="P:NLog.Internal.FileAppenders.ICreateFileParameters.ConcurrentWrites">
+            <summary>
+            Gets or sets a value indicating whether concurrent writes to the log file by multiple processes on the same host.
+            </summary>
+            <remarks>
+            This makes multi-process logging possible. NLog uses a special technique
+            that lets it keep the files open for writing.
+            </remarks>
+        </member>
+        <member name="P:NLog.Internal.FileAppenders.ICreateFileParameters.CreateDirs">
+            <summary>
+            Gets or sets a value indicating whether to create directories if they do not exist.
+            </summary>
+            <remarks>
+            Setting this to false may improve performance a bit, but you'll receive an error
+            when attempting to write to a directory that's not present.
+            </remarks>
+        </member>
+        <member name="P:NLog.Internal.FileAppenders.ICreateFileParameters.EnableFileDelete">
+            <summary>
+            Gets or sets a value indicating whether to enable log file(s) to be deleted.
+            </summary>
+        </member>
+        <member name="P:NLog.Internal.FileAppenders.ICreateFileParameters.BufferSize">
+            <summary>
+            Gets or sets the log file buffer size in bytes.
+            </summary>
+        </member>
+        <member name="P:NLog.Internal.FileAppenders.ICreateFileParameters.ForceManaged">
+            <summary>
+            Gets or set a value indicating whether a managed file stream is forced, instead of using the native implementation.
+            </summary>
+        </member>
+        <member name="P:NLog.Internal.FileAppenders.ICreateFileParameters.FileAttributes">
+            <summary>
+            Gets or sets the file attributes (Windows only).
+            </summary>
+        </member>
+        <member name="P:NLog.Internal.FileAppenders.ICreateFileParameters.IsArchivingEnabled">
+            <summary>
+            Should archive mutex be created?
+            </summary>
+        </member>
+        <member name="P:NLog.Internal.FileAppenders.ICreateFileParameters.EnableFileDeleteSimpleMonitor">
+            <summary>
+            Should manual simple detection of file deletion be enabled?
+            </summary>
+        </member>
+        <member name="P:NLog.Internal.FileAppenders.IFileAppenderCache.CreateFileParameters">
+            <summary>
+            Gets the parameters which will be used for creating a file.
+            </summary>
+        </member>
+        <member name="P:NLog.Internal.FileAppenders.IFileAppenderCache.Factory">
+            <summary>
+            Gets the file appender factory used by all the appenders in this list.
+            </summary>
+        </member>
+        <member name="P:NLog.Internal.FileAppenders.IFileAppenderCache.Size">
+            <summary>
+            Gets the number of appenders which the list can hold.
+            </summary>
+        </member>
+        <member name="E:NLog.Internal.FileAppenders.IFileAppenderCache.CheckCloseAppenders">
+            <summary>
+            Subscribe to background monitoring of active file appenders
+            </summary>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.IFileAppenderCache.AllocateAppender(System.String)">
+            <summary>
+            It allocates the first slot in the list when the file name does not already in the list and clean up any
+            unused slots.
+            </summary>
+            <param name="fileName">File name associated with a single appender.</param>
+            <returns>The allocated appender.</returns>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.IFileAppenderCache.CloseAppenders(System.String)">
+            <summary>
+            Close all the allocated appenders.
+            </summary>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.IFileAppenderCache.CloseExpiredAppenders(System.DateTime)">
+            <summary>
+            Close the allocated appenders initialized before the supplied time.
+            </summary>
+            <param name="expireTimeUtc">The time which prior the appenders considered expired</param>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.IFileAppenderCache.FlushAppenders">
+            <summary>
+            Flush all the allocated appenders.
+            </summary>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.IFileAppenderCache.GetFileLastWriteTimeUtc(System.String)">
+            <summary>
+            File Archive Logic uses the File-Creation-TimeStamp to detect if time to archive, and the File-LastWrite-Timestamp to name the archive-file.
+            </summary>
+            <remarks>
+            NLog always closes all relevant appenders during archive operation, so no need to lookup file-appender
+            </remarks>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.IFileAppenderCache.InvalidateAppender(System.String)">
+            <summary>
+            Closes the specified appender and removes it from the list.
+            </summary>
+            <param name="filePath">File name of the appender to be closed.</param>
+            <returns>File Appender that matched the filePath (null if none found)</returns>
+        </member>
+        <member name="P:NLog.Internal.FileAppenders.IFileAppenderCache.ArchiveFilePatternToWatch">
+            <summary>
+            The archive file path pattern that is used to detect when archiving occurs.
+            </summary>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.IFileAppenderCache.InvalidateAppendersForArchivedFiles">
+            <summary>
+            Invalidates appenders for all files that were archived.
+            </summary>
+        </member>
+        <member name="T:NLog.Internal.FileAppenders.IFileAppenderFactory">
+            <summary>
+            Interface implemented by all factories capable of creating file appenders.
+            </summary>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.IFileAppenderFactory.Open(System.String,NLog.Internal.FileAppenders.ICreateFileParameters)">
+            <summary>
+            Opens the appender for given file name and parameters.
+            </summary>
+            <param name="fileName">Name of the file.</param>
+            <param name="parameters">Creation parameters.</param>
+            <returns>Instance of <see cref="T:NLog.Internal.FileAppenders.BaseFileAppender"/> which can be used to write to the file.</returns>
+        </member>
+        <member name="T:NLog.Internal.FileAppenders.MutexMultiProcessFileAppender">
+            <summary>
+            Provides a multi process-safe atomic file appends while
+            keeping the files open.
+            </summary>
+            <remarks>
+            On Unix you can get all the appends to be atomic, even when multiple
+            processes are trying to write to the same file, because setting the file
+            pointer to the end of the file and appending can be made one operation.
+            On Win32 we need to maintain some synchronization between processes
+            (global named mutex is used for this)
+            </remarks>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.MutexMultiProcessFileAppender.#ctor(System.String,NLog.Internal.FileAppenders.ICreateFileParameters)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Internal.FileAppenders.MutexMultiProcessFileAppender" /> class.
+            </summary>
+            <param name="fileName">Name of the file.</param>
+            <param name="parameters">The parameters.</param>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.MutexMultiProcessFileAppender.Write(System.Byte[],System.Int32,System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.MutexMultiProcessFileAppender.Close">
+            <inheritdoc/>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.MutexMultiProcessFileAppender.Flush">
+            <inheritdoc/>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.MutexMultiProcessFileAppender.GetFileCreationTimeUtc">
+            <inheritdoc/>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.MutexMultiProcessFileAppender.GetFileLength">
+            <inheritdoc/>
+        </member>
+        <member name="T:NLog.Internal.FileAppenders.MutexMultiProcessFileAppender.Factory">
+            <summary>
+            Factory class.
+            </summary>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.MutexMultiProcessFileAppender.Factory.NLog#Internal#FileAppenders#IFileAppenderFactory#Open(System.String,NLog.Internal.FileAppenders.ICreateFileParameters)">
+            <inheritdoc/>
+        </member>
+        <member name="T:NLog.Internal.FileAppenders.NullAppender">
+            <summary>
+            Appender used to discard data for the FileTarget.
+            Used mostly for testing entire stack except the actual writing to disk.
+            Throws away all data.
+            </summary>
+        </member>
+        <member name="T:NLog.Internal.FileAppenders.NullAppender.Factory">
+            <summary>
+            Factory class.
+            </summary>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.NullAppender.Factory.NLog#Internal#FileAppenders#IFileAppenderFactory#Open(System.String,NLog.Internal.FileAppenders.ICreateFileParameters)">
+            <inheritdoc/>
+        </member>
+        <member name="T:NLog.Internal.FileAppenders.RetryingMultiProcessFileAppender">
+            <summary>
+            Multi-process and multi-host file appender which attempts
+            to get exclusive write access and retries if it's not available.
+            </summary>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.RetryingMultiProcessFileAppender.#ctor(System.String,NLog.Internal.FileAppenders.ICreateFileParameters)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Internal.FileAppenders.RetryingMultiProcessFileAppender" /> class.
+            </summary>
+            <param name="fileName">Name of the file.</param>
+            <param name="parameters">The parameters.</param>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.RetryingMultiProcessFileAppender.Write(System.Byte[],System.Int32,System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.RetryingMultiProcessFileAppender.Flush">
+            <inheritdoc/>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.RetryingMultiProcessFileAppender.Close">
+            <inheritdoc/>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.RetryingMultiProcessFileAppender.GetFileCreationTimeUtc">
+            <inheritdoc/>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.RetryingMultiProcessFileAppender.GetFileLength">
+            <inheritdoc/>
+        </member>
+        <member name="T:NLog.Internal.FileAppenders.RetryingMultiProcessFileAppender.Factory">
+            <summary>
+            Factory class.
+            </summary>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.RetryingMultiProcessFileAppender.Factory.NLog#Internal#FileAppenders#IFileAppenderFactory#Open(System.String,NLog.Internal.FileAppenders.ICreateFileParameters)">
+            <inheritdoc/>
+        </member>
+        <member name="T:NLog.Internal.FileAppenders.SingleProcessFileAppender">
+            <summary>
+            Optimized single-process file appender which keeps the file open for exclusive write.
+            </summary>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.SingleProcessFileAppender.#ctor(System.String,NLog.Internal.FileAppenders.ICreateFileParameters)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Internal.FileAppenders.SingleProcessFileAppender" /> class.
+            </summary>
+            <param name="fileName">Name of the file.</param>
+            <param name="parameters">The parameters.</param>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.SingleProcessFileAppender.Write(System.Byte[],System.Int32,System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.SingleProcessFileAppender.Flush">
+            <inheritdoc/>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.SingleProcessFileAppender.Close">
+            <inheritdoc/>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.SingleProcessFileAppender.GetFileCreationTimeUtc">
+            <inheritdoc/>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.SingleProcessFileAppender.GetFileLength">
+            <inheritdoc/>
+        </member>
+        <member name="T:NLog.Internal.FileAppenders.SingleProcessFileAppender.Factory">
+            <summary>
+            Factory class.
+            </summary>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.SingleProcessFileAppender.Factory.NLog#Internal#FileAppenders#IFileAppenderFactory#Open(System.String,NLog.Internal.FileAppenders.ICreateFileParameters)">
+            <inheritdoc/>
+        </member>
+        <member name="T:NLog.Internal.FileAppenders.WindowsMultiProcessFileAppender">
+            <summary>
+            Provides a multi process-safe atomic file append while
+            keeping the files open.
+            </summary>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.WindowsMultiProcessFileAppender.#ctor(System.String,NLog.Internal.FileAppenders.ICreateFileParameters)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Internal.FileAppenders.WindowsMultiProcessFileAppender" /> class.
+            </summary>
+            <param name="fileName">Name of the file.</param>
+            <param name="parameters">The parameters.</param>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.WindowsMultiProcessFileAppender.CreateAppendOnlyFile(System.String)">
+            <summary>
+            Creates or opens a file in a special mode, so that writes are automatically
+            as atomic writes at the file end.
+            See also "UnixMultiProcessFileAppender" which does a similar job on *nix platforms.
+            </summary>
+            <param name="fileName">File to create or open</param>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.WindowsMultiProcessFileAppender.Write(System.Byte[],System.Int32,System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.WindowsMultiProcessFileAppender.Close">
+            <inheritdoc/>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.WindowsMultiProcessFileAppender.Flush">
+            <inheritdoc/>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.WindowsMultiProcessFileAppender.GetFileCreationTimeUtc">
+            <inheritdoc/>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.WindowsMultiProcessFileAppender.GetFileLength">
+            <inheritdoc/>
+        </member>
+        <member name="T:NLog.Internal.FileAppenders.WindowsMultiProcessFileAppender.Factory">
+            <summary>
+            Factory class.
+            </summary>
+        </member>
+        <member name="M:NLog.Internal.FileAppenders.WindowsMultiProcessFileAppender.Factory.NLog#Internal#FileAppenders#IFileAppenderFactory#Open(System.String,NLog.Internal.FileAppenders.ICreateFileParameters)">
+            <inheritdoc/>
+        </member>
+        <member name="T:NLog.Internal.FilePathLayout">
+            <summary>
+            A layout that represents a filePath.
+            </summary>
+        </member>
+        <member name="F:NLog.Internal.FilePathLayout.DirectorySeparatorChars">
+            <summary>
+            Cached directory separator char array to avoid memory allocation on each method call.
+            </summary>
+        </member>
+        <member name="F:NLog.Internal.FilePathLayout.InvalidFileNameChars">
+            <summary>
+            Cached invalid file names char array to avoid memory allocation every time Path.GetInvalidFileNameChars() is called.
+            </summary>
+        </member>
+        <member name="F:NLog.Internal.FilePathLayout._baseDir">
+            <summary>
+            not null when <see cref="F:NLog.Internal.FilePathLayout._filePathKind"/> == <c>false</c>
+            </summary>
+        </member>
+        <member name="F:NLog.Internal.FilePathLayout._cleanedFixedResult">
+            <summary>
+            non null is fixed,
+            </summary>
+        </member>
+        <member name="F:NLog.Internal.FilePathLayout._cachedPrevRawFileName">
+            <summary>
+            <see cref="F:NLog.Internal.FilePathLayout._cachedPrevRawFileName"/> is the cache-key, and when newly rendered filename matches the cache-key,
+            then it reuses the cleaned cache-value <see cref="F:NLog.Internal.FilePathLayout._cachedPrevCleanFileName"/>.
+            </summary>
+        </member>
+        <member name="F:NLog.Internal.FilePathLayout._cachedPrevCleanFileName">
+            <summary>
+            <see cref="F:NLog.Internal.FilePathLayout._cachedPrevCleanFileName"/> is the cache-value that is reused, when the newly rendered filename
+            matches the cache-key <see cref="F:NLog.Internal.FilePathLayout._cachedPrevRawFileName"/>
+            </summary>
+        </member>
+        <member name="M:NLog.Internal.FilePathLayout.#ctor(NLog.Layouts.Layout,System.Boolean,NLog.Targets.FilePathKind)">
+            <summary>Initializes a new instance of the <see cref="T:NLog.Internal.FilePathLayout" /> class.</summary>
+        </member>
+        <member name="M:NLog.Internal.FilePathLayout.GetRenderedFileName(NLog.LogEventInfo,System.Text.StringBuilder)">
+            <summary>
+            Render the raw filename from Layout
+            </summary>
+            <param name="logEvent">The log event.</param>
+            <param name="reusableBuilder">StringBuilder to minimize allocations [optional].</param>
+            <returns>String representation of a layout.</returns>
+        </member>
+        <member name="M:NLog.Internal.FilePathLayout.GetCleanFileName(System.String)">
+            <summary>
+            Convert the raw filename to a correct filename
+            </summary>
+            <param name="rawFileName">The filename generated by Layout.</param>
+            <returns>String representation of a correct filename.</returns>
+        </member>
+        <member name="M:NLog.Internal.FilePathLayout.DetectFilePathKind(NLog.Layouts.SimpleLayout)">
+            <summary>
+            Is this (templated/invalid) path an absolute, relative or unknown?
+            </summary>
+        </member>
+        <member name="T:NLog.Internal.MultiFileWatcher">
+            <summary>
+            Watches multiple files at the same time and raises an event whenever
+            a single change is detected in any of those files.
+            </summary>
+        </member>
+        <member name="P:NLog.Internal.MultiFileWatcher.NotifyFilters">
+            <summary>
+            The types of changes to watch for.
+            </summary>
+        </member>
+        <member name="E:NLog.Internal.MultiFileWatcher.FileChanged">
+            <summary>
+            Occurs when a change is detected in one of the monitored files.
+            </summary>
+        </member>
+        <member name="M:NLog.Internal.MultiFileWatcher.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:NLog.Internal.MultiFileWatcher.StopWatching">
+            <summary>
+            Stops watching all files.
+            </summary>
+        </member>
+        <member name="M:NLog.Internal.MultiFileWatcher.StopWatching(System.String)">
+            <summary>
+            Stops watching the specified file.
+            </summary>
+            <param name="fileName"></param>
+        </member>
+        <member name="T:NLog.Internal.MutexDetector">
+            <summary>
+            Detects the platform the NLog is running on.
+            </summary>
+        </member>
+        <member name="P:NLog.Internal.MutexDetector.SupportsSharableMutex">
+            <summary>
+            Gets a value indicating whether current runtime supports use of mutex
+            </summary>
+        </member>
+        <member name="M:NLog.Internal.MutexDetector.ResolveSupportsSharableMutex">
+            <summary>
+            Will creating a mutex succeed runtime?
+            </summary>
+        </member>
+        <member name="T:NLog.Internal.PlatformDetector">
+            <summary>
+            Detects the platform the NLog is running on.
+            </summary>
+        </member>
+        <member name="P:NLog.Internal.PlatformDetector.CurrentOS">
+            <summary>
+            Gets the current runtime OS.
+            </summary>
+        </member>
+        <member name="P:NLog.Internal.PlatformDetector.IsWin32">
+            <summary>
+            Gets a value indicating whether current OS is Win32-based (desktop or mobile).
+            </summary>
+        </member>
+        <member name="P:NLog.Internal.PlatformDetector.IsUnix">
+            <summary>
+            Gets a value indicating whether current OS is Unix-based.
+            </summary>
+        </member>
+        <member name="P:NLog.Internal.PlatformDetector.IsMono">
+            <summary>
+            Gets a value indicating whether current runtime is Mono-based
+            </summary>
+        </member>
+        <member name="T:NLog.Internal.PlatformSystem">
+            <summary>
+            Supported operating systems.
+            </summary>
+            <remarks>
+            If you add anything here, make sure to add the appropriate detection
+            code to <see cref="T:NLog.Internal.PlatformDetector"/>
+            </remarks>
+        </member>
+        <member name="F:NLog.Internal.PlatformSystem.Unknown">
+            <summary>
+            Unknown operating system.
+            </summary>
+        </member>
+        <member name="F:NLog.Internal.PlatformSystem.Linux">
+            <summary>
+            Unix/Linux operating systems.
+            </summary>
+        </member>
+        <member name="F:NLog.Internal.PlatformSystem.Windows9x">
+            <summary>
+            Desktop versions of Windows (95,98,ME).
+            </summary>
+        </member>
+        <member name="F:NLog.Internal.PlatformSystem.WindowsNT">
+            <summary>
+            Windows NT, 2000, 2003 and future versions based on NT technology.
+            </summary>
+        </member>
+        <member name="F:NLog.Internal.PlatformSystem.MacOSX">
+            <summary>
+            Macintosh Mac OSX
+            </summary>
+        </member>
+        <member name="T:NLog.Internal.ReusableBufferCreator">
+            <summary>
+            Controls a single allocated char[]-buffer for reuse (only one active user)
+            </summary>
+        </member>
+        <member name="T:NLog.Internal.ReusableBuilderCreator">
+            <summary>
+            Controls a single allocated StringBuilder for reuse (only one active user)
+            </summary>
+        </member>
+        <member name="T:NLog.Internal.ReusableObjectCreator`1">
+            <summary>
+            Controls a single allocated object for reuse (only one active user)
+            </summary>
+        </member>
+        <member name="M:NLog.Internal.ReusableObjectCreator`1.Allocate">
+            <summary>
+            Creates handle to the reusable char[]-buffer for active usage
+            </summary>
+            <returns>Handle to the reusable item, that can release it again</returns>
+        </member>
+        <member name="F:NLog.Internal.ReusableObjectCreator`1.LockOject.Result">
+            <summary>
+            Access the acquired reusable object
+            </summary>
+        </member>
+        <member name="T:NLog.Internal.ReusableStreamCreator">
+            <summary>
+            Controls a single allocated MemoryStream for reuse (only one active user)
+            </summary>
+        </member>
+        <member name="T:NLog.Internal.SortHelpers">
+            <summary>
+            Provides helpers to sort log events and associated continuations.
+            </summary>
+        </member>
+        <member name="T:NLog.Internal.SortHelpers.KeySelector`2">
+            <summary>
+            Key selector delegate.
+            </summary>
+            <typeparam name="TValue">The type of the value.</typeparam>
+            <typeparam name="TKey">The type of the key.</typeparam>
+            <param name="value">Value to extract key information from.</param>
+            <returns>Key selected from log event.</returns>
+        </member>
+        <member name="M:NLog.Internal.SortHelpers.BucketSort``2(System.Collections.Generic.IList{``0},NLog.Internal.SortHelpers.KeySelector{``0,``1})">
+            <summary>
+            Performs bucket sort (group by) on an array of items and returns a dictionary for easy traversal of the result set.
+            </summary>
+            <typeparam name="TValue">The type of the value.</typeparam>
+            <typeparam name="TKey">The type of the key.</typeparam>
+            <param name="inputs">The inputs.</param>
+            <param name="keySelector">The key selector function.</param>
+            <returns>
+            Dictionary where keys are unique input keys, and values are lists of <see cref="T:NLog.Common.AsyncLogEventInfo"/>.
+            </returns>
+        </member>
+        <member name="M:NLog.Internal.SortHelpers.BucketSort``2(System.Collections.Generic.IList{``0},NLog.Internal.SortHelpers.KeySelector{``0,``1},System.Collections.Generic.IEqualityComparer{``1})">
+            <summary>
+            Performs bucket sort (group by) on an array of items and returns a dictionary for easy traversal of the result set.
+            </summary>
+            <typeparam name="TValue">The type of the value.</typeparam>
+            <typeparam name="TKey">The type of the key.</typeparam>
+            <param name="inputs">The inputs.</param>
+            <param name="keySelector">The key selector function.</param>
+            <param name="keyComparer">The key comparer function.</param>
+            <returns>
+            Dictionary where keys are unique input keys, and values are lists of <see cref="T:NLog.Common.AsyncLogEventInfo"/>.
+            </returns>
+        </member>
+        <member name="T:NLog.Internal.SortHelpers.ReadOnlySingleBucketGroupBy`2">
+             <summary>
+             Single-Bucket optimized readonly dictionary. Uses normal internally Dictionary if multiple buckets are needed.
+            
+             Avoids allocating a new dictionary, when all items are using the same bucket
+             </summary>
+             <typeparam name="TKey">The type of the key.</typeparam>
+             <typeparam name="TValue">The type of the value.</typeparam>
+        </member>
+        <member name="P:NLog.Internal.SortHelpers.ReadOnlySingleBucketGroupBy`2.Count">
+            <inheritDoc/>
+        </member>
+        <member name="T:NLog.Internal.SortHelpers.ReadOnlySingleBucketGroupBy`2.Enumerator">
+            <summary>
+            Non-Allocating struct-enumerator
+            </summary>
+        </member>
+        <member name="M:NLog.Internal.SortHelpers.ReadOnlySingleBucketGroupBy`2.System#Collections#Generic#IEnumerable{System#Collections#Generic#KeyValuePair{TKey,TValue}}#GetEnumerator">
+            <inheritDoc/>
+        </member>
+        <member name="M:NLog.Internal.SortHelpers.ReadOnlySingleBucketGroupBy`2.System#Collections#IEnumerable#GetEnumerator">
+            <inheritDoc/>
+        </member>
+        <member name="T:NLog.Internal.StreamHelpers">
+            <summary>
+            Stream helpers
+            </summary>
+        </member>
+        <member name="F:NLog.Internal.StreamHelpers.Utf8BOM">
+            <summary>
+            UTF-8 Byte Order Mark (BOM) bytes: EF BB BF (239, 187, 191).
+            </summary>
+        </member>
+        <member name="M:NLog.Internal.StreamHelpers.CopyAndSkipBom(System.IO.Stream,System.IO.Stream,System.Text.Encoding)">
+            <summary>
+            Copy to output stream and skip BOM if encoding is UTF8
+            </summary>
+            <param name="input"></param>
+            <param name="output"></param>
+            <param name="encoding"></param>
+        </member>
+        <member name="M:NLog.Internal.StreamHelpers.Copy(System.IO.Stream,System.IO.Stream)">
+            <summary>
+            Copy stream input to output. Skip the first bytes
+            </summary>
+            <param name="input">stream to read from</param>
+            <param name="output">stream to write to</param>
+            <remarks>.net35 doesn't have a .copyto</remarks>
+        </member>
+        <member name="M:NLog.Internal.StreamHelpers.CopyWithOffset(System.IO.Stream,System.IO.Stream,System.Int32)">
+            <summary>
+            Copy stream input to output. Skip the first bytes
+            </summary>
+            <param name="input">stream to read from</param>
+            <param name="output">stream to write to</param>
+            <param name="offset">first bytes to skip (optional)</param>
+        </member>
+        <member name="M:NLog.Internal.StreamHelpers.CopyToStream(System.Text.StringBuilder,System.IO.MemoryStream,System.Text.Encoding,System.Char[])">
+            <summary>
+            Copies the contents of the StringBuilder to the MemoryStream using the specified encoding (Without BOM/Preamble)
+            </summary>
+            <param name="builder">StringBuilder source</param>
+            <param name="ms">MemoryStream destination</param>
+            <param name="encoding">Encoding used for converter string into byte-stream</param>
+            <param name="transformBuffer">Helper char-buffer to minimize memory allocations</param>
+        </member>
+    </members>
+</doc>

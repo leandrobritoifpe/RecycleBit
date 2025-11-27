@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="RecycleBitModelStoreContainer" CdmEntityContainer="RECYCLEBITEntities">
+    <EntitySetMapping Name="ADDRESS">
+      <EntityTypeMapping TypeName="RecycleBitModel.ADDRESS">
+        <MappingFragment StoreEntitySet="ADDRESS">
+          <ScalarProperty Name="ADDRESS_ID" ColumnName="ADDRESS_ID" />
+          <ScalarProperty Name="ZIP_CODE" ColumnName="ZIP_CODE" />
+          <ScalarProperty Name="LONGITUDE" ColumnName="LONGITUDE" />
+          <ScalarProperty Name="LATITUDE" ColumnName="LATITUDE" />
+          <ScalarProperty Name="STREET" ColumnName="STREET" />
+          <ScalarProperty Name="NUMBER" ColumnName="NUMBER" />
+          <ScalarProperty Name="NEIGHBORHOOD" ColumnName="NEIGHBORHOOD" />
+          <ScalarProperty Name="CITY" ColumnName="CITY" />
+          <ScalarProperty Name="STATE" ColumnName="STATE" />
+          <ScalarProperty Name="STATE_ABBR" ColumnName="STATE_ABBR" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="COLLECTION_POINT">
+      <EntityTypeMapping TypeName="RecycleBitModel.COLLECTION_POINT">
+        <MappingFragment StoreEntitySet="COLLECTION_POINT">
+          <ScalarProperty Name="POINT_ID" ColumnName="POINT_ID" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="ADDRESS_ID" ColumnName="ADDRESS_ID" />
+          <ScalarProperty Name="COMPANY_ID" ColumnName="COMPANY_ID" />
+          <ScalarProperty Name="MAX_HAZARD_LEVEL" ColumnName="MAX_HAZARD_LEVEL" />
+          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="COMPANY">
+      <EntityTypeMapping TypeName="RecycleBitModel.COMPANY">
+        <MappingFragment StoreEntitySet="COMPANY">
+          <ScalarProperty Name="CNPJ" ColumnName="CNPJ" />
+          <ScalarProperty Name="CORPORATE_NAME" ColumnName="CORPORATE_NAME" />
+          <ScalarProperty Name="RESPONSIBLE" ColumnName="RESPONSIBLE" />
+          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+          <ScalarProperty Name="ADDRESS_ID" ColumnName="ADDRESS_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MATERIAL">
+      <EntityTypeMapping TypeName="RecycleBitModel.MATERIAL">
+        <MappingFragment StoreEntitySet="MATERIAL">
+          <ScalarProperty Name="MATERIAL_ID" ColumnName="MATERIAL_ID" />
+          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+          <ScalarProperty Name="MATERIAL_NAME" ColumnName="MATERIAL_NAME" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="HAZARD_LEVEL" ColumnName="HAZARD_LEVEL" />
+          <ScalarProperty Name="REQUIRES_SPECIAL_TRANSPORT" ColumnName="REQUIRES_SPECIAL_TRANSPORT" />
+          <ScalarProperty Name="HANDLING_INSTRUCTIONS" ColumnName="HANDLING_INSTRUCTIONS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MATERIAL_COLLECTION_POINT">
+      <EntityTypeMapping TypeName="RecycleBitModel.MATERIAL_COLLECTION_POINT">
+        <MappingFragment StoreEntitySet="MATERIAL_COLLECTION_POINT">
+          <ScalarProperty Name="MATERIAL_COLLECTION_ID" ColumnName="MATERIAL_COLLECTION_ID" />
+          <ScalarProperty Name="POINT_ID" ColumnName="POINT_ID" />
+          <ScalarProperty Name="MATERIAL_ID" ColumnName="MATERIAL_ID" />
+          <ScalarProperty Name="ESTIMATED_QUANTITY" ColumnName="ESTIMATED_QUANTITY" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MATERIAL_SCHEDULE">
+      <EntityTypeMapping TypeName="RecycleBitModel.MATERIAL_SCHEDULE">
+        <MappingFragment StoreEntitySet="MATERIAL_SCHEDULE">
+          <ScalarProperty Name="MATERIAL_SCHEDULE_ID" ColumnName="MATERIAL_SCHEDULE_ID" />
+          <ScalarProperty Name="MATERIAL_ID" ColumnName="MATERIAL_ID" />
+          <ScalarProperty Name="SCHEDULE_ID" ColumnName="SCHEDULE_ID" />
+          <ScalarProperty Name="QUANTITY" ColumnName="QUANTITY" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PUBLICATION">
+      <EntityTypeMapping TypeName="RecycleBitModel.PUBLICATION">
+        <MappingFragment StoreEntitySet="PUBLICATION">
+          <ScalarProperty Name="PUBLICATION_ID" ColumnName="PUBLICATION_ID" />
+          <ScalarProperty Name="POINT_ID" ColumnName="POINT_ID" />
+          <ScalarProperty Name="IMAGE_PUBLICATION_PATH" ColumnName="IMAGE_PUBLICATION_PATH" />
+          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+          <ScalarProperty Name="DATE_TIME" ColumnName="DATE_TIME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ROLE">
+      <EntityTypeMapping TypeName="RecycleBitModel.ROLE">
+        <MappingFragment StoreEntitySet="ROLE">
+          <ScalarProperty Name="ROLE_ID" ColumnName="ROLE_ID" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SCHEDULE">
+      <EntityTypeMapping TypeName="RecycleBitModel.SCHEDULE">
+        <MappingFragment StoreEntitySet="SCHEDULE">
+          <ScalarProperty Name="SCHEDULE_ID" ColumnName="SCHEDULE_ID" />
+          <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+          <ScalarProperty Name="POINT_ID" ColumnName="POINT_ID" />
+          <ScalarProperty Name="DATE_TIME" ColumnName="DATE_TIME" />
+          <ScalarProperty Name="TOTAL_QUANTITY" ColumnName="TOTAL_QUANTITY" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="USER">
+      <EntityTypeMapping TypeName="RecycleBitModel.USER">
+        <MappingFragment StoreEntitySet="USER">
+          <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+          <ScalarProperty Name="ADDRESS_ID" ColumnName="ADDRESS_ID" />
+          <ScalarProperty Name="CPF" ColumnName="CPF" />
+          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+          <ScalarProperty Name="PHONE" ColumnName="PHONE" />
+          <ScalarProperty Name="ROLE_ID" ColumnName="ROLE_ID" />
+          <ScalarProperty Name="BIRTH_DATE" ColumnName="BIRTH_DATE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="USER_AUDIT">
+      <EntityTypeMapping TypeName="RecycleBitModel.USER_AUDIT">
+        <MappingFragment StoreEntitySet="USER_AUDIT">
+          <ScalarProperty Name="AUDIT_ID" ColumnName="AUDIT_ID" />
+          <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+          <ScalarProperty Name="OPERATION" ColumnName="OPERATION" />
+          <ScalarProperty Name="DATE_TIME" ColumnName="DATE_TIME" />
+          <ScalarProperty Name="DATA" ColumnName="DATA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

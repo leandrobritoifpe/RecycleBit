@@ -1,0 +1,475 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="RailwayWeighingModelStoreContainer" CdmEntityContainer="Entities">
+    <EntitySetMapping Name="DUAAT_COMPOSITION">
+      <EntityTypeMapping TypeName="RailwayWeighingModel.DUAAT_COMPOSITION">
+        <MappingFragment StoreEntitySet="DUAAT_COMPOSITION">
+          <ScalarProperty Name="DUAA_COMPOSITION_ID" ColumnName="DUAA_COMPOSITION_ID" />
+          <ScalarProperty Name="DUAA_LOAD_POINT" ColumnName="DUAA_LOAD_POINT" />
+          <ScalarProperty Name="DUAA_OPERATIONAL_UNIT" ColumnName="DUAA_OPERATIONAL_UNIT" />
+          <ScalarProperty Name="DUAA_COMPOSITION_GPV_ID" ColumnName="DUAA_COMPOSITION_GPV_ID" />
+          <ScalarProperty Name="DUAA_TRAIN_CODE" ColumnName="DUAA_TRAIN_CODE" />
+          <ScalarProperty Name="DUAA_COMPOSITION_VALID" ColumnName="DUAA_COMPOSITION_VALID" />
+          <ScalarProperty Name="DUAA_STATUS_TRAIN" ColumnName="DUAA_STATUS_TRAIN" />
+          <ScalarProperty Name="DUAA_WAGON_MAX_LOAD" ColumnName="DUAA_WAGON_MAX_LOAD" />
+          <ScalarProperty Name="DUAA_CAR_NUMBER" ColumnName="DUAA_CAR_NUMBER" />
+          <ScalarProperty Name="DUAA_CAR_SERIAL_NUMBER" ColumnName="DUAA_CAR_SERIAL_NUMBER" />
+          <ScalarProperty Name="DUAA_CAR_TYPE" ColumnName="DUAA_CAR_TYPE" />
+          <ScalarProperty Name="DUAA_TARE_WEIGHT" ColumnName="DUAA_TARE_WEIGHT" />
+          <ScalarProperty Name="DUAA_STATUS_SEND" ColumnName="DUAA_STATUS_SEND" />
+          <ScalarProperty Name="DUAA_DATE" ColumnName="DUAA_DATE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DUABT_LOT">
+      <EntityTypeMapping TypeName="RailwayWeighingModel.DUABT_LOT">
+        <MappingFragment StoreEntitySet="DUABT_LOT">
+          <ScalarProperty Name="DUAB_LOT_ID" ColumnName="DUAB_LOT_ID" />
+          <ScalarProperty Name="DUAB_LOT_GPV_ID" ColumnName="DUAB_LOT_GPV_ID" />
+          <ScalarProperty Name="DUAB_LOAD_POINT" ColumnName="DUAB_LOAD_POINT" />
+          <ScalarProperty Name="DUAB_OPERATIONAL_UNIT" ColumnName="DUAB_OPERATIONAL_UNIT" />
+          <ScalarProperty Name="DUAB_ASSOCIATED" ColumnName="DUAB_ASSOCIATED" />
+          <ScalarProperty Name="DUAB_PRODUCT_CODE" ColumnName="DUAB_PRODUCT_CODE" />
+          <ScalarProperty Name="DUAB_SITE_ID" ColumnName="DUAB_SITE_ID" />
+          <ScalarProperty Name="DUAB_EXPECTED_WAGONS_QUANTITY" ColumnName="DUAB_EXPECTED_WAGONS_QUANTITY" />
+          <ScalarProperty Name="DUAB_SITUATION" ColumnName="DUAB_SITUATION" />
+          <ScalarProperty Name="DUAB_EXPECTED_INITIAL_DATE" ColumnName="DUAB_EXPECTED_INITIAL_DATE" />
+          <ScalarProperty Name="DUAB_REGISTRY_TIME" ColumnName="DUAB_REGISTRY_TIME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DUACT_USER">
+      <EntityTypeMapping TypeName="RailwayWeighingModel.DUACT_USER">
+        <MappingFragment StoreEntitySet="DUACT_USER">
+          <ScalarProperty Name="DUAC_USER_ID" ColumnName="DUAC_USER_ID" />
+          <ScalarProperty Name="DUAC_USER" ColumnName="DUAC_USER" />
+          <ScalarProperty Name="DUAC_USER_NAME" ColumnName="DUAC_USER_NAME" />
+          <ScalarProperty Name="DUAC_USER_EMAIL" ColumnName="DUAC_USER_EMAIL" />
+          <ScalarProperty Name="DUAC_TYPE" ColumnName="DUAC_TYPE" />
+          <ScalarProperty Name="DUAC_ROLE" ColumnName="DUAC_ROLE" />
+          <ScalarProperty Name="DUAC_SEND_TO_SUPERVISORY" ColumnName="DUAC_SEND_TO_SUPERVISORY" />
+          <ScalarProperty Name="DUAC_SUPERVISORY_CODE" ColumnName="DUAC_SUPERVISORY_CODE" />
+          <ScalarProperty Name="DUAC_ACTIVE" ColumnName="DUAC_ACTIVE" />
+          <ScalarProperty Name="DUAC_WEIGHING_USER" ColumnName="DUAC_WEIGHING_USER" />
+          <ScalarProperty Name="DUAC_SEND_MRS" ColumnName="DUAC_SEND_MRS" />
+          <ScalarProperty Name="DUAC_ACCESS_ROLES" ColumnName="DUAC_ACCESS_ROLES" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DUADT_WEIGHING">
+      <EntityTypeMapping TypeName="RailwayWeighingModel.DUADT_WEIGHING">
+        <MappingFragment StoreEntitySet="DUADT_WEIGHING">
+          <ScalarProperty Name="DUAD_WEIGHING_ID" ColumnName="DUAD_WEIGHING_ID" />
+          <ScalarProperty Name="DUAD_LOAD_POINT_CODE" ColumnName="DUAD_LOAD_POINT_CODE" />
+          <ScalarProperty Name="DUAD_OPERATIONAL_UNIT" ColumnName="DUAD_OPERATIONAL_UNIT" />
+          <ScalarProperty Name="DUAD_REGISTER_TIME" ColumnName="DUAD_REGISTER_TIME" />
+          <ScalarProperty Name="DUAD_REGISTRY_TIME" ColumnName="DUAD_REGISTRY_TIME" />
+          <ScalarProperty Name="DUAD_ID_COMPOSITION" ColumnName="DUAD_ID_COMPOSITION" />
+          <ScalarProperty Name="DUAD_CAR_NUMBER" ColumnName="DUAD_CAR_NUMBER" />
+          <ScalarProperty Name="DUAD_AXIS_NUMBER" ColumnName="DUAD_AXIS_NUMBER" />
+          <ScalarProperty Name="DUAD_CAR_TYPE" ColumnName="DUAD_CAR_TYPE" />
+          <ScalarProperty Name="DUAD_ID_PRODUCT" ColumnName="DUAD_ID_PRODUCT" />
+          <ScalarProperty Name="DUAD_LOT_GPV_ID" ColumnName="DUAD_LOT_GPV_ID" />
+          <ScalarProperty Name="DUAD_RIGHT_WHEEL_TARE" ColumnName="DUAD_RIGHT_WHEEL_TARE" />
+          <ScalarProperty Name="DUAD_LEFT_WHEEL_TARE" ColumnName="DUAD_LEFT_WHEEL_TARE" />
+          <ScalarProperty Name="DUAD_TRUCK_TARE" ColumnName="DUAD_TRUCK_TARE" />
+          <ScalarProperty Name="DUAD_AXIS_TARE" ColumnName="DUAD_AXIS_TARE" />
+          <ScalarProperty Name="DUAD_TARE_WEIGHT" ColumnName="DUAD_TARE_WEIGHT" />
+          <ScalarProperty Name="DUAD_RIGHT_WHEEL_GROSS" ColumnName="DUAD_RIGHT_WHEEL_GROSS" />
+          <ScalarProperty Name="DUAD_LEFT_WHEEL_GROSS" ColumnName="DUAD_LEFT_WHEEL_GROSS" />
+          <ScalarProperty Name="DUAD_TRUCK_GROSS" ColumnName="DUAD_TRUCK_GROSS" />
+          <ScalarProperty Name="DUAD_AXIS_GROSS" ColumnName="DUAD_AXIS_GROSS" />
+          <ScalarProperty Name="DUAD_GROSS_WEIGHT" ColumnName="DUAD_GROSS_WEIGHT" />
+          <ScalarProperty Name="DUAD_RIGHT_WHEEL_NET" ColumnName="DUAD_RIGHT_WHEEL_NET" />
+          <ScalarProperty Name="DUAD_LEFT_WHEEL_NET" ColumnName="DUAD_LEFT_WHEEL_NET" />
+          <ScalarProperty Name="DUAD_TRUCK_NET" ColumnName="DUAD_TRUCK_NET" />
+          <ScalarProperty Name="DUAD_AXIS_NET" ColumnName="DUAD_AXIS_NET" />
+          <ScalarProperty Name="DUAD_NET_WEIGHT" ColumnName="DUAD_NET_WEIGHT" />
+          <ScalarProperty Name="DUAD_INTER_WHEIGHT" ColumnName="DUAD_INTER_WHEIGHT" />
+          <ScalarProperty Name="DUAD_LOAD_REMOVER" ColumnName="DUAD_LOAD_REMOVER" />
+          <ScalarProperty Name="DUAD_SPEED" ColumnName="DUAD_SPEED" />
+          <ScalarProperty Name="DUAD_SPEED_EXCEEDED" ColumnName="DUAD_SPEED_EXCEEDED" />
+          <ScalarProperty Name="DUAD_DATA_TYPE" ColumnName="DUAD_DATA_TYPE" />
+          <ScalarProperty Name="DUAD_DATA_WEIGHING_SOURCE" ColumnName="DUAD_DATA_WEIGHING_SOURCE" />
+          <ScalarProperty Name="DUAD_CONCH" ColumnName="DUAD_CONCH" />
+          <ScalarProperty Name="DUAD_OVERLOAD_WEIGHT" ColumnName="DUAD_OVERLOAD_WEIGHT" />
+          <ScalarProperty Name="DUAD_GROSS_OVERLOAD" ColumnName="DUAD_GROSS_OVERLOAD" />
+          <ScalarProperty Name="DUAD_OVERLOAD_STATUS" ColumnName="DUAD_OVERLOAD_STATUS" />
+          <ScalarProperty Name="DUAD_JUSTIFICATION" ColumnName="DUAD_JUSTIFICATION" />
+          <ScalarProperty Name="DUAD_OPERATOR_WEIGHT" ColumnName="DUAD_OPERATOR_WEIGHT" />
+          <ScalarProperty Name="DUAD_OPERATOR_ID" ColumnName="DUAD_OPERATOR_ID" />
+          <ScalarProperty Name="DUAD_LAST_REGISTRY_VALID" ColumnName="DUAD_LAST_REGISTRY_VALID" />
+          <ScalarProperty Name="DUAD_QUALITY_STATUS" ColumnName="DUAD_QUALITY_STATUS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DUAET_REVIWED_WEIGHING">
+      <EntityTypeMapping TypeName="RailwayWeighingModel.DUAET_REVIWED_WEIGHING">
+        <MappingFragment StoreEntitySet="DUAET_REVIWED_WEIGHING">
+          <ScalarProperty Name="DUAE_REVIWED_WEIGHING_ID" ColumnName="DUAE_REVIWED_WEIGHING_ID" />
+          <ScalarProperty Name="DUAE_LOAD_POINT_CODE" ColumnName="DUAE_LOAD_POINT_CODE" />
+          <ScalarProperty Name="DUAE_OPERATIONAL_UNIT" ColumnName="DUAE_OPERATIONAL_UNIT" />
+          <ScalarProperty Name="DUAE_REGISTER_TIME" ColumnName="DUAE_REGISTER_TIME" />
+          <ScalarProperty Name="DUAE_REGISTRY_TIME" ColumnName="DUAE_REGISTRY_TIME" />
+          <ScalarProperty Name="DUAE_ID_COMPOSITION" ColumnName="DUAE_ID_COMPOSITION" />
+          <ScalarProperty Name="DUAE_CAR_NUMBER" ColumnName="DUAE_CAR_NUMBER" />
+          <ScalarProperty Name="DUAE_AXIS_NUMBER" ColumnName="DUAE_AXIS_NUMBER" />
+          <ScalarProperty Name="DUAE_CAR_TYPE" ColumnName="DUAE_CAR_TYPE" />
+          <ScalarProperty Name="DUAE_ID_PRODUCT" ColumnName="DUAE_ID_PRODUCT" />
+          <ScalarProperty Name="DUAE_LOT_GPV_ID" ColumnName="DUAE_LOT_GPV_ID" />
+          <ScalarProperty Name="DUAE_RIGHT_WHEEL_TARE" ColumnName="DUAE_RIGHT_WHEEL_TARE" />
+          <ScalarProperty Name="DUAE_LEFT_WHEEL_TARE" ColumnName="DUAE_LEFT_WHEEL_TARE" />
+          <ScalarProperty Name="DUAE_TRUCK_TARE" ColumnName="DUAE_TRUCK_TARE" />
+          <ScalarProperty Name="DUAE_AXIS_TARE" ColumnName="DUAE_AXIS_TARE" />
+          <ScalarProperty Name="DUAE_TARE_WEIGHT" ColumnName="DUAE_TARE_WEIGHT" />
+          <ScalarProperty Name="DUAE_RIGHT_WHEEL_GROSS" ColumnName="DUAE_RIGHT_WHEEL_GROSS" />
+          <ScalarProperty Name="DUAE_LEFT_WHEEL_GROSS" ColumnName="DUAE_LEFT_WHEEL_GROSS" />
+          <ScalarProperty Name="DUAE_TRUCK_GROSS" ColumnName="DUAE_TRUCK_GROSS" />
+          <ScalarProperty Name="DUAE_AXIS_GROSS" ColumnName="DUAE_AXIS_GROSS" />
+          <ScalarProperty Name="DUAE_GROSS_WEIGHT" ColumnName="DUAE_GROSS_WEIGHT" />
+          <ScalarProperty Name="DUAE_RIGHT_WHEEL_NET" ColumnName="DUAE_RIGHT_WHEEL_NET" />
+          <ScalarProperty Name="DUAE_LEFT_WHEEL_NET" ColumnName="DUAE_LEFT_WHEEL_NET" />
+          <ScalarProperty Name="DUAE_TRUCK_NET" ColumnName="DUAE_TRUCK_NET" />
+          <ScalarProperty Name="DUAE_AXIS_NET" ColumnName="DUAE_AXIS_NET" />
+          <ScalarProperty Name="DUAE_NET_WEIGHT" ColumnName="DUAE_NET_WEIGHT" />
+          <ScalarProperty Name="DUAE_INTER_WHEIGHT" ColumnName="DUAE_INTER_WHEIGHT" />
+          <ScalarProperty Name="DUAE_LOAD_REMOVER" ColumnName="DUAE_LOAD_REMOVER" />
+          <ScalarProperty Name="DUAE_SPEED" ColumnName="DUAE_SPEED" />
+          <ScalarProperty Name="DUAE_SPEED_EXCEEDED" ColumnName="DUAE_SPEED_EXCEEDED" />
+          <ScalarProperty Name="DUAE_DATA_TYPE" ColumnName="DUAE_DATA_TYPE" />
+          <ScalarProperty Name="DUAE_DATA_WEIGHING_SOURCE" ColumnName="DUAE_DATA_WEIGHING_SOURCE" />
+          <ScalarProperty Name="DUAE_CONCH" ColumnName="DUAE_CONCH" />
+          <ScalarProperty Name="DUAE_OVERLOAD_WEIGHT" ColumnName="DUAE_OVERLOAD_WEIGHT" />
+          <ScalarProperty Name="DUAE_GROSS_OVERLOAD" ColumnName="DUAE_GROSS_OVERLOAD" />
+          <ScalarProperty Name="DUAE_OVERLOAD_STATUS" ColumnName="DUAE_OVERLOAD_STATUS" />
+          <ScalarProperty Name="DUAE_JUSTIFICATION" ColumnName="DUAE_JUSTIFICATION" />
+          <ScalarProperty Name="DUAE_OPERATOR_WEIGHT" ColumnName="DUAE_OPERATOR_WEIGHT" />
+          <ScalarProperty Name="DUAE_OPERATOR_ID" ColumnName="DUAE_OPERATOR_ID" />
+          <ScalarProperty Name="DUAE_LAST_REGISTRY_VALID" ColumnName="DUAE_LAST_REGISTRY_VALID" />
+          <ScalarProperty Name="DUAE_QUALITY_STATUS" ColumnName="DUAE_QUALITY_STATUS" />
+          <ScalarProperty Name="DUAE_WEIGHING_DESTINATION_ID" ColumnName="DUAE_WEIGHING_DESTINATION_ID" />
+          <ScalarProperty Name="DUAE_WAGON_CAPACITY" ColumnName="DUAE_WAGON_CAPACITY" />
+          <ScalarProperty Name="DUAE_ID_FLOW_COMPOSITION" ColumnName="DUAE_ID_FLOW_COMPOSITION" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DUAFT_WAGON_PARAMETER">
+      <EntityTypeMapping TypeName="RailwayWeighingModel.DUAFT_WAGON_PARAMETER">
+        <MappingFragment StoreEntitySet="DUAFT_WAGON_PARAMETER">
+          <ScalarProperty Name="DUAF_WAGON_PARAMETER_ID" ColumnName="DUAF_WAGON_PARAMETER_ID" />
+          <ScalarProperty Name="DUAF_WAGON_TYPE" ColumnName="DUAF_WAGON_TYPE" />
+          <ScalarProperty Name="DUAF_DEFAULT_TARE" ColumnName="DUAF_DEFAULT_TARE" />
+          <ScalarProperty Name="DUAF_WAGON_GROUP" ColumnName="DUAF_WAGON_GROUP" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DUAGT_JUSTIFICATION">
+      <EntityTypeMapping TypeName="RailwayWeighingModel.DUAGT_JUSTIFICATION">
+        <MappingFragment StoreEntitySet="DUAGT_JUSTIFICATION">
+          <ScalarProperty Name="DUAG_JUSTIFICATION_ID" ColumnName="DUAG_JUSTIFICATION_ID" />
+          <ScalarProperty Name="DUAG_DESCRIPTION" ColumnName="DUAG_DESCRIPTION" />
+          <ScalarProperty Name="DUAG_NORMAL_JUSTIFICATION" ColumnName="DUAG_NORMAL_JUSTIFICATION" />
+          <ScalarProperty Name="DUAG_FLOW_JUSTIFICATION" ColumnName="DUAG_FLOW_JUSTIFICATION" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DUAHT_WEIGHING_CONFIG">
+      <EntityTypeMapping TypeName="RailwayWeighingModel.DUAHT_WEIGHING_CONFIG">
+        <MappingFragment StoreEntitySet="DUAHT_WEIGHING_CONFIG">
+          <ScalarProperty Name="DUAH_WEIGHING_CONFIG_ID" ColumnName="DUAH_WEIGHING_CONFIG_ID" />
+          <ScalarProperty Name="DUAH_LOAD_POINT_CODE" ColumnName="DUAH_LOAD_POINT_CODE" />
+          <ScalarProperty Name="DUAH_OPERATIONAL_UNIT" ColumnName="DUAH_OPERATIONAL_UNIT" />
+          <ScalarProperty Name="DUAH_DATA_SOURCE" ColumnName="DUAH_DATA_SOURCE" />
+          <ScalarProperty Name="DUAH_WEIGHING_LOCATION" ColumnName="DUAH_WEIGHING_LOCATION" />
+          <ScalarProperty Name="DUAH_TARE_WEIGHT_MIN" ColumnName="DUAH_TARE_WEIGHT_MIN" />
+          <ScalarProperty Name="DUAH_TARE_WEIGHT_MAX" ColumnName="DUAH_TARE_WEIGHT_MAX" />
+          <ScalarProperty Name="DUAH_GROSS_WEIGHT_MIN" ColumnName="DUAH_GROSS_WEIGHT_MIN" />
+          <ScalarProperty Name="DUAH_GROSS_WEIGHT_MAX" ColumnName="DUAH_GROSS_WEIGHT_MAX" />
+          <ScalarProperty Name="DUAH_ACCEPT_ABNORMAL" ColumnName="DUAH_ACCEPT_ABNORMAL" />
+          <ScalarProperty Name="DUAH_WEIGHING_ADJUSTMENT" ColumnName="DUAH_WEIGHING_ADJUSTMENT" />
+          <ScalarProperty Name="DUAH_ADJUSTMENT_PERCENT" ColumnName="DUAH_ADJUSTMENT_PERCENT" />
+          <ScalarProperty Name="DUAH_GDU_LIMIT_GROSS" ColumnName="DUAH_GDU_LIMIT_GROSS" />
+          <ScalarProperty Name="DUAH_GDT_LIMIT_GROSS" ColumnName="DUAH_GDT_LIMIT_GROSS" />
+          <ScalarProperty Name="DUAH_HAT_LIMIT_GROSS" ColumnName="DUAH_HAT_LIMIT_GROSS" />
+          <ScalarProperty Name="DUAH_WAGON_TYPE_TOLERANCE" ColumnName="DUAH_WAGON_TYPE_TOLERANCE" />
+          <ScalarProperty Name="DUAH_TOLERANCE_LIMIT_GROSS" ColumnName="DUAH_TOLERANCE_LIMIT_GROSS" />
+          <ScalarProperty Name="DUAH_GDU_LIMIT_TARE" ColumnName="DUAH_GDU_LIMIT_TARE" />
+          <ScalarProperty Name="DUAH_GDT_LIMIT_TARE" ColumnName="DUAH_GDT_LIMIT_TARE" />
+          <ScalarProperty Name="DUAH_HAT_LIMIT_TARE" ColumnName="DUAH_HAT_LIMIT_TARE" />
+          <ScalarProperty Name="DUAH_TOLERANCE_LIMIT_TARE" ColumnName="DUAH_TOLERANCE_LIMIT_TARE" />
+          <ScalarProperty Name="DUAH_OVERLOAD" ColumnName="DUAH_OVERLOAD" />
+          <ScalarProperty Name="DUAH_BATCH_ENABLE" ColumnName="DUAH_BATCH_ENABLE" />
+          <ScalarProperty Name="DUAH_DISABLE_EXCEL_FILE" ColumnName="DUAH_DISABLE_EXCEL_FILE" />
+          <ScalarProperty Name="DUAH_WAGON_GROUP" ColumnName="DUAH_WAGON_GROUP" />
+          <ScalarProperty Name="DUAH_HAS_TOLERANCE" ColumnName="DUAH_HAS_TOLERANCE" />
+          <ScalarProperty Name="DUAH_PROCESSING" ColumnName="DUAH_PROCESSING" />
+          <ScalarProperty Name="DUAH_WAGONS_DELAY_QTY" ColumnName="DUAH_WAGONS_DELAY_QTY" />
+          <ScalarProperty Name="DUAH_DESTINATION_HOST_WS" ColumnName="DUAH_DESTINATION_HOST_WS" />
+          <ScalarProperty Name="DUAH_DESTINATION_PORT_WS" ColumnName="DUAH_DESTINATION_PORT_WS" />
+          <ScalarProperty Name="DUAH_WEB_SERVICE_NAME_WS" ColumnName="DUAH_WEB_SERVICE_NAME_WS" />
+          <ScalarProperty Name="DUAH_CONTINGENCY_FLOW_TAG" ColumnName="DUAH_CONTINGENCY_FLOW_TAG" />
+          <ScalarProperty Name="DUAH_COMPANY" ColumnName="DUAH_COMPANY" />
+          <ScalarProperty Name="DUAH_REPORT_WEIGHING" ColumnName="DUAH_REPORT_WEIGHING" />
+          <ScalarProperty Name="DUAH_CONTIGENCY_BALANCE_POINT" ColumnName="DUAH_CONTIGENCY_BALANCE_POINT" />
+          <ScalarProperty Name="DUAH_USE_LIMITS_BY_WAGON_TYPE" ColumnName="DUAH_USE_LIMITS_BY_WAGON_TYPE" />
+          <ScalarProperty Name="DUAH_VALIDATE_OVERLOAD_CONSISTENCY" ColumnName="DUAH_VALIDATE_OVERLOAD_CONSISTENCY" />
+          <ScalarProperty Name="DUAH_VALIDATE_EVEN_ODD_WAGON_CONSISTENCY" ColumnName="DUAH_VALIDATE_EVEN_ODD_WAGON_CONSISTENCY" />
+          <ScalarProperty Name="DUAH_ALLOW_MANY_LOTS" ColumnName="DUAH_ALLOW_MANY_LOTS" />
+          <ScalarProperty Name="DUAH_CONFIRM_BEFORE_SEND_WEIGHING" ColumnName="DUAH_CONFIRM_BEFORE_SEND_WEIGHING" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DUAIT_TOLERANCE">
+      <EntityTypeMapping TypeName="RailwayWeighingModel.DUAIT_TOLERANCE">
+        <MappingFragment StoreEntitySet="DUAIT_TOLERANCE">
+          <ScalarProperty Name="DUAI_TOLERANCE_ID" ColumnName="DUAI_TOLERANCE_ID" />
+          <ScalarProperty Name="DUAI_RULE_ENABLE" ColumnName="DUAI_RULE_ENABLE" />
+          <ScalarProperty Name="DUAI_GROSS_WEIGHT_TOL" ColumnName="DUAI_GROSS_WEIGHT_TOL" />
+          <ScalarProperty Name="DUAI_MAX_CAR_IN_RULE" ColumnName="DUAI_MAX_CAR_IN_RULE" />
+          <ScalarProperty Name="DUAI_LOAD_POINT_CODE" ColumnName="DUAI_LOAD_POINT_CODE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DUAJT_LOAD_POINT">
+      <EntityTypeMapping TypeName="RailwayWeighingModel.DUAJT_LOAD_POINT">
+        <MappingFragment StoreEntitySet="DUAJT_LOAD_POINT">
+          <ScalarProperty Name="DUAJ_LOAD_POINT_ID" ColumnName="DUAJ_LOAD_POINT_ID" />
+          <ScalarProperty Name="DUAJ_LOAD_POINT_CODE" ColumnName="DUAJ_LOAD_POINT_CODE" />
+          <ScalarProperty Name="DUAJ_ENDPOINT" ColumnName="DUAJ_ENDPOINT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DUAKT_LOG_SEND_WEIGHING">
+      <EntityTypeMapping TypeName="RailwayWeighingModel.DUAKT_LOG_SEND_WEIGHING">
+        <MappingFragment StoreEntitySet="DUAKT_LOG_SEND_WEIGHING">
+          <ScalarProperty Name="DUAK_LOG_SEND_WEIGHING_ID" ColumnName="DUAK_LOG_SEND_WEIGHING_ID" />
+          <ScalarProperty Name="DUAK_LOAD_POINT_CODE" ColumnName="DUAK_LOAD_POINT_CODE" />
+          <ScalarProperty Name="DUAK_MESSAGE_ID" ColumnName="DUAK_MESSAGE_ID" />
+          <ScalarProperty Name="DUAK_SEND_TIME" ColumnName="DUAK_SEND_TIME" />
+          <ScalarProperty Name="DUAK_RETURN_TIME" ColumnName="DUAK_RETURN_TIME" />
+          <ScalarProperty Name="DUAK_EXECUTION_STATUS" ColumnName="DUAK_EXECUTION_STATUS" />
+          <ScalarProperty Name="DUAK_RETURN_MESSAGE" ColumnName="DUAK_RETURN_MESSAGE" />
+          <ScalarProperty Name="DUAK_ERROR_CODE" ColumnName="DUAK_ERROR_CODE" />
+          <ScalarProperty Name="DUAK_ERROR_TYPE" ColumnName="DUAK_ERROR_TYPE" />
+          <ScalarProperty Name="DUAK_REQUEST_ERROR_TOTAL" ColumnName="DUAK_REQUEST_ERROR_TOTAL" />
+          <ScalarProperty Name="DUAK_REQUEST_SUCCESS_TOTAL" ColumnName="DUAK_REQUEST_SUCCESS_TOTAL" />
+          <ScalarProperty Name="DUAK_REQUEST_DURATION" ColumnName="DUAK_REQUEST_DURATION" />
+          <ScalarProperty Name="DUAK_MESSAGE_SIZE" ColumnName="DUAK_MESSAGE_SIZE" />
+          <ScalarProperty Name="DUAK_CARS_SEND" ColumnName="DUAK_CARS_SEND" />
+          <ScalarProperty Name="DUAK_COMPOSITION_CODE" ColumnName="DUAK_COMPOSITION_CODE" />
+          <ScalarProperty Name="DUAK_WEIGHING_DESTINATION_ID" ColumnName="DUAK_WEIGHING_DESTINATION_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DUALT_OPC_CONFIG">
+      <EntityTypeMapping TypeName="RailwayWeighingModel.DUALT_OPC_CONFIG">
+        <MappingFragment StoreEntitySet="DUALT_OPC_CONFIG">
+          <ScalarProperty Name="DUAL_OPC_CONFIG_ID" ColumnName="DUAL_OPC_CONFIG_ID" />
+          <ScalarProperty Name="DUAL_CAR_TAG" ColumnName="DUAL_CAR_TAG" />
+          <ScalarProperty Name="DUAL_CAR_TYPE_TAG" ColumnName="DUAL_CAR_TYPE_TAG" />
+          <ScalarProperty Name="DUAL_COMPOSITION_TAG" ColumnName="DUAL_COMPOSITION_TAG" />
+          <ScalarProperty Name="DUAL_TARE_WEIGHT_TAG" ColumnName="DUAL_TARE_WEIGHT_TAG" />
+          <ScalarProperty Name="DUAL_GROSS_WEIGHT_TAG" ColumnName="DUAL_GROSS_WEIGHT_TAG" />
+          <ScalarProperty Name="DUAL_NET_WEIGHT_TAG" ColumnName="DUAL_NET_WEIGHT_TAG" />
+          <ScalarProperty Name="DUAL_INTER_WEIGHT_TAG" ColumnName="DUAL_INTER_WEIGHT_TAG" />
+          <ScalarProperty Name="DUAL_PRODUCT_TAG" ColumnName="DUAL_PRODUCT_TAG" />
+          <ScalarProperty Name="DUAL_LOAD_REMOVER_TAG" ColumnName="DUAL_LOAD_REMOVER_TAG" />
+          <ScalarProperty Name="DUAL_OPERATOR_ID_TAG" ColumnName="DUAL_OPERATOR_ID_TAG" />
+          <ScalarProperty Name="DUAL_DEFAULT_TARE_WEIGHT" ColumnName="DUAL_DEFAULT_TARE_WEIGHT" />
+          <ScalarProperty Name="DUAL_DEFAULT_GROSS_WEIGHT" ColumnName="DUAL_DEFAULT_GROSS_WEIGHT" />
+          <ScalarProperty Name="DUAL_DEFAULT_PRODUCT" ColumnName="DUAL_DEFAULT_PRODUCT" />
+          <ScalarProperty Name="DUAL_MAX_CAR_NUMBER" ColumnName="DUAL_MAX_CAR_NUMBER" />
+          <ScalarProperty Name="DUAL_ADJUST_WAGON_STATUS" ColumnName="DUAL_ADJUST_WAGON_STATUS" />
+          <ScalarProperty Name="DUAL_TYPE_WAGON" ColumnName="DUAL_TYPE_WAGON" />
+          <ScalarProperty Name="DUAL_TYPE_LOCOMOTIVE" ColumnName="DUAL_TYPE_LOCOMOTIVE" />
+          <ScalarProperty Name="DUAL_WAGON_MIN_TARE_WEIGHT" ColumnName="DUAL_WAGON_MIN_TARE_WEIGHT" />
+          <ScalarProperty Name="DUAL_WAGON_MIN_GROSS_WEIGHT" ColumnName="DUAL_WAGON_MIN_GROSS_WEIGHT" />
+          <ScalarProperty Name="DUAL_COMPOSITION_ACRO" ColumnName="DUAL_COMPOSITION_ACRO" />
+          <ScalarProperty Name="DUAL_LOAD_POINT_CODE" ColumnName="DUAL_LOAD_POINT_CODE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DUAMT_OVERLOAD_CONFIG">
+      <EntityTypeMapping TypeName="RailwayWeighingModel.DUAMT_OVERLOAD_CONFIG">
+        <MappingFragment StoreEntitySet="DUAMT_OVERLOAD_CONFIG">
+          <ScalarProperty Name="DUAM_OVERLOAD_CONFIG_ID" ColumnName="DUAM_OVERLOAD_CONFIG_ID" />
+          <ScalarProperty Name="DUAM_RECORD_NAME" ColumnName="DUAM_RECORD_NAME" />
+          <ScalarProperty Name="DUAM_LOAD_POINT_CODE" ColumnName="DUAM_LOAD_POINT_CODE" />
+          <ScalarProperty Name="DUAM_OPERATION_UNIT" ColumnName="DUAM_OPERATION_UNIT" />
+          <ScalarProperty Name="DUAM_BIN_NAME_TAG" ColumnName="DUAM_BIN_NAME_TAG" />
+          <ScalarProperty Name="DUAM_COMPOSITION_NAME_TAG" ColumnName="DUAM_COMPOSITION_NAME_TAG" />
+          <ScalarProperty Name="DUAM_DESTINY_WAGON_TAG" ColumnName="DUAM_DESTINY_WAGON_TAG" />
+          <ScalarProperty Name="DUAM_ORIGIN_WAGON_TAG" ColumnName="DUAM_ORIGIN_WAGON_TAG" />
+          <ScalarProperty Name="DUAM_WEIGTH_WAGON_MOVED_TAG" ColumnName="DUAM_WEIGTH_WAGON_MOVED_TAG" />
+          <ScalarProperty Name="DUAM_LAST_WEIGHINH_TAG" ColumnName="DUAM_LAST_WEIGHINH_TAG" />
+          <ScalarProperty Name="DUAM_BIN_NUMBER" ColumnName="DUAM_BIN_NUMBER" />
+          <ScalarProperty Name="DUAM_CRANE_LAST_USAGE" ColumnName="DUAM_CRANE_LAST_USAGE" />
+          <ScalarProperty Name="DUAM_PROCESSING" ColumnName="DUAM_PROCESSING" />
+          <ScalarProperty Name="DUAM_BIN_PROCESSING" ColumnName="DUAM_BIN_PROCESSING" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DUANT_WEIGHING_DESTINATION">
+      <EntityTypeMapping TypeName="RailwayWeighingModel.DUANT_WEIGHING_DESTINATION">
+        <MappingFragment StoreEntitySet="DUANT_WEIGHING_DESTINATION">
+          <ScalarProperty Name="DUAN_WEIGHING_DESTINATION_ID" ColumnName="DUAN_WEIGHING_DESTINATION_ID" />
+          <ScalarProperty Name="DUAN_WEIGHING_DESTINATION_CODE" ColumnName="DUAN_WEIGHING_DESTINATION_CODE" />
+          <ScalarProperty Name="DUAN_WEIGHING_DESTINATION_DESCRIPTION" ColumnName="DUAN_WEIGHING_DESTINATION_DESCRIPTION" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DUAOT_WEIGHING_RECEIVED">
+      <EntityTypeMapping TypeName="RailwayWeighingModel.DUAOT_WEIGHING_RECEIVED">
+        <MappingFragment StoreEntitySet="DUAOT_WEIGHING_RECEIVED">
+          <ScalarProperty Name="DUAO_WEIGHING_RECEIVED_ID" ColumnName="DUAO_WEIGHING_RECEIVED_ID" />
+          <ScalarProperty Name="DUAO_RECEIVED_STATUS" ColumnName="DUAO_RECEIVED_STATUS" />
+          <ScalarProperty Name="DUAO_COMPANY" ColumnName="DUAO_COMPANY" />
+          <ScalarProperty Name="DUAO_MESSAGE_ID" ColumnName="DUAO_MESSAGE_ID" />
+          <ScalarProperty Name="DUAO_FILE_NAME" ColumnName="DUAO_FILE_NAME" />
+          <ScalarProperty Name="DUAO_COMPOSITION_ID" ColumnName="DUAO_COMPOSITION_ID" />
+          <ScalarProperty Name="DUAO_RECEIVED_DATETIME" ColumnName="DUAO_RECEIVED_DATETIME" />
+          <ScalarProperty Name="DUAO_PROCESSED_DATETIME" ColumnName="DUAO_PROCESSED_DATETIME" />
+          <ScalarProperty Name="DUAO_PROCESSING_STATUS" ColumnName="DUAO_PROCESSING_STATUS" />
+          <ScalarProperty Name="DUAO_WAGONS_INSERTED" ColumnName="DUAO_WAGONS_INSERTED" />
+          <ScalarProperty Name="DUAO_WAGONS_UPDATED" ColumnName="DUAO_WAGONS_UPDATED" />
+          <ScalarProperty Name="DUAO_EMPTY_WAGONS" ColumnName="DUAO_EMPTY_WAGONS" />
+          <ScalarProperty Name="DUAO_WAGONS_TOTAL" ColumnName="DUAO_WAGONS_TOTAL" />
+          <ScalarProperty Name="DUAO_ADDITIONAL_INFO" ColumnName="DUAO_ADDITIONAL_INFO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DUAPT_QUEUE_STATUS">
+      <EntityTypeMapping TypeName="RailwayWeighingModel.DUAPT_QUEUE_STATUS">
+        <MappingFragment StoreEntitySet="DUAPT_QUEUE_STATUS">
+          <ScalarProperty Name="DUAP_QUEUE_STATUS_ID" ColumnName="DUAP_QUEUE_STATUS_ID" />
+          <ScalarProperty Name="DUAP_DATETIME" ColumnName="DUAP_DATETIME" />
+          <ScalarProperty Name="DUAP_STATUS" ColumnName="DUAP_STATUS" />
+          <ScalarProperty Name="DUAP_STATUS_DESCRIPTION" ColumnName="DUAP_STATUS_DESCRIPTION" />
+          <ScalarProperty Name="DUAP_QUEUE_HOST" ColumnName="DUAP_QUEUE_HOST" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DUAQT_WEIGHING_CONFIG_DESTINATION">
+      <EntityTypeMapping TypeName="RailwayWeighingModel.DUAQT_WEIGHING_CONFIG_DESTINATION">
+        <MappingFragment StoreEntitySet="DUAQT_WEIGHING_CONFIG_DESTINATION">
+          <ScalarProperty Name="DUAQ_WEIGHING_CONFIG_DESTINATION_ID" ColumnName="DUAQ_WEIGHING_CONFIG_DESTINATION_ID" />
+          <ScalarProperty Name="DUAQ_WEIGHING_CONFIG_ID" ColumnName="DUAQ_WEIGHING_CONFIG_ID" />
+          <ScalarProperty Name="DUAQ_WEIGHING_DESTINATION_ID" ColumnName="DUAQ_WEIGHING_DESTINATION_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DUART_TARE_CONSOLIDATION_CONFIG">
+      <EntityTypeMapping TypeName="RailwayWeighingModel.DUART_TARE_CONSOLIDATION_CONFIG">
+        <MappingFragment StoreEntitySet="DUART_TARE_CONSOLIDATION_CONFIG">
+          <ScalarProperty Name="DUART_TARE_CONSOLIDATION_CONFIG_ID" ColumnName="DUART_TARE_CONSOLIDATION_CONFIG_ID" />
+          <ScalarProperty Name="DUAR_WEIGHING_CONFIG_ID" ColumnName="DUAR_WEIGHING_CONFIG_ID" />
+          <ScalarProperty Name="DUAR_PIPOINT_TOTALIZER" ColumnName="DUAR_PIPOINT_TOTALIZER" />
+          <ScalarProperty Name="DUAR_CURRENT_COMPOSITION" ColumnName="DUAR_CURRENT_COMPOSITION" />
+          <ScalarProperty Name="DUAR_CURRENT_COMPOSITION_TOTAL_WAGONS" ColumnName="DUAR_CURRENT_COMPOSITION_TOTAL_WAGONS" />
+          <ScalarProperty Name="DUAR_LAST_COMPOSITION" ColumnName="DUAR_LAST_COMPOSITION" />
+          <ScalarProperty Name="DUAR_LAST_COMPOSITION_END_DATETIME" ColumnName="DUAR_LAST_COMPOSITION_END_DATETIME" />
+          <ScalarProperty Name="DUAR_LAST_TARE_CONSOLIDATION" ColumnName="DUAR_LAST_TARE_CONSOLIDATION" />
+          <ScalarProperty Name="DUAR_TARE_CONSOLIDATION_TOTAL" ColumnName="DUAR_TARE_CONSOLIDATION_TOTAL" />
+          <ScalarProperty Name="DUAR_LAST_PIPOINT_UPDATE" ColumnName="DUAR_LAST_PIPOINT_UPDATE" />
+          <ScalarProperty Name="DUAR_PROCESSING" ColumnName="DUAR_PROCESSING" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DUAST_TARE_CONSOLIDATION">
+      <EntityTypeMapping TypeName="RailwayWeighingModel.DUAST_TARE_CONSOLIDATION">
+        <MappingFragment StoreEntitySet="DUAST_TARE_CONSOLIDATION">
+          <ScalarProperty Name="DUAST_TARE_CONSOLIDATION_ID" ColumnName="DUAST_TARE_CONSOLIDATION_ID" />
+          <ScalarProperty Name="DUAS_TARE_CONSOLIDATION_CONFIG_ID" ColumnName="DUAS_TARE_CONSOLIDATION_CONFIG_ID" />
+          <ScalarProperty Name="DUAS_PIPOINT_TOTALIZER" ColumnName="DUAS_PIPOINT_TOTALIZER" />
+          <ScalarProperty Name="DUAS_COMPOSITION" ColumnName="DUAS_COMPOSITION" />
+          <ScalarProperty Name="DUAS_COMPOSITION_END_DATETIME" ColumnName="DUAS_COMPOSITION_END_DATETIME" />
+          <ScalarProperty Name="DUAS_TARE_CONSOLIDATION" ColumnName="DUAS_TARE_CONSOLIDATION" />
+          <ScalarProperty Name="DUAS_TARE_CONSOLIDATION_TOTAL" ColumnName="DUAS_TARE_CONSOLIDATION_TOTAL" />
+          <ScalarProperty Name="DUAS_CONSOLIDATION_DATETIME" ColumnName="DUAS_CONSOLIDATION_DATETIME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DUATT_SUPERVISORS">
+      <EntityTypeMapping TypeName="RailwayWeighingModel.DUATT_SUPERVISORS">
+        <MappingFragment StoreEntitySet="DUATT_SUPERVISORS">
+          <ScalarProperty Name="DUAT_SUPERVISOR_ID" ColumnName="DUAT_SUPERVISOR_ID" />
+          <ScalarProperty Name="DUAT_USER" ColumnName="DUAT_USER" />
+          <ScalarProperty Name="DUAT_NAME" ColumnName="DUAT_NAME" />
+          <ScalarProperty Name="DUAT_LOCATION" ColumnName="DUAT_LOCATION" />
+          <ScalarProperty Name="DUAT_ACTIVE" ColumnName="DUAT_ACTIVE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DUAUT_WAGONS_CAPACITY">
+      <EntityTypeMapping TypeName="RailwayWeighingModel.DUAUT_WAGONS_CAPACITY">
+        <MappingFragment StoreEntitySet="DUAUT_WAGONS_CAPACITY">
+          <ScalarProperty Name="DUAU_WAGON_CAPACITY_ID" ColumnName="DUAU_WAGON_CAPACITY_ID" />
+          <ScalarProperty Name="DUAU_LOCATION" ColumnName="DUAU_LOCATION" />
+          <ScalarProperty Name="DUAU_TYPE" ColumnName="DUAU_TYPE" />
+          <ScalarProperty Name="DUAU_CAPACITY" ColumnName="DUAU_CAPACITY" />
+          <ScalarProperty Name="DUAU_ACTIVE" ColumnName="DUAU_ACTIVE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DUAVT_OPC_FLOW_CONFIG">
+      <EntityTypeMapping TypeName="RailwayWeighingModel.DUAVT_OPC_FLOW_CONFIG">
+        <MappingFragment StoreEntitySet="DUAVT_OPC_FLOW_CONFIG">
+          <ScalarProperty Name="DUAV_OPC_FLOW_CONFIG_ID" ColumnName="DUAV_OPC_FLOW_CONFIG_ID" />
+          <ScalarProperty Name="DUAV_MANUAL_START_DATETIME_TAG" ColumnName="DUAV_MANUAL_START_DATETIME_TAG" />
+          <ScalarProperty Name="DUAV_COMPOSITION_NUMBER_TAG" ColumnName="DUAV_COMPOSITION_NUMBER_TAG" />
+          <ScalarProperty Name="DUAV_ORIGIN_TAG" ColumnName="DUAV_ORIGIN_TAG" />
+          <ScalarProperty Name="DUAV_PREFIX_ORIGIN_TAG" ColumnName="DUAV_PREFIX_ORIGIN_TAG" />
+          <ScalarProperty Name="DUAV_DESTINATION_TAG" ColumnName="DUAV_DESTINATION_TAG" />
+          <ScalarProperty Name="DUAV_PRODUCT_TAG" ColumnName="DUAV_PRODUCT_TAG" />
+          <ScalarProperty Name="DUAV_WAGON_TYPE_TAG" ColumnName="DUAV_WAGON_TYPE_TAG" />
+          <ScalarProperty Name="DUAV_WAGONS_NUMBER_TAG" ColumnName="DUAV_WAGONS_NUMBER_TAG" />
+          <ScalarProperty Name="DUAV_TIME_BETWEEN_WAGONS_TAG" ColumnName="DUAV_TIME_BETWEEN_WAGONS_TAG" />
+          <ScalarProperty Name="DUAV_NET_WEIGHT_TAG" ColumnName="DUAV_NET_WEIGHT_TAG" />
+          <ScalarProperty Name="DUAV_TARE_WEIGHT_TAG" ColumnName="DUAV_TARE_WEIGHT_TAG" />
+          <ScalarProperty Name="DUAV_START_COMPOSITION_TAG" ColumnName="DUAV_START_COMPOSITION_TAG" />
+          <ScalarProperty Name="DUAV_END_COMPOSITION_TAG" ColumnName="DUAV_END_COMPOSITION_TAG" />
+          <ScalarProperty Name="DUAV_MAX_CAR_NUMBER" ColumnName="DUAV_MAX_CAR_NUMBER" />
+          <ScalarProperty Name="DUAV_LOAD_POINT_CODE" ColumnName="DUAV_LOAD_POINT_CODE" />
+          <ScalarProperty Name="DUAV_PISYSTEM_SOURCE" ColumnName="DUAV_PISYSTEM_SOURCE" />
+          <ScalarProperty Name="DUAV_IDENTITY" ColumnName="DUAV_IDENTITY" />
+          <ScalarProperty Name="DUAV_NET_WEIGHT_CONST_CONVERT" ColumnName="DUAV_NET_WEIGHT_CONST_CONVERT" />
+          <ScalarProperty Name="DUAV_TARE_WEIGHT_CONST_CONVERT" ColumnName="DUAV_TARE_WEIGHT_CONST_CONVERT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DUAWT_ODBC_CONFIG">
+      <EntityTypeMapping TypeName="RailwayWeighingModel.DUAWT_ODBC_CONFIG">
+        <MappingFragment StoreEntitySet="DUAWT_ODBC_CONFIG">
+          <ScalarProperty Name="DUAW_ODBC_CONFIG_ID" ColumnName="DUAW_ODBC_CONFIG_ID" />
+          <ScalarProperty Name="DUAW_LOAD_POINT_CODE" ColumnName="DUAW_LOAD_POINT_CODE" />
+          <ScalarProperty Name="DUAW_HOST_ADDRESS" ColumnName="DUAW_HOST_ADDRESS" />
+          <ScalarProperty Name="DUAW_LOCOMOTIVE_INITIAL" ColumnName="DUAW_LOCOMOTIVE_INITIAL" />
+          <ScalarProperty Name="DUAW_PROTOCOL" ColumnName="DUAW_PROTOCOL" />
+          <ScalarProperty Name="DUAW_SERVER" ColumnName="DUAW_SERVER" />
+          <ScalarProperty Name="DUAW_SERVICE_NAME" ColumnName="DUAW_SERVICE_NAME" />
+          <ScalarProperty Name="DUAW_TABLE_CARS" ColumnName="DUAW_TABLE_CARS" />
+          <ScalarProperty Name="DUAW_TABLE_COMPOSITION" ColumnName="DUAW_TABLE_COMPOSITION" />
+          <ScalarProperty Name="DUAW_TABLE_WHEELS" ColumnName="DUAW_TABLE_WHEELS" />
+          <ScalarProperty Name="DUAW_USER_ID_SECRET" ColumnName="DUAW_USER_ID_SECRET" />
+          <ScalarProperty Name="DUAW_PASSWORD_SECRET" ColumnName="DUAW_PASSWORD_SECRET" />
+          <ScalarProperty Name="DUAW_PORT" ColumnName="DUAW_PORT" />
+          <ScalarProperty Name="DUAW_PROCESSING" ColumnName="DUAW_PROCESSING" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DUAXT_AUDIT">
+      <EntityTypeMapping TypeName="RailwayWeighingModel.DUAXT_AUDIT">
+        <MappingFragment StoreEntitySet="DUAXT_AUDIT">
+          <ScalarProperty Name="DUAX_AUDIT_ID" ColumnName="DUAX_AUDIT_ID" />
+          <ScalarProperty Name="DUAX_DATETIME" ColumnName="DUAX_DATETIME" />
+          <ScalarProperty Name="DUAX_MODIFIED_BY" ColumnName="DUAX_MODIFIED_BY" />
+          <ScalarProperty Name="DUAX_OBJECT" ColumnName="DUAX_OBJECT" />
+          <ScalarProperty Name="DUAX_OLD_VERSION" ColumnName="DUAX_OLD_VERSION" />
+          <ScalarProperty Name="DUAX_NEW_VERSION" ColumnName="DUAX_NEW_VERSION" />
+          <ScalarProperty Name="DUAX_CHANGE_TYPE" ColumnName="DUAX_CHANGE_TYPE" />
+          <ScalarProperty Name="DUAX_ADDITIONAL_INFO" ColumnName="DUAX_ADDITIONAL_INFO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
