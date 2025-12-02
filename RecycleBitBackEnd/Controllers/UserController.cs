@@ -1,10 +1,8 @@
-﻿using HarpiaCommon.Exceptions;
-using HarpiaCommon.Models.Request;
-using HarpiaCommon.Services.Interfaces;
-using RecycleBitBackEnd.Models;
+﻿
+using RecycleBitBackEnd.models.dto;
 using RecycleBitBackEnd.Models.Request;
 using RecycleBitBackEnd.Services.Interfaces;
-using RecycleBitBackEnd.Util;
+using RecycleBitBackEnd.Util.Exceptions;
 using RecycleBitBackEnd.Util.Filters;
 using System;
 using System.Net;
@@ -20,9 +18,8 @@ namespace RecycleBitBackEnd.Controllers {
     [RoutePrefix("api/user")]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class UserController : ApiController {
-        private readonly IHarpiaLoggerBO loggerBO;
+
         private readonly IUsersBO usersBO;
-        private readonly IPublicationBO auditBO;
 
         public UserController() {
         }
@@ -30,11 +27,9 @@ namespace RecycleBitBackEnd.Controllers {
         /// <summary>
         /// Constructor for the UserController class that initializes the UsersBO service.
         /// </summary>
-        /// <param name="loggerBO"></param>
         /// <param name="usersBO"></param>
-        /// <param name="auditBO"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public UserController(IUsersBO usersBO, IPublicationBO auditBO) {
+        public UserController(IUsersBO usersBO) {
             this.usersBO = usersBO ?? throw new ArgumentNullException("usersBO");
         }
 
@@ -53,7 +48,6 @@ namespace RecycleBitBackEnd.Controllers {
             } catch (ProjectException projEx) {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, projEx.Message);
             } catch (Exception e) {
-                loggerBO.SetErrorLog(new NewLogErrorRequest((string)ApplicationParameters.Params.ApplicationName, DateTime.Now, e.GetBaseException().Message, string.Empty, this.GetMethodContext(), e, e.StackTrace));
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.GetBaseException().Message);
             }
         }
@@ -66,16 +60,58 @@ namespace RecycleBitBackEnd.Controllers {
         [AcceptVerbs("POST")]
         [ActionName("Login")]
         [ValidateModel]
-        public HttpResponseMessage LoginUser([FromBody][ValidateEmail] string email, [FromBody][ValidatePassword] string password) {
+        public HttpResponseMessage LoginUser([FromBody] LoginRequest login) {
             try {
-                USER response = usersBO.Login(email, password);
+                UserDTO response = usersBO.Login(login.Email, login.Password);
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             } catch (ProjectException projEx) {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, projEx.Message);
             } catch (Exception e) {
-                loggerBO.SetErrorLog(new NewLogErrorRequest((string)ApplicationParameters.Params.ApplicationName, DateTime.Now, e.GetBaseException().Message, string.Empty, this.GetMethodContext(), e, e.StackTrace));
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.GetBaseException().Message);
             }
         }
+
+        /// <summary>
+        /// Method to create a new user in the system.
+        /// </summary>
+        /// <param name="userDTO"></param>
+        /// <returns></returns>
+        [AcceptVerbs("GET")]
+        [ActionName("GetUserById")]
+        [ValidateModel]
+        public HttpResponseMessage GetUserById(int userIdApplicant, int userIdSearch, string role) {
+            try {
+                if (userIdApplicant != userIdSearch && !role.Contains("Administrator"))
+                    return Request.CreateResponse(HttpStatusCode.Unauthorized);
+                UserDTO response = usersBO.getUserById(userIdSearch);
+                return Request.CreateResponse(HttpStatusCode.OK, response);
+            } catch (ProjectException projEx) {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, projEx.Message);
+            } catch (Exception e) {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.GetBaseException().Message);
+            }
+        }
+
+        /// <summary>
+        /// Method to create a new user in the system.
+        /// </summary>
+        /// <param name="userDTO"></param>
+        /// <returns></returns>
+        [AcceptVerbs("GET")]
+        [ActionName("GetAllUsers")]
+        [ValidateModel]
+        public HttpResponseMessage GetAllUsers([FromBody] GetAllUserReques request) {
+            try {
+                if (!request.Role.Contains("Administrator"))
+                    return Request.CreateResponse(HttpStatusCode.Unauthorized);
+                System.Collections.Generic.List<UserDTO> response = usersBO.GettAllUsers();
+                return Request.CreateResponse(HttpStatusCode.OK, response);
+            } catch (ProjectException projEx) {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, projEx.Message);
+            } catch (Exception e) {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.GetBaseException().Message);
+            }
+        }
+
     }
 }

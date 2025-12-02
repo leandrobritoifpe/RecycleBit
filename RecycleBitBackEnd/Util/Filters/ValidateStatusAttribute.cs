@@ -11,7 +11,7 @@ namespace RecycleBitBackEnd.Util.Filters {
         ///    Method responsible for initializing the ValidatePasswordAttribute class
         /// </summary>
         public ValidateStatusAttribute() {
-            ErrorMessage = "O campo status deve está dentro do padrão esperado, entre 1 e 0";
+            ErrorMessage = "O campo status deve está dentro do padrão esperado, true ou false";
         }
 
         /// <summary>
@@ -20,11 +20,8 @@ namespace RecycleBitBackEnd.Util.Filters {
         /// <param name="value"></param>
         /// <returns></returns>
         public override bool IsValid(object value) {
-            int status = (int)value;
-            if (status != 1 || status != 0)
-                return false;
-
-            return true;
+            bool status = (bool)value;
+            return status;
         }
     }
 }

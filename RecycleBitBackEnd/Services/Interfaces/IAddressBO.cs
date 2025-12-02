@@ -1,4 +1,5 @@
-﻿using RecycleBitBackEnd.Models.Dto;
+﻿using RecycleBitBackEnd.Models;
+using RecycleBitBackEnd.Models.Dto;
 
 namespace RecycleBitBackEnd.Services.Interfaces {
 
@@ -12,6 +13,6 @@ namespace RecycleBitBackEnd.Services.Interfaces {
         /// </summary>
         /// <param name="addressDto"></param>
         /// <returns></returns>
-        void SaveAddress(AddressDto addressDto);
+        ADDRESS SaveAddress(AddressDto addressDto);
     }
 }

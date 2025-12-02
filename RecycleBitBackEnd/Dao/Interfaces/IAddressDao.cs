@@ -7,6 +7,6 @@ namespace RecycleBitBackEnd.Dao.Interfaces {
     /// </summary>
     public interface IAddressDao {
 
-        void SaveAddress(ADDRESS address);
+        ADDRESS SaveAddress(ADDRESS address);
     }
 }

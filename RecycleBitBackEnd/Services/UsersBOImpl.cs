@@ -1,12 +1,11 @@
 ﻿using RecycleBitBackEnd.Config;
 using RecycleBitBackEnd.Dao.Interfaces;
+using RecycleBitBackEnd.models.dto;
 using RecycleBitBackEnd.Models;
-using RecycleBitBackEnd.Models.Dto;
 using RecycleBitBackEnd.Models.Request;
 using RecycleBitBackEnd.Services.Interfaces;
 using RecycleBitBackEnd.Util.Exceptions;
 using System;
-using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -47,18 +46,14 @@ namespace RecycleBitBackEnd.Services {
             if (usersDao.GetUserByEmail(userRequest.Email) != null)
                 throw new ProjectException(DictionaryError.EMAIL_EXIST_IN_DATABASE);
 
-            USER userInsert = MappingDataUser(userRequest);
-            userInsert.ADDRESS = MappingAddressObject(userRequest.Address);
-            userInsert.ROLE = role;
+            ADDRESS Adrres = addressBo.SaveAddress(userRequest.Address);
 
-            USER userCadaster = usersDao.CreateUser(MapToUserEntity(userRequest));
+            USER userInsert = MappingDataUser(userRequest, Adrres.ADDRESS_ID);
+
+            USER userCadaster = usersDao.CreateUser(userInsert);
 
             if (userCadaster == null)
                 throw new ProjectException(String.Format(DictionaryError.ID_ROLE_NO_REFERENCES, userRequest.RoleId));
-
-            //userRequest.Address.User = userCadaster;
-
-            //addressBo.SaveAddress(userRequest.Address);
 
             return DictionaryMessageView.USER_CREATE_SUCES;
         }
@@ -70,46 +65,38 @@ namespace RecycleBitBackEnd.Services {
         /// <param name="password"></param>
         /// <returns></returns>
         /// <exception cref="ProjectException"></exception>
-        public USER Login(string email, string password) {
+        public UserDTO Login(string email, string password) {
             string hashedPassword = GenerateMD5(password);
             USER user = usersDao.Login(email, hashedPassword);
+            UserDTO userDto = ConvertObjectUserDTO(user);
             if (user == null) {
                 throw new ProjectException(DictionaryError.INVALID_EMAIL_OR_PASSWORD);
             }
-            return user;
+            return userDto;
         }
 
-        private ADDRESS MappingAddressObject(AddressDto addressDto) {
-            ADDRESS address = new() {
-                CITY = addressDto.City,
-                NEIGHBORHOOD = addressDto.Neighborhood,
-                NUMBER = addressDto.Number,
-                STATE = addressDto.State,
-                STATE_ABBR = addressDto.StateAbbr,
-                LATITUDE = (decimal?)addressDto.Latitude,
-                LONGITUDE = (decimal?)addressDto.Longitude,
-                STREET = addressDto.Street,
-                ZIP_CODE = addressDto.ZipCode,
-                USER = (ICollection<USER>)addressDto.Company ?? new HashSet<USER>(),
-                COMPANY = (ICollection<COMPANY>)addressDto.Company ?? new HashSet<COMPANY>(),
-            };
-            return address;
+        public UserDTO getUserById(int id) {
+            USER user = usersDao.GetUserById(id);
+            UserDTO userDto = ConvertObjectUserDTO(user);
+            if (user == null) {
+                throw new ProjectException(DictionaryError.INVALID_EMAIL_OR_PASSWORD);
+            }
+            return userDto;
         }
 
-        private USER MappingDataUser(CreateUserRequest user) {
+        private USER MappingDataUser(CreateUserRequest user, int adressId) {
             USER userInsert = new() {
-                CPF = user.CPF,
+                CPF = user.CPF.Replace(".", "").Replace("-", ""),
                 EMAIL = user.Email,
                 PASSWORD = GenerateMD5(user.Password),
                 NAME = user.Name,
                 PHONE = user.Phone,
                 BIRTH_DATE = user.DateNasc,
+                STATUS = user.Status,
+                ADDRESS_ID = adressId,
+                ROLE_ID = user.RoleId
             };
             return userInsert;
-        }
-
-        private USER MapToUserEntity(CreateUserRequest user) {
-            throw new NotImplementedException();
         }
 
         private static string GenerateMD5(string senha) {
@@ -135,12 +122,21 @@ namespace RecycleBitBackEnd.Services {
             throw new NotImplementedException();
         }
 
-        public void getAllUsers() {
+        public void GettAllUsers() {
             throw new NotImplementedException();
         }
 
-        public void getUserById(int id) {
-            throw new NotImplementedException();
+        private UserDTO ConvertObjectUserDTO(USER user) {
+            UserDTO userDto = new() {
+                Name = user.NAME,
+                Status = user.STATUS,
+                Email = user.EMAIL,
+                RoleId = user.ROLE_ID,
+                Role = user.ROLE.NAME,
+                AddrresId = user.ADDRESS_ID,
+                Id = user.USER_ID
+            };
+            return userDto;
         }
     }
 }

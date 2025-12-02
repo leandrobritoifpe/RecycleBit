@@ -676,6 +676,7 @@
     <Compile Include="Models\PUBLICATION.cs">
       <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Request\GetAllUserRequest.cs" />
     <Compile Include="Models\Request\LoginResquest.cs" />
     <Compile Include="Models\Request\CreateUserRequest.cs" />
     <Compile Include="Models\ROLE.cs">

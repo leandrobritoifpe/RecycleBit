@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Prometheus.NetFramework.AspNet</name>
+    </assembly>
+    <members>
+        <member name="M:Prometheus.AspNetMetricServer.RegisterRoutes(System.Web.Http.HttpConfiguration,Prometheus.AspNetMetricServer.Settings)">
+            <summary>
+            Registers an anonymous instance of the controller to be published on the /metrics URL.
+            </summary>
+        </member>
+        <member name="M:Prometheus.AspNetMetricServer.RegisterRoutes(System.Web.Http.HttpConfiguration,System.String,Prometheus.AspNetMetricServer.Settings)">
+            <summary>
+            Registers an anonymous instance of the controller to be published on a given URL path (e.g. "custom/metrics").
+            </summary>
+        </member>
+    </members>
+</doc>

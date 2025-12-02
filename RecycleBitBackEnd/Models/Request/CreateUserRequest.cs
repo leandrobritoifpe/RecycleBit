@@ -7,7 +7,6 @@ using System.ComponentModel.DataAnnotations;
 namespace RecycleBitBackEnd.Models.Request {
 
     public class CreateUserRequest {
-        public int Id { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = DictionaryError.IS_VALUE_NOT_NULL)]
         public string Name { get; set; }

@@ -10,8 +10,6 @@
         public string City { get; set; }
         public string State { get; set; }
         public string StateAbbr { get; set; }
-
-        public USER User { get; set; }
-        public COMPANY Company { get; set; }
+        //public COMPANY Company { get; set; }
     }
 }

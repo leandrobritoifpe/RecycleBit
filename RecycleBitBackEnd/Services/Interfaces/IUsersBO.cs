@@ -1,5 +1,6 @@
-﻿using RecycleBitBackEnd.Models;
+﻿using RecycleBitBackEnd.models.dto;
 using RecycleBitBackEnd.Models.Request;
+using System.Collections.Generic;
 
 namespace RecycleBitBackEnd.Services.Interfaces {
 
@@ -14,10 +15,10 @@ namespace RecycleBitBackEnd.Services.Interfaces {
 
         void DeleteUser(int user);
 
-        void getAllUsers();
+        List<UserDTO> GettAllUsers();
 
-        void getUserById(int id);
+        UserDTO getUserById(int userId);
 
-        USER Login(string email, string password);
+        UserDTO Login(string email, string password);
     }
 }

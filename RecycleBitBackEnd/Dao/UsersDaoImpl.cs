@@ -34,13 +34,23 @@ namespace RecycleBitBackEnd.Dao {
         /// <param name="user"></param>
         /// <returns></returns>
         public USER CreateUser(USER user) {
-            RecycleBitEntities context = new();
+            try {
+                RecycleBitEntities context = new();
 
-            context.USER.Add(user);
-            context.SaveChanges();
+                context.USER.Add(user);
+                context.SaveChanges();
 
-            USER userCadaster = context.USER.Where(u => u.EMAIL == user.EMAIL && u.CPF == user.CPF).FirstOrDefault();
-            return userCadaster;
+                USER userCadaster = context.USER.Where(u => u.EMAIL == user.EMAIL && u.CPF == user.CPF).FirstOrDefault();
+                return userCadaster;
+
+            } catch (System.Data.Entity.Validation.DbEntityValidationException ex) {
+                foreach (var validationErrors in ex.EntityValidationErrors) {
+                    foreach (var validationError in validationErrors.ValidationErrors) {
+                        Console.WriteLine($"Propriedade: {validationError.PropertyName} Erro: {validationError.ErrorMessage}");
+                    }
+                }
+                throw; // ou retorne uma mensagem mais amigável
+            }
         }
 
         public void DeleteUser(int user) {
@@ -55,8 +65,10 @@ namespace RecycleBitBackEnd.Dao {
             throw new NotImplementedException();
         }
 
-        public void GetUserById(int id) {
-            throw new NotImplementedException();
+        public USER GetUserById(int id) {
+            RecycleBitEntities context = new();
+            USER user = context.USER.Where(u => u.USER_ID == id).FirstOrDefault();
+            return user;
         }
 
         public USER GetUserByEmail(string email) {

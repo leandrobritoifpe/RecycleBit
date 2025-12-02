@@ -15,7 +15,7 @@ namespace RecycleBitBackEnd.Dao.Interfaces {
 
         void GetAllUsers();
 
-        void GetUserById(int id);
+        USER GetUserById(int id);
 
         /// <summary>
         ///     Method to get user by email

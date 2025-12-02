@@ -3,7 +3,6 @@ using RecycleBitBackEnd.Models;
 using RecycleBitBackEnd.Models.Dto;
 using RecycleBitBackEnd.Services.Interfaces;
 using System;
-using System.Collections.Generic;
 
 namespace RecycleBitBackEnd.Services {
 
@@ -20,9 +19,9 @@ namespace RecycleBitBackEnd.Services {
             this.addressDao = addressDao ?? throw new ArgumentNullException("addressDao");
         }
 
-        public void SaveAddress(AddressDto addressDto) {
+        public ADDRESS SaveAddress(AddressDto addressDto) {
             ADDRESS address = MappingAddressObject(addressDto);
-            addressDao.SaveAddress(address);
+            return addressDao.SaveAddress(address);
         }
 
         /// <summary>
@@ -41,8 +40,6 @@ namespace RecycleBitBackEnd.Services {
                 LONGITUDE = (decimal?)addressDto.Longitude,
                 STREET = addressDto.Street,
                 ZIP_CODE = addressDto.ZipCode,
-                USER = (ICollection<USER>)addressDto.Company ?? new HashSet<USER>(),
-                COMPANY = (ICollection<COMPANY>)addressDto.Company ?? new HashSet<COMPANY>(),
             };
             return address;
         }
