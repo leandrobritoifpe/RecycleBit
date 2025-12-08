@@ -1,10 +1,11 @@
 ﻿namespace RecycleBitBackEnd.Models.Dto {
 
     /// <summary>
-    /// Dignostic Object
+    /// Diagnostic Object
     /// </summary>
     public class DiagnosticModel {
 
+        #region Attributes Properties
         /// <summary>
         /// Database connection status
         /// </summary>
@@ -15,12 +16,17 @@
         /// </summary>
         public bool KeyVaultAccess { get; set; }
 
+        #endregion
+
+        #region Constructors
         /// <summary>
         /// Default constructor
         /// </summary>
         public DiagnosticModel() {
         }
+        #endregion
 
+        #region Public Methods
         /// <summary>
         /// Constructor with parameters
         /// </summary>
@@ -28,5 +34,6 @@
         public DiagnosticModel(bool DataBaseAccess) {
             this.DataBaseAccess = DataBaseAccess;
         }
+        #endregion
     }
 }

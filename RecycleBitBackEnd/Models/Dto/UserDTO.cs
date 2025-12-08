@@ -1,15 +1,17 @@
-﻿namespace RecycleBitBackEnd.models.dto {
+﻿using RecycleBitBackEnd.Models.Dto;
+
+namespace RecycleBitBackEnd.models.dto {
 
     /// <summary>
-    /// Informations about the user
+    /// Information about the user
     /// </summary>
     public class UserDTO {
 
+        #region Attributes Properties
         /// <summary>
         /// User ID
         /// </summary>
         public int Id { get; set; }
-
 
         /// <summary>
         /// User name
@@ -39,6 +41,12 @@
         /// <summary>
         /// Indicates if the user is a weighing user
         /// </summary>
-        public int AddrresId { get; set; }
+        public int AddressId { get; set; }
+
+        /// <summary>
+        ///     Attribute Address
+        /// </summary>
+        public AddressDto Address { get; set; }
+        #endregion
     }
 }

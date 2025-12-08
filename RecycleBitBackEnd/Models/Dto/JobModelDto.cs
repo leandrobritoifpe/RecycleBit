@@ -4,26 +4,69 @@ using System;
 using System.Collections.Generic;
 
 namespace RecycleBitBackEnd.Models.Dto {
+
+    /// <summary>
+    ///     Class responsible per for Job Model Data Transfer Object
+    /// </summary>
     public class JobModelDto {
+
+        #region Attributes Properties
+        /// <summary>
+        ///     Attribute Name
+        /// </summary>
         public string Name { get; set; }
 
+        /// <summary>
+        ///     Attribute Group
+        /// </summary>
         public string Group { get; set; }
 
+        /// <summary>
+        ///  Attribute Running
+        /// </summary>
         public bool Running { get; set; }
 
+        /// <summary>
+        ///     Atribute LastRunSuccess
+        /// </summary>
         public bool LastRunSuccess { get; set; }
 
+        /// <summary>
+        ///     Attribute NextRunDateTimeOffset
+        /// </summary>
         public DateTimeOffset? NextRunDateTimeOffset { get; set; }
 
+        /// <summary>
+        ///     Attribute ScheduledTime
+        /// </summary>
         public string ScheduledTime { get; set; }
 
+        /// <summary>
+        ///     Attribute Next
+        /// </summary>
         public string NextExecution { get; set; }
 
+        /// <summary>
+        ///     Attribute Triggers
+        /// </summary>
         public List<JobTriggers> Triggers { get; set; }
+        #endregion
 
+        #region Constructors
+        /// <summary>
+        ///     Constructor JobModelDto
+        /// </summary>
         public JobModelDto() {
         }
+        #endregion
 
+        #region Public Methods
+
+        /// <summary>
+        ///     Method responsible for mapping JobModelDto
+        /// </summary>
+        /// <param name="job"></param>
+        /// <param name="triggers"></param>
         public JobModelDto(IJobDetail job, List<ITrigger> triggers) {
             Triggers = new List<JobTriggers>();
             Name = job.Key.Name;
@@ -41,6 +84,11 @@ namespace RecycleBitBackEnd.Models.Dto {
             });
         }
 
+        /// <summary>
+        ///     Method responsible for mapping JobModelDto
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <param name="trigger"></param>
         public JobModelDto(object dto, JobTriggers trigger) {
             JobModelDto jobModelDto = dto as JobModelDto;
             Name = jobModelDto.Name;
@@ -51,5 +99,6 @@ namespace RecycleBitBackEnd.Models.Dto {
             ScheduledTime = jobModelDto.ScheduledTime;
             Triggers = new List<JobTriggers> { trigger };
         }
+        #endregion
     }
 }

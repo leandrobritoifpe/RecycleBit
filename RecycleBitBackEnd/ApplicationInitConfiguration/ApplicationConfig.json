@@ -5,13 +5,13 @@
   "Properties": {
     "SQLDBName": "RECYCLEBIT",
     "SQLInstanceName": "C11-173U33CRLAS\\SQLEXPRESS",
-    "EnvSQLUser": "recyclebit",
-    "EnvSQLUserPassword": "1234",
+    "RecycleSQLUser": "RecycleSQLUser",
+    "RecycleSQLUserPassword": "RecycleSQLUserPassword",
     "StartJob": "FALSE",
     "CronExpression": "0 0/30 * 1/1 * ? *",
     "LogFilePath": "c:\\RecycleBit\\Logs\\",
     "NLogMaxArchiveDays": "3",
-    "NLogMinLevel": "Info",
-    "NLogMaxLevel": "Fatal"
+    "LogMinLevel": "INFO",
+    "LogMaxLevel": "FATAL"
   }
 }

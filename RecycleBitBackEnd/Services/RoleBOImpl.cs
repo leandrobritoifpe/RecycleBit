@@ -9,17 +9,37 @@ namespace RecycleBitBackEnd.Services {
     ///     Class responsible for implementing the IRoleBO interface
     /// </summary>
     public class RoleBOImpl : IRoleBO {
-        private readonly IRoleDao roleDao;
 
+        #region Attributes Properties
+        private readonly IRoleDao roleDao;
+        #endregion
+
+        #region Constructors
+        /// <summary>
+        ///     Method responsible for implementing the IRoleBO interface
+        /// </summary>
         public RoleBOImpl() {
         }
+        #endregion
 
+        #region Public Methods
+        /// <summary>
+        ///     Method responsible for constructing the RoleBOImpl class with the specified IRoleDao.
+        /// </summary>
+        /// <param name="roleDao"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         public RoleBOImpl(IRoleDao roleDao) {
             this.roleDao = roleDao ?? throw new ArgumentNullException("roleDao");
         }
 
+        /// <summary>
+        ///     Class responsible for getting role by id
+        /// </summary>
+        /// <param name="idRole"></param>
+        /// <returns></returns>
         public ROLE GetRoleById(int idRole) {
             return roleDao.GetRoleById(idRole);
         }
+        #endregion
     }
 }

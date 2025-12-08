@@ -353,6 +353,8 @@ C:\Aplication\RecycleBit\VPI-RailwayWeighting\VPIRailwayWeightingBackend\obj\Deb
 C:\Aplication\RecycleBit\VPI-RailwayWeighting\VPIRailwayWeightingBackend\obj\Debug\RecycleB.4253D5D4.Up2Date
 C:\Aplication\RecycleBit\VPI-RailwayWeighting\VPIRailwayWeightingBackend\obj\Debug\VPIRailwayWeightingBackend.dll
 C:\Aplication\RecycleBit\VPI-RailwayWeighting\VPIRailwayWeightingBackend\obj\Debug\VPIRailwayWeightingBackend.pdb
+C:\Aplication\RecycleBit\RecycleBitGit\RecycleBit\RecycleBitBackEnd\obj\Debug\RecycleBitBackEnd.csproj.AssemblyReference.cache
+C:\Aplication\RecycleBit\RecycleBitGit\RecycleBit\RecycleBitBackEnd\obj\Debug\RecycleBitBackEnd.csproj.CoreCompileInputs.cache
 C:\Aplication\RecycleBit\RecycleBitGit\RecycleBit\RecycleBitBackEnd\bin\Microsoft.DiaSymReader.Native.x86.dll
 C:\Aplication\RecycleBit\RecycleBitGit\RecycleBit\RecycleBitBackEnd\bin\Microsoft.DiaSymReader.Native.amd64.dll
 C:\Aplication\RecycleBit\RecycleBitGit\RecycleBit\RecycleBitBackEnd\bin\RecycleBitBackEnd.dll.config
@@ -404,6 +406,7 @@ C:\Aplication\RecycleBit\RecycleBitGit\RecycleBit\RecycleBitBackEnd\bin\EntityFr
 C:\Aplication\RecycleBit\RecycleBitGit\RecycleBit\RecycleBitBackEnd\bin\EntityFramework.SqlServer.dll
 C:\Aplication\RecycleBit\RecycleBitGit\RecycleBit\RecycleBitBackEnd\bin\HarpiaCommon.dll
 C:\Aplication\RecycleBit\RecycleBitGit\RecycleBit\RecycleBitBackEnd\bin\JetBrains.Annotations.dll
+C:\Aplication\RecycleBit\RecycleBitGit\RecycleBit\RecycleBitBackEnd\bin\log4net.dll
 C:\Aplication\RecycleBit\RecycleBitGit\RecycleBit\RecycleBitBackEnd\bin\Microsoft.AspNetCore.Http.Abstractions.dll
 C:\Aplication\RecycleBit\RecycleBitGit\RecycleBit\RecycleBitBackEnd\bin\Microsoft.AspNetCore.Http.Extensions.dll
 C:\Aplication\RecycleBit\RecycleBitGit\RecycleBit\RecycleBitBackEnd\bin\Microsoft.AspNetCore.Http.Features.dll
@@ -531,6 +534,8 @@ C:\Aplication\RecycleBit\RecycleBitGit\RecycleBit\RecycleBitBackEnd\bin\Document
 C:\Aplication\RecycleBit\RecycleBitGit\RecycleBit\RecycleBitBackEnd\bin\EntityFramework.xml
 C:\Aplication\RecycleBit\RecycleBitGit\RecycleBit\RecycleBitBackEnd\bin\EntityFramework.SqlServer.xml
 C:\Aplication\RecycleBit\RecycleBitGit\RecycleBit\RecycleBitBackEnd\bin\JetBrains.Annotations.xml
+C:\Aplication\RecycleBit\RecycleBitGit\RecycleBit\RecycleBitBackEnd\bin\log4net.pdb
+C:\Aplication\RecycleBit\RecycleBitGit\RecycleBit\RecycleBitBackEnd\bin\log4net.xml
 C:\Aplication\RecycleBit\RecycleBitGit\RecycleBit\RecycleBitBackEnd\bin\Microsoft.AspNetCore.Http.Abstractions.xml
 C:\Aplication\RecycleBit\RecycleBitGit\RecycleBit\RecycleBitBackEnd\bin\Microsoft.AspNetCore.Http.Extensions.xml
 C:\Aplication\RecycleBit\RecycleBitGit\RecycleBit\RecycleBitBackEnd\bin\Microsoft.AspNetCore.Http.Features.xml
@@ -703,8 +708,6 @@ C:\Aplication\RecycleBit\RecycleBitGit\RecycleBit\RecycleBitBackEnd\bin\pt-br\Sy
 C:\Aplication\RecycleBit\RecycleBitGit\RecycleBit\RecycleBitBackEnd\bin\pt-br\System.Web.WebPages.resources.dll
 C:\Aplication\RecycleBit\RecycleBitGit\RecycleBit\RecycleBitBackEnd\bin\pt-br\System.Web.WebPages.Deployment.resources.dll
 C:\Aplication\RecycleBit\RecycleBitGit\RecycleBit\RecycleBitBackEnd\bin\pt-br\System.Web.WebPages.Razor.resources.dll
-C:\Aplication\RecycleBit\RecycleBitGit\RecycleBit\RecycleBitBackEnd\obj\Debug\RecycleBitBackEnd.csproj.AssemblyReference.cache
-C:\Aplication\RecycleBit\RecycleBitGit\RecycleBit\RecycleBitBackEnd\obj\Debug\RecycleBitBackEnd.csproj.CoreCompileInputs.cache
 C:\Aplication\RecycleBit\RecycleBitGit\RecycleBit\RecycleBitBackEnd\obj\Debug\RecycleB.4253D5D4.Up2Date
 C:\Aplication\RecycleBit\RecycleBitGit\RecycleBit\RecycleBitBackEnd\obj\Debug\RecycleBitBackEnd.dll
 C:\Aplication\RecycleBit\RecycleBitGit\RecycleBit\RecycleBitBackEnd\obj\Debug\RecycleBitBackEnd.pdb

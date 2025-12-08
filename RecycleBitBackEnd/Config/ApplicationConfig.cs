@@ -60,8 +60,8 @@ namespace RecycleBitBackEnd.Config {
 
         public static dynamic FileNLogPath { get; internal set; }
         public static dynamic NLogMaxArchiveDays { get; internal set; }
-        public static string NLogMinLevel { get; internal set; }
-        public static string NLogMaxLevel { get; internal set; }
+        public static string LogMinLevel { get; internal set; }
+        public static string LogMaxLevel { get; internal set; }
         public static string SQLInstanceName { get; internal set; }
         public static string SQLUser { get; internal set; }
         public static string SQLUserPassword { get; internal set; }

@@ -93,6 +93,9 @@
     <Reference Include="JetBrains.Annotations, Version=4242.42.42.42, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
       <HintPath>..\packages\JetBrains.Annotations.2024.3.0\lib\net20\JetBrains.Annotations.dll</HintPath>
     </Reference>
+    <Reference Include="log4net, Version=3.2.0.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.3.2.0\lib\net462\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNetCore.Http.Abstractions, Version=2.3.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNetCore.Http.Abstractions.2.3.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
     </Reference>
@@ -676,9 +679,10 @@
     <Compile Include="Models\PUBLICATION.cs">
       <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Request\EditUserRequest.cs" />
     <Compile Include="Models\Request\GetAllUserRequest.cs" />
     <Compile Include="Models\Request\LoginResquest.cs" />
-    <Compile Include="Models\Request\CreateUserRequest.cs" />
+    <Compile Include="Models\Request\CreateOrUpdateUserRequest.cs" />
     <Compile Include="Models\ROLE.cs">
       <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
@@ -712,22 +716,28 @@
     <Compile Include="Util\AutoFacModules\ControllerModule.cs" />
     <Compile Include="Util\AutoFacModules\NameSpacesMap.cs" />
     <Compile Include="Util\AutoFacModules\ServiceModule.cs" />
+    <Compile Include="Util\Encriptor.cs" />
+    <Compile Include="Util\Enums\Role.cs" />
     <Compile Include="Util\Enums\StatusEnum.cs" />
     <Compile Include="Util\Enums\YesNoEnum.cs" />
-    <Compile Include="Util\EXceptions\PersistenceException.cs" />
-    <Compile Include="Util\EXceptions\ProjectException.cs" />
-    <Compile Include="Util\EXceptions\UtilException.cs" />
+    <Compile Include="Util\Exceptions\EntityException.cs" />
+    <Compile Include="Util\Exceptions\PersistenceException.cs" />
+    <Compile Include="Util\Exceptions\ProjectException.cs" />
+    <Compile Include="Util\Exceptions\UtilException.cs" />
     <Compile Include="Util\ExtensionMethods\StringExtension.cs" />
     <Compile Include="Util\ExtensionMethods\ObjectExtension.cs" />
     <Compile Include="Util\ExtensionMethods\DateTimeExtension.cs" />
     <Compile Include="Util\Filters\ValidateAnyListIsEmptyAttribute.cs" />
     <Compile Include="Util\Filters\ValidateEmailAttribute.cs" />
     <Compile Include="Util\Filters\ValidateGenericListIsEmptyAttribute.cs" />
+    <Compile Include="Util\Filters\ValidateLatitudeAttribute.cs" />
     <Compile Include="Util\Filters\ValidateListIsEmptyAttribute.cs" />
+    <Compile Include="Util\Filters\ValidateLongitudeAttribute.cs" />
     <Compile Include="Util\Filters\ValidateModelAttribute.cs" />
     <Compile Include="Util\Filters\ValidateCPFAttribute.cs" />
     <Compile Include="Util\Filters\ValidateStatusAttribute.cs" />
     <Compile Include="Util\Filters\ValidatePasswordAttribute.cs" />
+    <Compile Include="Util\Filters\ValidateZipeCodeAttribute.cs" />
     <Compile Include="Util\Prometheus\PrometheusHttpRequestModule.cs" />
     <Compile Include="Util\Scheduler\JobFailureHandler.cs" />
   </ItemGroup>

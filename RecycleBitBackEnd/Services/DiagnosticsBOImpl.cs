@@ -11,11 +11,16 @@ namespace RecycleBitBackEnd.Services {
     /// </summary>
     public class DiagnosticsBOImpl : IDiagnosticsBO {
 
+        #region Contructors
+        /// <summary>
+        ///     Method Constructor DiagnosticsBOImpl
+        /// </summary>
         public DiagnosticsBOImpl() {
         }
+        #endregion
 
         /// <summary>
-        /// Get comunication diagnostic that solution needs to be ready for use
+        /// Get communication diagnostic that solution needs to be ready for use
         /// </summary>
         /// <returns></returns>
         public DiagnosticModel GetDiagnosticsFromSolution() {
@@ -24,6 +29,8 @@ namespace RecycleBitBackEnd.Services {
             };
             return diagnosticModel;
         }
+
+        #region Private Methods
 
         private bool ValidateAccessDatabase() {
             try {
@@ -34,5 +41,6 @@ namespace RecycleBitBackEnd.Services {
                 return false;
             }
         }
+        #endregion
     }
 }

@@ -8,11 +8,12 @@
         /// <summary>
         ///     Attribute USER_CREATE_SUCES
         /// </summary>
-        public const string USER_CREATE_SUCES = "Usuario Cadastrado com Sucesso";
+        public const string USER_CREATE_SUCESS = "Usuário Cadastrado com Sucesso";
 
         /// <summary>
-        ///     Attribute CPF_OR_EMAIL_EXIST_IN_DATABASE
+        ///     Attribute DELETE_USER_SUCESS
         /// </summary>
-        public const string CPF_OR_EMAIL_EXIST_IN_DATABASE = "O E-mail ou CPF informado já foi cadastrado";
+        public const string DELETE_USER_SUCESS = "Usuário deletado com sucesso";
+
     }
 }

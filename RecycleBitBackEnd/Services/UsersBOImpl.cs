@@ -1,4 +1,5 @@
-﻿using RecycleBitBackEnd.Config;
+﻿using log4net;
+using RecycleBitBackEnd.Config;
 using RecycleBitBackEnd.Dao.Interfaces;
 using RecycleBitBackEnd.models.dto;
 using RecycleBitBackEnd.Models;
@@ -6,6 +7,7 @@ using RecycleBitBackEnd.Models.Request;
 using RecycleBitBackEnd.Services.Interfaces;
 using RecycleBitBackEnd.Util.Exceptions;
 using System;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -15,10 +17,15 @@ namespace RecycleBitBackEnd.Services {
     /// Class responsible for implementing the INewUserBO interface
     /// </summary>
     public class UsersBOImpl : IUsersBO {
+
+        #region Attributes Properties
+        private readonly ILog Logger = LogManager.GetLogger(typeof(UsersBOImpl));
         private readonly IUsersDao usersDao;
         private readonly IRoleBO roleBo;
         private readonly IAddressBO addressBo;
+        #endregion
 
+        #region Constructors
         /// <summary>
         /// Default constructor for the NewUserBOImpl class.
         /// </summary>
@@ -33,8 +40,17 @@ namespace RecycleBitBackEnd.Services {
             this.addressBo = addressBo ?? throw new ArgumentNullException("addressBo");
             this.roleBo = roleBo ?? throw new ArgumentNullException("roleBo");
         }
+        #endregion
 
-        public string CreateUser(CreateUserRequest userRequest) {
+        #region Public Methods
+
+        /// <summary>
+        ///     Method responsible for creating a new user in the system
+        /// </summary>
+        /// <param name="userRequest"></param>
+        /// <returns></returns>
+        /// <exception cref="ProjectException"></exception>
+        public UserDTO CreateUser(CreateOrUpdateUserRequest userRequest) {
             ROLE role = roleBo.GetRoleById(userRequest.RoleId);
 
             if (role == null)
@@ -55,7 +71,7 @@ namespace RecycleBitBackEnd.Services {
             if (userCadaster == null)
                 throw new ProjectException(String.Format(DictionaryError.ID_ROLE_NO_REFERENCES, userRequest.RoleId));
 
-            return DictionaryMessageView.USER_CREATE_SUCES;
+            return ConvertObjectUserDTO(userCadaster);
         }
 
         /// <summary>
@@ -75,7 +91,13 @@ namespace RecycleBitBackEnd.Services {
             return userDto;
         }
 
-        public UserDTO getUserById(int id) {
+        /// <summary>
+        ///     Method responsible for getting user by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="ProjectException"></exception>
+        public UserDTO GetUserById(int id) {
             USER user = usersDao.GetUserById(id);
             UserDTO userDto = ConvertObjectUserDTO(user);
             if (user == null) {
@@ -84,7 +106,45 @@ namespace RecycleBitBackEnd.Services {
             return userDto;
         }
 
-        private USER MappingDataUser(CreateUserRequest user, int adressId) {
+        /// <summary>
+        ///     Method responsible for getting all users
+        /// </summary>
+        /// <returns></returns>
+        public List<UserDTO> GetAllUsers() {
+            List<UserDTO> listUserDto = new();
+            List<USER> listUser = usersDao.GetAllUsers();
+            foreach (USER user in listUser) {
+                try {
+                    listUserDto.Add(ConvertObjectUserDTO(user));
+                } catch (Exception ex) {
+                    throw;
+                }
+            }
+            return listUserDto;
+        }
+
+        /// <summary>
+        ///     Method responsible for deleting a user
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public string DeleteUser(int user) {
+            usersDao.DeleteUser(user);
+            return DictionaryMessageView.DELETE_USER_SUCESS;
+        }
+
+
+        public UserDTO EditUser(int userIdEdit, CreateOrUpdateUserRequest request) {
+            request.CPF = request.CPF.Replace(".", "").Replace("-", "");
+            request.Password = GenerateMD5(request.Password);
+            USER userEdit = usersDao.EditUser(userIdEdit, request);
+            return ConvertObjectUserDTO(userEdit);
+        }
+        #endregion
+
+        #region Private Methods
+
+        private USER MappingDataUser(CreateOrUpdateUserRequest user, int adressId) {
             USER userInsert = new() {
                 CPF = user.CPF.Replace(".", "").Replace("-", ""),
                 EMAIL = user.Email,
@@ -113,19 +173,6 @@ namespace RecycleBitBackEnd.Services {
                 return sb.ToString();
             }
         }
-
-        public void DeleteUser(int user) {
-            throw new NotImplementedException();
-        }
-
-        public void EditUser(object user) {
-            throw new NotImplementedException();
-        }
-
-        public void GettAllUsers() {
-            throw new NotImplementedException();
-        }
-
         private UserDTO ConvertObjectUserDTO(USER user) {
             UserDTO userDto = new() {
                 Name = user.NAME,
@@ -133,10 +180,22 @@ namespace RecycleBitBackEnd.Services {
                 Email = user.EMAIL,
                 RoleId = user.ROLE_ID,
                 Role = user.ROLE.NAME,
-                AddrresId = user.ADDRESS_ID,
-                Id = user.USER_ID
+                AddressId = user.ADDRESS_ID,
+                Id = user.USER_ID,
+                Address = new() {
+                    Id = user.ADDRESS.ADDRESS_ID,
+                    Street = user.ADDRESS.STREET,
+                    Number = user.ADDRESS.NUMBER,
+                    Neighborhood = user.ADDRESS.NEIGHBORHOOD,
+                    City = user.ADDRESS.CITY,
+                    State = user.ADDRESS.STATE,
+                    ZipCode = user.ADDRESS.ZIP_CODE,
+                    Longitude = (double)(user.ADDRESS.LONGITUDE ?? 0),
+                    Latitude = (double)(user.ADDRESS.LATITUDE ?? 0)
+                }
             };
             return userDto;
         }
+        #endregion
     }
 }

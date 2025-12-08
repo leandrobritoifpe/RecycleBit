@@ -7,12 +7,14 @@ namespace RecycleBitBackEnd.Services.Interfaces {
     /// </summary>
     public interface IDiagnosticsBO {
 
+        #region Public Methods
         /// <summary>
-        ///     Method responsable per return informations from solution
+        ///     Method responsible per return information from solution
         /// </summary>
         /// <returns>
         ///     Current Diagnostics
         /// </returns>
         DiagnosticModel GetDiagnosticsFromSolution();
+        #endregion
     }
 }
