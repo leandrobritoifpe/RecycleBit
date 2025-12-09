@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 namespace RecycleBitBackEnd.Services.Interfaces {
     public interface ISchedulerBO {
-        List<JobModelDto> ReturnAllJobs(int offsetHours = 0);
+        List<JobModelDTO> ReturnAllJobs(int offsetHours = 0);
 
-        IList<JobModelDto> GetCurrentJobsScheduled(int offsetHours = 0);
+        IList<JobModelDTO> GetCurrentJobsScheduled(int offsetHours = 0);
 
         void DeleteJobByJobKey(string jobName);
 

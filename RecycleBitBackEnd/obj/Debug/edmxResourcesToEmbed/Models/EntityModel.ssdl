@@ -36,6 +36,8 @@
     <Property Name="RESPONSIBLE" Type="varchar" MaxLength="80" Nullable="false" />
     <Property Name="STATUS" Type="bit" Nullable="false" />
     <Property Name="ADDRESS_ID" Type="int" Nullable="false" />
+    <Property Name="EMAIL" Type="varchar" MaxLength="100" />
+    <Property Name="PASSWORD" Type="varchar" MaxLength="255" />
   </EntityType>
   <EntityType Name="MATERIAL">
     <Key>

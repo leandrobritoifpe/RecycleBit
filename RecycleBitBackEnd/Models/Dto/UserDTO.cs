@@ -46,7 +46,7 @@ namespace RecycleBitBackEnd.models.dto {
         /// <summary>
         ///     Attribute Address
         /// </summary>
-        public AddressDto Address { get; set; }
+        public AddressDTO Address { get; set; }
         #endregion
     }
 }

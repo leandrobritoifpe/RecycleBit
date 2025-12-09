@@ -1,5 +1,6 @@
 using RecycleBitBackEnd.Dao.Interfaces;
 using RecycleBitBackEnd.Models;
+using RecycleBitBackEnd.Models.Request;
 using RecycleBitBackEnd.Util.Exceptions;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
@@ -78,7 +79,7 @@ namespace RecycleBitBackEnd.Dao {
         }
 
         /// <summary>
-        ///     Nethdod to get user by email
+        ///     Method to get user by email
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
@@ -116,10 +117,10 @@ namespace RecycleBitBackEnd.Dao {
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="userRequest"></param>
-        public USER EditUser(int userId, Models.Request.CreateOrUpdateUserRequest userRequest) {
+        public USER EditUser(int userId, CreateOrUpdateUserRequest userRequest) {
             try {
                 RecycleBitEntities context = new();
-                USER userEdit = context.USER.Where(u => u.USER_ID == userId).FirstOrDefault();
+                USER userEdit = context.USER.Where(user => user.USER_ID == userId && user.STATUS == true).FirstOrDefault();
                 if (userEdit != null) {
                     userEdit.NAME = userRequest.Name;
                     userEdit.CPF = userRequest.CPF;

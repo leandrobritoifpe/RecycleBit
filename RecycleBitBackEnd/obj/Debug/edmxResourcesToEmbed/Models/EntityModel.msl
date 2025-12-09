@@ -33,6 +33,8 @@
     <EntitySetMapping Name="COMPANY">
       <EntityTypeMapping TypeName="RecycleBitModel.COMPANY">
         <MappingFragment StoreEntitySet="COMPANY">
+          <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
           <ScalarProperty Name="CNPJ" ColumnName="CNPJ" />
           <ScalarProperty Name="CORPORATE_NAME" ColumnName="CORPORATE_NAME" />
           <ScalarProperty Name="RESPONSIBLE" ColumnName="RESPONSIBLE" />

@@ -6,7 +6,7 @@ namespace RecycleBitBackEnd.Models.Dto {
     /// <summary>
     ///     Class responsible per defining the AddressDto model
     /// </summary>
-    public class AddressDto {
+    public class AddressDTO {
 
         #region Attributes Properties
         /// <summary>
@@ -69,7 +69,6 @@ namespace RecycleBitBackEnd.Models.Dto {
         /// <summary>
         ///     Attribute Id
         /// </summary>
-        [Required]
         public int Id { get; set; }
         //public COMPANY Company { get; set; }
         #endregion

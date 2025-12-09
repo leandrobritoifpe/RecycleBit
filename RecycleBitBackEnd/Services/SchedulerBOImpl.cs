@@ -45,28 +45,28 @@ namespace RecycleBitBackEnd.Services {
             }
         }
 
-        public List<JobModelDto> ReturnAllJobs(int offsetHours = 0) {
-            List<JobModelDto> jobs = new();
+        public List<JobModelDTO> ReturnAllJobs(int offsetHours = 0) {
+            List<JobModelDTO> jobs = new();
 
             List<JobKey> jobKeys = _scheduler.GetJobKeys(GroupMatcher<JobKey>.AnyGroup()).Result.ToList();
             List<IJobDetail> jobDetails = new();
 
             jobKeys.ForEach(job => jobDetails.Add(_scheduler.GetJobDetail(job).Result));
 
-            jobDetails.ForEach(job => jobs.Add(new JobModelDto(job, _scheduler.GetTriggersOfJob(job.Key).Result.ToList())));
+            jobDetails.ForEach(job => jobs.Add(new JobModelDTO(job, _scheduler.GetTriggersOfJob(job.Key).Result.ToList())));
 
             return GetJobsDetails(jobs, offsetHours);
         }
 
-        private List<JobModelDto> GetJobsDetails(List<JobModelDto> jobList, int offsetHours = 0) {
-            List<JobModelDto> jobs = new();
-            foreach (JobModelDto currentJob in jobList) {
+        private List<JobModelDTO> GetJobsDetails(List<JobModelDTO> jobList, int offsetHours = 0) {
+            List<JobModelDTO> jobs = new();
+            foreach (JobModelDTO currentJob in jobList) {
                 foreach (JobTriggers trigger in currentJob.Triggers) {
                     try {
                         currentJob.ScheduledTime = GetCronDescription(ConvertCronUtcToLocal(trigger.CronExpression, offsetHours), "pt");
                         currentJob.NextRunDateTimeOffset = trigger.NextRunDateTime;
                         currentJob.NextExecution = trigger.NextRunDateTime.HasValue ? trigger.NextRunDateTime.Value.DateTime.ToString("dd/MM/yyyy HH:mm:ss") : string.Empty;
-                        jobs.Add(new JobModelDto(currentJob, trigger));
+                        jobs.Add(new JobModelDTO(currentJob, trigger));
                     } catch (System.Exception e) {
                     }
                 }
@@ -74,7 +74,7 @@ namespace RecycleBitBackEnd.Services {
             return jobs;
         }
 
-        public IList<JobModelDto> GetCurrentJobsScheduled(int offsetHours = 0) {
+        public IList<JobModelDTO> GetCurrentJobsScheduled(int offsetHours = 0) {
             return ReturnAllJobs(offsetHours).Where(j => j.Running).ToList();
         }
 

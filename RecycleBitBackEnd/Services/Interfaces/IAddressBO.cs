@@ -14,7 +14,7 @@ namespace RecycleBitBackEnd.Services.Interfaces {
         /// </summary>
         /// <param name="addressDto"></param>
         /// <returns></returns>
-        ADDRESS SaveAddress(AddressDto addressDto);
+        ADDRESS SaveAddress(AddressDTO addressDto);
         #endregion
     }
 }

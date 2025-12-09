@@ -29,7 +29,7 @@ namespace RecycleBitBackEnd.Services {
         /// </summary>
         /// <param name="addressDto"></param>
         /// <returns></returns>
-        public ADDRESS SaveAddress(AddressDto addressDto) {
+        public ADDRESS SaveAddress(AddressDTO addressDto) {
             ADDRESS address = MappingAddressObject(addressDto);
             return addressDao.SaveAddress(address);
         }
@@ -41,7 +41,7 @@ namespace RecycleBitBackEnd.Services {
         /// </summary>
         /// <param name="addressDto"></param>
         /// <returns></returns>
-        private ADDRESS MappingAddressObject(AddressDto addressDto) {
+        private ADDRESS MappingAddressObject(AddressDTO addressDto) {
             ADDRESS address = new() {
                 CITY = addressDto.City,
                 NEIGHBORHOOD = addressDto.Neighborhood,

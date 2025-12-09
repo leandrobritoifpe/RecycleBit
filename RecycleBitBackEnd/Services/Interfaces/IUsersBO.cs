@@ -1,5 +1,6 @@
 ﻿using RecycleBitBackEnd.models.dto;
 using RecycleBitBackEnd.Models.Request;
+using RecycleBitBackEnd.Models.Response;
 using System.Collections.Generic;
 
 namespace RecycleBitBackEnd.Services.Interfaces {
@@ -23,7 +24,7 @@ namespace RecycleBitBackEnd.Services.Interfaces {
         /// <param name="email"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        UserDTO Login(string email, string password);
+        LoginResponse Login(string email, string password);
 
         /// <summary>
         ///     Method interface to get user by id

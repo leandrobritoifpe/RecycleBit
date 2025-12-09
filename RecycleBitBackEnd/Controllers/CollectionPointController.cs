@@ -1,15 +1,13 @@
 ﻿
 using log4net;
 using RecycleBitBackEnd.Config;
-using RecycleBitBackEnd.models.dto;
+using RecycleBitBackEnd.Models.Dto;
 using RecycleBitBackEnd.Models.Request;
-using RecycleBitBackEnd.Models.Response;
 using RecycleBitBackEnd.Services.Interfaces;
 using RecycleBitBackEnd.Util.Enums;
 using RecycleBitBackEnd.Util.Exceptions;
 using RecycleBitBackEnd.Util.Filters;
 using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -20,13 +18,13 @@ namespace RecycleBitBackEnd.Controllers {
     /// <summary>
     /// Controller to configure the solutions APIs related to Configuration information
     /// </summary>
-    [RoutePrefix("api/user")]
+    [RoutePrefix("api/point")]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    public class UserController : ApiController {
+    public class CollectionPointController : ApiController {
 
         #region Attributes Properties
-        private readonly IUsersBO usersBO;
-        private readonly ILog Logger = LogManager.GetLogger(typeof(UserController));
+        private readonly ICompanyBO companyBO;
+        private readonly ILog Logger = LogManager.GetLogger(typeof(CompanyController));
         #endregion
 
         #region Constructors
@@ -34,7 +32,7 @@ namespace RecycleBitBackEnd.Controllers {
         /// <summary>
         ///     Constructor for the UserController class.
         /// </summary>
-        public UserController() {
+        public CollectionPointController() {
         }
 
         /// <summary>
@@ -42,49 +40,25 @@ namespace RecycleBitBackEnd.Controllers {
         /// </summary>
         /// <param name="usersBO"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public UserController(IUsersBO usersBO) {
-            this.usersBO = usersBO ?? throw new ArgumentNullException("usersBO");
+        public CollectionPointController(ICompanyBO conpanyBO) {
+            this.companyBO = conpanyBO ?? throw new ArgumentNullException("conpanyBO");
         }
         #endregion
 
         #region Methods Public
 
         /// <summary>
-        ///     Method to create a new user in the system.
+        ///     Create a new company in the system.
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        [ActionName("CreateUser")]
+        [ActionName("CreateCompany")]
         [ValidateModel]
-        public HttpResponseMessage CreateUser([FromBody] CreateOrUpdateUserRequest request) {
+        public HttpResponseMessage CreateCompany([FromBody] CreateOrUpdateCompanyRequest request) {
             try {
-                UserDTO response = usersBO.CreateUser(request);
+                CompanyDTO response = companyBO.CreateCompany(request);
                 return Request.CreateResponse(HttpStatusCode.OK, response);
-            } catch (ProjectException projEx) {
-                Logger.Error(String.Format(DictionaryError.TEMPLATE_ERROR_LOGGER, DateTime.Now.ToString(BusinessConfig.DEFAULT_OU_DATE_FORMAT), projEx.Message, projEx.StackTrace));
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, projEx.Message);
-            } catch (Exception ex) {
-                Logger.Error(String.Format(DictionaryError.TEMPLATE_ERROR_LOGGER, DateTime.Now.ToString(BusinessConfig.DEFAULT_OU_DATE_FORMAT), ex.Message, ex.StackTrace));
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.GetBaseException().Message);
-            }
-        }
-
-        /// <summary>
-        ///     Method to login a user in the system.
-        /// </summary>
-        /// <param name="login"></param>
-        /// <returns></returns>
-        //[AcceptVerbs("POST")]
-        [HttpPost]
-        [ActionName("LoginUser")]
-        [ValidateModel]
-        public HttpResponseMessage LoginUser([FromBody] LoginRequest login) {
-            try {
-                LoginResponse response = usersBO.Login(login.Email, login.Password);
-                if (response.Company != null)
-                    return Request.CreateResponse(HttpStatusCode.OK, response.Company);
-                return Request.CreateResponse(HttpStatusCode.OK, response.User);
             } catch (ProjectException projEx) {
                 Logger.Error(String.Format(DictionaryError.TEMPLATE_ERROR_LOGGER, DateTime.Now.ToString(BusinessConfig.DEFAULT_OU_DATE_FORMAT), projEx.Message, projEx.StackTrace));
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, projEx.Message);
@@ -97,18 +71,14 @@ namespace RecycleBitBackEnd.Controllers {
         /// <summary>
         ///     Method to get a user by id in the system.
         /// </summary>
-        /// <param name="userIdApplicant"></param>
-        /// <param name="userIdSearch"></param>
-        /// <param name="role"></param>
+        /// <param name="cnpj"></param>
         /// <returns></returns>
         [HttpGet]
-        [ActionName("GetUserById")]
+        [ActionName("GetCompanyByCnpj")]
         [ValidateModel]
-        public HttpResponseMessage GetUserById(int userIdApplicant, int userIdSearch, Role role) {
+        public HttpResponseMessage GetCompanyByCnpj(string cnpj) {
             try {
-                if (userIdApplicant != userIdSearch && role != Role.Administrator)
-                    return Request.CreateResponse(HttpStatusCode.Unauthorized, DictionaryError.ERROR_UNAUTHORIZED);
-                UserDTO response = usersBO.GetUserById(userIdSearch);
+                CompanyDTO response = companyBO.GetCompanyByCpnj(cnpj);
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             } catch (ProjectException projEx) {
                 Logger.Error(String.Format(DictionaryError.TEMPLATE_ERROR_LOGGER, DateTime.Now.ToString(BusinessConfig.DEFAULT_OU_DATE_FORMAT), projEx.Message, projEx.StackTrace));
@@ -125,15 +95,40 @@ namespace RecycleBitBackEnd.Controllers {
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpGet]
-        [ActionName("GetAllUsers")]
+        [ActionName("GetAllCompanies")]
         [ValidateModel]
-        public HttpResponseMessage GetAllUsers(Role role) {
+        public HttpResponseMessage GetAllCompanies(Role role) {
             try {
                 if (role != Role.Administrator)
                     return Request.CreateResponse(HttpStatusCode.Unauthorized, DictionaryError.ERROR_UNAUTHORIZED);
-                List<UserDTO> response = usersBO.GetAllUsers();
+                var response = companyBO.GetAllCompanies();
                 if (response == null || response.Count == 0)
                     return Request.CreateResponse(HttpStatusCode.NoContent, DictionaryError.ERROR_NO_CONTENT);
+                return Request.CreateResponse(HttpStatusCode.OK, response);
+            } catch (ProjectException projEx) {
+                Logger.Error(String.Format(DictionaryError.TEMPLATE_ERROR_LOGGER, DateTime.Now.ToString(BusinessConfig.DEFAULT_OU_DATE_FORMAT), projEx.Message, projEx.StackTrace));
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, projEx.Message);
+            } catch (Exception ex) {
+                Logger.Error(String.Format(DictionaryError.TEMPLATE_ERROR_LOGGER, DateTime.Now.ToString(BusinessConfig.DEFAULT_OU_DATE_FORMAT), ex.Message, ex.StackTrace));
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.GetBaseException().Message);
+            }
+        }
+
+        /// <summary>
+        ///     Method Controller responsible for deleting a company in the system.
+        /// </summary>
+        /// <param name="cnpjApplicant"></param>
+        /// <param name="cnpjDelete"></param>
+        /// <param name="role"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        [ActionName("DeleteCompany")]
+        [ValidateModel]
+        public HttpResponseMessage DeleteCompany(string cnpjApplicant, string cnpjDelete, Role role) {
+            try {
+                if (role != Role.Administrator && !cnpjApplicant.Equals(cnpjDelete))
+                    return Request.CreateResponse(HttpStatusCode.Unauthorized, DictionaryError.ERROR_UNAUTHORIZED);
+                string response = companyBO.DeleteCompany(cnpjDelete);
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             } catch (ProjectException projEx) {
                 Logger.Error(String.Format(DictionaryError.TEMPLATE_ERROR_LOGGER, DateTime.Now.ToString(BusinessConfig.DEFAULT_OU_DATE_FORMAT), projEx.Message, projEx.StackTrace));
@@ -148,40 +143,17 @@ namespace RecycleBitBackEnd.Controllers {
         ///     Method responsible performing the deletion of a user in the system.
         /// </summary>
         /// <param name="userIdApplicant"></param>
-        /// <param name="userIdDelete"></param>
+        /// <param name="userIdEdit"></param>
         /// <param name="role"></param>
-        /// <returns></returns>
-        [HttpDelete]
-        [ActionName("DeleteUser")]
-        [ValidateModel]
-        public HttpResponseMessage DeleteUser(int userIdApplicant, int userIdDelete, Role role) {
-            try {
-                if (role != Role.Administrator && userIdApplicant != userIdDelete)
-                    return Request.CreateResponse(HttpStatusCode.Unauthorized, DictionaryError.ERROR_UNAUTHORIZED);
-                string response = usersBO.DeleteUser(userIdDelete);
-                return Request.CreateResponse(HttpStatusCode.OK, response);
-            } catch (ProjectException projEx) {
-                Logger.Error(String.Format(DictionaryError.TEMPLATE_ERROR_LOGGER, DateTime.Now.ToString(BusinessConfig.DEFAULT_OU_DATE_FORMAT), projEx.Message, projEx.StackTrace));
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, projEx.Message);
-            } catch (Exception ex) {
-                Logger.Error(String.Format(DictionaryError.TEMPLATE_ERROR_LOGGER, DateTime.Now.ToString(BusinessConfig.DEFAULT_OU_DATE_FORMAT), ex.Message, ex.StackTrace));
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.GetBaseException().Message);
-            }
-        }
-
-        /// <summary>
-        ///     Method responsible performing the deletion of a user in the system.
-        /// </summary>
-        /// <param name="request"></param>
         /// <returns></returns>
         [HttpPut]
         [ActionName("EditUser")]
         [ValidateModel]
-        public HttpResponseMessage EditUser([FromBody] EditUserRequest request) {
+        public HttpResponseMessage EditUser([FromBody] EditCompanyRequest request) {
             try {
-                if (request.Role != Role.Administrator && request.UserIdApplicant != request.UserIdEdit)
+                if (request.Role != Role.Administrator && !request.cnpjApplicant.Equals(request.cnpjEdit))
                     return Request.CreateResponse(HttpStatusCode.Unauthorized, DictionaryError.ERROR_UNAUTHORIZED);
-                UserDTO response = usersBO.EditUser(request.UserIdEdit, request.UserRequest);
+                CompanyDTO response = companyBO.EditCompany(request.cnpjEdit, request.Request);
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             } catch (ProjectException projEx) {
                 Logger.Error(String.Format(DictionaryError.TEMPLATE_ERROR_LOGGER, DateTime.Now.ToString(BusinessConfig.DEFAULT_OU_DATE_FORMAT), projEx.Message, projEx.StackTrace));

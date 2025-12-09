@@ -619,6 +619,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\CollectionPointController.cs" />
+    <Compile Include="Controllers\CompanyController .cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InfoController.cs" />
@@ -628,7 +630,11 @@
     <Compile Include="Controllers\LogsController.cs" />
     <Compile Include="Controllers\LogsZipController.cs" />
     <Compile Include="Dao\AddressDaoImpl.cs" />
+    <Compile Include="Dao\CollectionPointDaoImpl.cs" />
+    <Compile Include="Dao\ComapnyDaoImpl.cs" />
     <Compile Include="Dao\Interfaces\IAddressDao.cs" />
+    <Compile Include="Dao\Interfaces\ICollectionPointDao .cs" />
+    <Compile Include="Dao\Interfaces\ICompanyDao.cs" />
     <Compile Include="Dao\Interfaces\IPublicationDao.cs" />
     <Compile Include="Dao\Interfaces\IRoleDao.cs" />
     <Compile Include="Dao\Interfaces\IUsersDao.cs" />
@@ -646,10 +652,11 @@
     <Compile Include="Models\COMPANY.cs">
       <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Dto\AddressDto.cs" />
+    <Compile Include="Models\Dto\AddressDTO.cs" />
+    <Compile Include="Models\Dto\CompanyDTO.cs" />
     <Compile Include="Models\Dto\DiagnosticModel.cs" />
     <Compile Include="Models\Dto\Job.cs" />
-    <Compile Include="Models\Dto\JobModelDto.cs" />
+    <Compile Include="Models\Dto\JobModelDTO.cs" />
     <Compile Include="Models\Dto\JobTriggers.cs" />
     <Compile Include="Models\Dto\UserDTO.cs" />
     <Compile Include="Models\EntityModel.Context.cs">
@@ -679,10 +686,12 @@
     <Compile Include="Models\PUBLICATION.cs">
       <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Request\CreateOrUpdateCompanyRequest.cs" />
+    <Compile Include="Models\Request\EditCompanyResquest.cs" />
     <Compile Include="Models\Request\EditUserRequest.cs" />
-    <Compile Include="Models\Request\GetAllUserRequest.cs" />
     <Compile Include="Models\Request\LoginResquest.cs" />
     <Compile Include="Models\Request\CreateOrUpdateUserRequest.cs" />
+    <Compile Include="Models\Response\LoginResponse.cs" />
     <Compile Include="Models\ROLE.cs">
       <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
@@ -696,7 +705,11 @@
       <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Services\AddressBOImpl.cs" />
+    <Compile Include="Services\CollectionPointBOImpl.cs" />
+    <Compile Include="Services\CompanyBOImpl.cs" />
     <Compile Include="Services\Interfaces\IAddressBO.cs" />
+    <Compile Include="Services\Interfaces\ICollectionPointBO.cs" />
+    <Compile Include="Services\Interfaces\ICompanyBO.cs" />
     <Compile Include="Services\Interfaces\IDiagnosticsBO.cs" />
     <Compile Include="Services\Interfaces\IRoleBO.cs" />
     <Compile Include="Services\Interfaces\IPublicationBO.cs" />
@@ -894,9 +907,7 @@
     <Content Include="Scripts\jquery-3.7.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.7.1.min.map" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\Response\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>

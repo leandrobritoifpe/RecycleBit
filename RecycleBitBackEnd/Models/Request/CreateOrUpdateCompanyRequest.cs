@@ -1,15 +1,14 @@
 ﻿using RecycleBitBackEnd.Config;
 using RecycleBitBackEnd.Models.Dto;
 using RecycleBitBackEnd.Util.Filters;
-using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace RecycleBitBackEnd.Models.Request {
 
     /// <summary>
-    ///     Class responsible per for creating or updating a user
+    ///     Class responsible per for creating or updating a Company
     /// </summary>
-    public class CreateOrUpdateUserRequest {
+    public class CreateOrUpdateCompanyRequest {
 
         #region Attributes Properties
 
@@ -17,7 +16,7 @@ namespace RecycleBitBackEnd.Models.Request {
         ///     Attribute Name
         /// </summary>
         [Required(AllowEmptyStrings = false, ErrorMessage = DictionaryError.IS_VALUE_NOT_NULL)]
-        public string Name { get; set; }
+        public string CorporateName { get; set; }
 
         /// <summary>
         ///     Attribute Password
@@ -34,12 +33,6 @@ namespace RecycleBitBackEnd.Models.Request {
         public string Email { get; set; }
 
         /// <summary>
-        ///     Attribute Status
-        /// </summary>
-        [ValidateStatus]
-        public bool Status { get; set; }
-
-        /// <summary>
         ///     Attribute RoleId
         /// </summary>
         [Required]
@@ -51,23 +44,28 @@ namespace RecycleBitBackEnd.Models.Request {
         public string Phone { get; set; }
 
         /// <summary>
-        ///     Attribute DateNasc
-        /// </summary>
-        [Required]
-        [Range(typeof(DateTime), "01/01/1900", "01/01/2500")]
-        public DateTime DateNasc { get; set; }
-
-        /// <summary>
         ///     Attribute CPF
         /// </summary>
         [Required]
         [ValidateCPF]
-        public string CPF { get; set; }
+        public string CNPJ { get; set; }
 
         /// <summary>
         ///     Attribute Address
         /// </summary>
+        [Required]
         public AddressDTO Address { get; set; }
+
+        /// <summary>
+        ///     Attribute Responsible
+        /// </summary>
+        [Required]
+        public string Responsible { get; set; }
+
+        /// <summary>
+        ///     Attribute Status
+        /// </summary>
+        public bool Status { get; set; }
         #endregion
     }
 }

@@ -8,7 +8,7 @@ namespace RecycleBitBackEnd.Models.Dto {
     /// <summary>
     ///     Class responsible per for Job Model Data Transfer Object
     /// </summary>
-    public class JobModelDto {
+    public class JobModelDTO {
 
         #region Attributes Properties
         /// <summary>
@@ -56,7 +56,7 @@ namespace RecycleBitBackEnd.Models.Dto {
         /// <summary>
         ///     Constructor JobModelDto
         /// </summary>
-        public JobModelDto() {
+        public JobModelDTO() {
         }
         #endregion
 
@@ -67,7 +67,7 @@ namespace RecycleBitBackEnd.Models.Dto {
         /// </summary>
         /// <param name="job"></param>
         /// <param name="triggers"></param>
-        public JobModelDto(IJobDetail job, List<ITrigger> triggers) {
+        public JobModelDTO(IJobDetail job, List<ITrigger> triggers) {
             Triggers = new List<JobTriggers>();
             Name = job.Key.Name;
             Group = job.Key.Group;
@@ -89,8 +89,8 @@ namespace RecycleBitBackEnd.Models.Dto {
         /// </summary>
         /// <param name="dto"></param>
         /// <param name="trigger"></param>
-        public JobModelDto(object dto, JobTriggers trigger) {
-            JobModelDto jobModelDto = dto as JobModelDto;
+        public JobModelDTO(object dto, JobTriggers trigger) {
+            JobModelDTO jobModelDto = dto as JobModelDTO;
             Name = jobModelDto.Name;
             Group = jobModelDto.Group;
             Running = jobModelDto.Running;

@@ -13,6 +13,8 @@ namespace RecycleBitBackEnd {
                 ApplicationConfig.SQL_USER = Environment.GetEnvironmentVariable((string)ApplicationParameters.Params.Properties.RecycleSQLUser, EnvironmentVariableTarget.Machine);
                 ApplicationConfig.SQL_USER_PASSWORD = Encriptor.simpleDecriptBase64(Environment.GetEnvironmentVariable((string)ApplicationParameters.Params.Properties.RecycleSQLUserPassword, EnvironmentVariableTarget.Machine));
                 ApplicationConfig.START_JOBS = ApplicationParameters.Params.Properties.StartJob;
+                ApplicationConfig.SQL_INSTANCE_NAME = ApplicationParameters.Params.Properties.SQLInstanceName;
+                ApplicationConfig.SQL_DB_NAME = ApplicationParameters.Params.Properties.SQLDBName;
             } catch (Exception ex) {
                 throw new Exception($"Erro ao ler as variáveis de ambiente. {ex.Message}", ex);
             }

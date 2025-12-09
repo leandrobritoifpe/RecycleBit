@@ -1,15 +1,14 @@
-﻿using log4net;
-using RecycleBitBackEnd.Config;
+﻿using RecycleBitBackEnd.Config;
 using RecycleBitBackEnd.Dao.Interfaces;
 using RecycleBitBackEnd.models.dto;
 using RecycleBitBackEnd.Models;
 using RecycleBitBackEnd.Models.Request;
+using RecycleBitBackEnd.Models.Response;
 using RecycleBitBackEnd.Services.Interfaces;
+using RecycleBitBackEnd.Util;
 using RecycleBitBackEnd.Util.Exceptions;
 using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace RecycleBitBackEnd.Services {
 
@@ -19,10 +18,10 @@ namespace RecycleBitBackEnd.Services {
     public class UsersBOImpl : IUsersBO {
 
         #region Attributes Properties
-        private readonly ILog Logger = LogManager.GetLogger(typeof(UsersBOImpl));
         private readonly IUsersDao usersDao;
         private readonly IRoleBO roleBo;
         private readonly IAddressBO addressBo;
+        private readonly ICompanyBO companyBo;
         #endregion
 
         #region Constructors
@@ -35,10 +34,11 @@ namespace RecycleBitBackEnd.Services {
         /// Constructor for the NewUserBOImpl class that initializes the logger and DAO.
         /// </summary>
         /// <param name="usersDao"></param>
-        public UsersBOImpl(IUsersDao usersDao, IAddressBO addressBo, IRoleBO roleBo) {
+        public UsersBOImpl(IUsersDao usersDao, IAddressBO addressBo, IRoleBO roleBo, ICompanyBO companyBo) {
             this.usersDao = usersDao ?? throw new ArgumentNullException("usersDao");
             this.addressBo = addressBo ?? throw new ArgumentNullException("addressBo");
             this.roleBo = roleBo ?? throw new ArgumentNullException("roleBo");
+            this.companyBo = companyBo ?? throw new ArgumentNullException("companyBo");
         }
         #endregion
 
@@ -81,14 +81,25 @@ namespace RecycleBitBackEnd.Services {
         /// <param name="password"></param>
         /// <returns></returns>
         /// <exception cref="ProjectException"></exception>
-        public UserDTO Login(string email, string password) {
-            string hashedPassword = GenerateMD5(password);
+        public LoginResponse Login(string email, string password) {
+
+            LoginResponse login = new() {
+                Company = new(),
+                User = new()
+            };
+
+            string hashedPassword = Encriptor.GenerateMD5(password);
             USER user = usersDao.Login(email, hashedPassword);
-            UserDTO userDto = ConvertObjectUserDTO(user);
-            if (user == null) {
-                throw new ProjectException(DictionaryError.INVALID_EMAIL_OR_PASSWORD);
+
+            if (user != null) {
+                login.User = ConvertObjectUserDTO(user);
+                return login;
+            } else {
+                login.Company = companyBo.Login(email, hashedPassword);
+                if (login.Company == null)
+                    throw new ProjectException(DictionaryError.INVALID_EMAIL_OR_PASSWORD);
             }
-            return userDto;
+            return login;
         }
 
         /// <summary>
@@ -99,11 +110,10 @@ namespace RecycleBitBackEnd.Services {
         /// <exception cref="ProjectException"></exception>
         public UserDTO GetUserById(int id) {
             USER user = usersDao.GetUserById(id);
-            UserDTO userDto = ConvertObjectUserDTO(user);
             if (user == null) {
                 throw new ProjectException(DictionaryError.INVALID_EMAIL_OR_PASSWORD);
             }
-            return userDto;
+            return ConvertObjectUserDTO(user);
         }
 
         /// <summary>
@@ -133,10 +143,16 @@ namespace RecycleBitBackEnd.Services {
             return DictionaryMessageView.DELETE_USER_SUCESS;
         }
 
+        /// <summary>
+        ///     Method responsible for editing a user in the system
+        /// </summary>
+        /// <param name="userIdEdit"></param>
+        /// <param name="request"></param>
+        /// <returns></returns>
 
         public UserDTO EditUser(int userIdEdit, CreateOrUpdateUserRequest request) {
             request.CPF = request.CPF.Replace(".", "").Replace("-", "");
-            request.Password = GenerateMD5(request.Password);
+            request.Password = Encriptor.GenerateMD5(request.Password);
             USER userEdit = usersDao.EditUser(userIdEdit, request);
             return ConvertObjectUserDTO(userEdit);
         }
@@ -144,11 +160,17 @@ namespace RecycleBitBackEnd.Services {
 
         #region Private Methods
 
+        /// <summary>
+        ///     Private method responsible for mapping the data from the request to the USER model
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="adressId"></param>
+        /// <returns></returns>
         private USER MappingDataUser(CreateOrUpdateUserRequest user, int adressId) {
             USER userInsert = new() {
                 CPF = user.CPF.Replace(".", "").Replace("-", ""),
                 EMAIL = user.Email,
-                PASSWORD = GenerateMD5(user.Password),
+                PASSWORD = Encriptor.GenerateMD5(user.Password),
                 NAME = user.Name,
                 PHONE = user.Phone,
                 BIRTH_DATE = user.DateNasc,
@@ -159,20 +181,11 @@ namespace RecycleBitBackEnd.Services {
             return userInsert;
         }
 
-        private static string GenerateMD5(string senha) {
-            if (string.IsNullOrWhiteSpace(senha))
-                return string.Empty;
-
-            using (MD5 md5 = MD5.Create()) {
-                byte[] inputBytes = Encoding.UTF8.GetBytes(senha);
-                byte[] hashBytes = md5.ComputeHash(inputBytes);
-                StringBuilder sb = new StringBuilder();
-                foreach (byte b in hashBytes)
-                    sb.Append(b.ToString("x2"));
-
-                return sb.ToString();
-            }
-        }
+        /// <summary>
+        ///     Private method responsible for converting the USER object to UserDTO
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         private UserDTO ConvertObjectUserDTO(USER user) {
             UserDTO userDto = new() {
                 Name = user.NAME,

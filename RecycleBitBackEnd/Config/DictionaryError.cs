@@ -22,6 +22,11 @@
         public const string CPF_EXIST_IN_DATABASE = "O CPF informado já foi cadastrado";
 
         /// <summary>
+        ///     Attribute CNPJ_EXIST_IN_DATABASE
+        /// </summary>
+        public const string CNPJ_EXIST_IN_DATABASE = "O CNPJ informado já foi cadastrado";
+
+        /// <summary>
         ///     Attribute EMAIL_EXIST_IN_DATABASE
         /// </summary>
         public const string EMAIL_EXIST_IN_DATABASE = "O CPF informado já foi cadastrado";
@@ -52,6 +57,16 @@
         ///     Attribute TEMPLATE_ERROR_ENTITY_LOGGER
         /// </summary>
         public static string TEMPLATE_ERROR_ENTITY_LOGGER = "DateTime: {0} | Propriedade: {1} | ErrorMessage: {2} | StackTrace: {3}";
+
+        /// <summary>
+        ///     Attribute ERROR_CREATE_COMPANY
+        /// </summary>
+        public static string ERROR_CREATE_COMPANY = "An unexpected error occurred while trying to create the company in the database.";
+
+        /// <summary>
+        ///     Attribute COMPANY_NOT_FOUND
+        /// </summary>
+        public static string COMPANY_NOT_FOUND = "A Company {0} not found in database.";
         #endregion
     }
 }
