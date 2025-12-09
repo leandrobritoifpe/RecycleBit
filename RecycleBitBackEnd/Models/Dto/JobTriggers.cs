@@ -4,6 +4,7 @@ using RecycleBitBackEnd.Config;
 using System;
 
 namespace RecycleBitBackEnd.Models.Dto {
+
     public class JobTriggers {
         public DateTimeOffset? NextRunDateTime { get; set; }
 

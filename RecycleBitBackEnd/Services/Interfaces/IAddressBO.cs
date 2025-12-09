@@ -9,12 +9,14 @@ namespace RecycleBitBackEnd.Services.Interfaces {
     public interface IAddressBO {
 
         #region Public Methods
+
         /// <summary>
         ///     Method responsible for mapping an AddressDto object to an ADDRESS entity.
         /// </summary>
         /// <param name="addressDto"></param>
         /// <returns></returns>
         ADDRESS SaveAddress(AddressDTO addressDto);
-        #endregion
+
+        #endregion Public Methods
     }
 }

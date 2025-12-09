@@ -15,42 +15,35 @@ namespace RecycleBitBackEnd.Services.Interfaces {
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        CompanyDTO CreateCompany(CreateOrUpdateCompanyRequest request);
+        CollectionPointDTO CreateCollectionPoint(CreateOrUpdateCollectionPoint request);
 
         /// <summary>
-        ///     Method interface responsible for user login
+        ///     Method interface responsible for get collection point by Id
         /// </summary>
-        /// <param name="email"></param>
-        /// <param name="password"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        CompanyDTO Login(string email, string password);
+        CollectionPointDTO GetCollectionPointById(int id);
 
         /// <summary>
-        ///     Method responsible for retrieving all companies from the database
+        ///     Method interface responsible for retrieving all collection points by CNPJ
         /// </summary>
         /// <param name="cnpj"></param>
         /// <returns></returns>
-        CompanyDTO GetCompanyByCpnj(string cnpj);
+        List<CollectionPointDTO> GetAllCollectionPointByCnpj(string cnpj);
 
         /// <summary>
-        ///     Method interface responsible for retrieving a company by email
+        ///    Method responsible for deleting a collection point by Id
         /// </summary>
-        /// <returns></returns>
-        List<CompanyDTO> GetAllCompanies();
-
-        /// <summary>
-        ///     Method interface responsible for deleting a company in the system by CNPJ
-        /// </summary>
-        /// <param name="cnpj"></param>
-        string DeleteCompany(string cnpj);
+        /// <param name="id"></param>
+        string DeleteCollectionPoint(int id);
 
         /// <summary>
         ///     Method interface responsible for editing a company in the system
         /// </summary>
-        /// <param name="cnpj"></param>
+        /// <param name="id"></param>
         /// <param name="request"></param>
         /// <returns></returns>
-        CompanyDTO EditCompany(string cnpj, CreateOrUpdateCompanyRequest request);
+        CollectionPointDTO EditCollectionPoint(int id, CreateOrUpdateCollectionPoint request);
 
         #endregion
     }

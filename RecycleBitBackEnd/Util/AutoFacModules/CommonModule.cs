@@ -12,7 +12,6 @@ namespace RecycleBitBackEnd.Util.AutoFac.Modules {
         #region Protected Methods
 
         protected override void Load(ContainerBuilder builder) {
-
             var loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
             var loadedPaths = loadedAssemblies.Where(
                 search => search.FullName.Contains("RecycleBitBackEnd")

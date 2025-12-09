@@ -13,7 +13,9 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace RecycleBitBackEnd.Services {
+
     public class SchedulerBOImpl : ISchedulerBO {
+
         //private readonly IHarpiaLoggerBO loggerBO;
         private readonly List<Job> ActiveJobs;
 
@@ -114,7 +116,6 @@ namespace RecycleBitBackEnd.Services {
             parts[2] = string.Join(",", localHours);
             return string.Join(" ", parts);
         }
-
 
         public void PauseJobByJobName(string jobName) {
             List<JobKey> jobKeys = _scheduler.GetJobKeys(GroupMatcher<JobKey>.AnyGroup()).Result.ToList();

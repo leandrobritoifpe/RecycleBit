@@ -5,6 +5,7 @@
     /// </summary>
     public static class DictionaryMessageView {
 
+        #region Attributes Properties
         /// <summary>
         ///     Attribute USER_CREATE_SUCES
         /// </summary>
@@ -20,5 +21,10 @@
         /// </summary>
         public const string DELETE_COMPANY_SUCESS = "Empresa Deletada Com Sucesso";
 
+        /// <summary>
+        ///     Attribute DELETE_COLLECTION_POINT_SUCESS
+        /// </summary>
+        public const string DELETE_COLLECTION_POINT_SUCESS = "Ponto de Coleta Deletado com Sucesso";
+        #endregion
     }
 }

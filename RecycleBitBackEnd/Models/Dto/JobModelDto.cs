@@ -11,6 +11,7 @@ namespace RecycleBitBackEnd.Models.Dto {
     public class JobModelDTO {
 
         #region Attributes Properties
+
         /// <summary>
         ///     Attribute Name
         /// </summary>
@@ -50,15 +51,18 @@ namespace RecycleBitBackEnd.Models.Dto {
         ///     Attribute Triggers
         /// </summary>
         public List<JobTriggers> Triggers { get; set; }
-        #endregion
+
+        #endregion Attributes Properties
 
         #region Constructors
+
         /// <summary>
         ///     Constructor JobModelDto
         /// </summary>
         public JobModelDTO() {
         }
-        #endregion
+
+        #endregion Constructors
 
         #region Public Methods
 
@@ -99,6 +103,7 @@ namespace RecycleBitBackEnd.Models.Dto {
             ScheduledTime = jobModelDto.ScheduledTime;
             Triggers = new List<JobTriggers> { trigger };
         }
-        #endregion
+
+        #endregion Public Methods
     }
 }

@@ -47,7 +47,7 @@ namespace RecycleBitBackEnd.Models.Request {
         ///     Attribute CPF
         /// </summary>
         [Required]
-        [ValidateCPF]
+        [ValidateCNPJ]
         public string CNPJ { get; set; }
 
         /// <summary>

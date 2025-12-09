@@ -653,6 +653,7 @@
       <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Dto\AddressDTO.cs" />
+    <Compile Include="Models\Dto\CollectionPointDTO.cs" />
     <Compile Include="Models\Dto\CompanyDTO.cs" />
     <Compile Include="Models\Dto\DiagnosticModel.cs" />
     <Compile Include="Models\Dto\Job.cs" />
@@ -686,7 +687,9 @@
     <Compile Include="Models\PUBLICATION.cs">
       <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Request\CreateOrUpdateCollectionPoint.cs" />
     <Compile Include="Models\Request\CreateOrUpdateCompanyRequest.cs" />
+    <Compile Include="Models\Request\EditColletionPointRequest.cs" />
     <Compile Include="Models\Request\EditCompanyResquest.cs" />
     <Compile Include="Models\Request\EditUserRequest.cs" />
     <Compile Include="Models\Request\LoginResquest.cs" />
@@ -741,6 +744,7 @@
     <Compile Include="Util\ExtensionMethods\ObjectExtension.cs" />
     <Compile Include="Util\ExtensionMethods\DateTimeExtension.cs" />
     <Compile Include="Util\Filters\ValidateAnyListIsEmptyAttribute.cs" />
+    <Compile Include="Util\Filters\ValidateCNPJAttribute.cs" />
     <Compile Include="Util\Filters\ValidateEmailAttribute.cs" />
     <Compile Include="Util\Filters\ValidateGenericListIsEmptyAttribute.cs" />
     <Compile Include="Util\Filters\ValidateLatitudeAttribute.cs" />

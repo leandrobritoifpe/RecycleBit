@@ -127,7 +127,7 @@ namespace RecycleBitBackEnd.Services {
                 try {
                     listUserDto.Add(ConvertObjectUserDTO(user));
                 } catch (Exception ex) {
-                    throw;
+                    throw ex;
                 }
             }
             return listUserDto;

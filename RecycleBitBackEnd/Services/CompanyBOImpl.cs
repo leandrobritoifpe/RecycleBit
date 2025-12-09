@@ -8,6 +8,7 @@ using RecycleBitBackEnd.Util;
 using RecycleBitBackEnd.Util.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RecycleBitBackEnd.Services {
 
@@ -22,7 +23,16 @@ namespace RecycleBitBackEnd.Services {
         #endregion
 
         #region Constructors
+        public CompanyBOImpl() { }
 
+        /// <summary>
+        /// Constructor for the NewUserBOImpl class that initializes the logger and DAO.
+        /// </summary>
+        /// <param name="usersDao"></param>
+        public CompanyBOImpl(ICompanyDao companyDao, IAddressBO addressBo) {
+            this.companyDao = companyDao ?? throw new ArgumentNullException("companyDao");
+            this.addressBo = addressBo ?? throw new ArgumentNullException("addressBo");
+        }
         #endregion
 
         #region Public Methods
@@ -71,7 +81,7 @@ namespace RecycleBitBackEnd.Services {
         /// <param name="cnpj"></param>
         /// <returns></returns>
         /// <exception cref="ProjectException"></exception>
-        public CompanyDTO GetCompanyByCpnj(string cnpj) {
+        public CompanyDTO GetCompanyByCnpj(string cnpj) {
             COMPANY company = companyDao.GetCompanyByCpnj(cnpj);
             if (company == null)
                 throw new ProjectException(String.Format(DictionaryError.COMPANY_NOT_FOUND, cnpj));
@@ -89,7 +99,7 @@ namespace RecycleBitBackEnd.Services {
                 try {
                     companies.Add(ConvertObjectCompanyDTO(company));
                 } catch (Exception ex) {
-                    throw;
+                    throw ex;
                 }
             }
             return companies;
@@ -161,8 +171,31 @@ namespace RecycleBitBackEnd.Services {
                     ZipCode = Company.ADDRESS.ZIP_CODE,
                     Longitude = (double)(Company.ADDRESS.LONGITUDE ?? 0),
                     Latitude = (double)(Company.ADDRESS.LATITUDE ?? 0)
-                }
+                },
+                CollectionPoints = new()
             };
+            if (Company.COLLECTION_POINT.Where(p => p.STATUS == true).Any()) {
+                foreach (COLLECTION_POINT collection in Company.COLLECTION_POINT.Where(point => point.STATUS == true)) {
+                    CollectionPointDTO point = new();
+                    point.Name = collection.NAME;
+                    point.Status = collection.STATUS;
+                    point.Address = new() {
+                        Id = collection.ADDRESS.ADDRESS_ID,
+                        Street = collection.ADDRESS.STREET,
+                        Number = collection.ADDRESS.NUMBER,
+                        Neighborhood = collection.ADDRESS.NEIGHBORHOOD,
+                        City = collection.ADDRESS.CITY,
+                        State = collection.ADDRESS.STATE,
+                        ZipCode = collection.ADDRESS.ZIP_CODE,
+                        Longitude = (double)(collection.ADDRESS.LONGITUDE ?? 0),
+                        Latitude = (double)(collection.ADDRESS.LATITUDE ?? 0)
+                    };
+                    point.Description = collection.DESCRIPTION;
+                    point.CompanyCNPJ = collection.COMPANY_ID;
+                    point.Id = collection.POINT_ID;
+                    companyDto.CollectionPoints.Add(point);
+                }
+            }
             return companyDto;
         }
         #endregion

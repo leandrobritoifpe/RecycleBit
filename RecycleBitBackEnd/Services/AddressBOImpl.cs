@@ -10,20 +10,26 @@ namespace RecycleBitBackEnd.Services {
     ///     Class responsible for implementing the IAddressBO interface.
     /// </summary>
     public class AddressBOImpl : IAddressBO {
+
         #region Attributes Properties
+
         private readonly IAddressDao addressDao;
-        #endregion
+
+        #endregion Attributes Properties
 
         #region Constructors
+
         public AddressBOImpl() {
         }
 
         public AddressBOImpl(IAddressDao addressDao) {
             this.addressDao = addressDao ?? throw new ArgumentNullException("addressDao");
         }
-        #endregion
+
+        #endregion Constructors
 
         #region Public Methods
+
         /// <summary>
         ///     Method responsible for saving an address in the database.
         /// </summary>
@@ -33,9 +39,11 @@ namespace RecycleBitBackEnd.Services {
             ADDRESS address = MappingAddressObject(addressDto);
             return addressDao.SaveAddress(address);
         }
-        #endregion
+
+        #endregion Public Methods
 
         #region Private Methods
+
         /// <summary>
         ///     Method responsible for mapping an AddressDto object to an ADDRESS entity.
         /// </summary>
@@ -55,6 +63,7 @@ namespace RecycleBitBackEnd.Services {
             };
             return address;
         }
-        #endregion
+
+        #endregion Private Methods
     }
 }

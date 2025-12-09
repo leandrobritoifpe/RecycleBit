@@ -14,11 +14,13 @@ namespace RecycleBitBackEnd.Dao {
     public class UsersDaoImpl : IUsersDao {
 
         #region Constructors
+
         /// <summary>
         /// Default constructor for the UsersDaoImpl class.
         /// </summary>
         public UsersDaoImpl() { }
-        #endregion
+
+        #endregion Constructors
 
         /// <summary>
         ///     Method responsible for creating a new user in the database
@@ -33,7 +35,6 @@ namespace RecycleBitBackEnd.Dao {
 
                 USER userCadaster = context.USER.Where(u => u.EMAIL == user.EMAIL && u.CPF == user.CPF).FirstOrDefault();
                 return userCadaster;
-
             } catch (DbEntityValidationException ex) {
                 EntityException.SetLoggerDbEntity(ex);
                 throw ex;

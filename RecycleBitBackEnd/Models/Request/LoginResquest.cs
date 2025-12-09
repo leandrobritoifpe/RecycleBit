@@ -8,6 +8,7 @@ namespace RecycleBitBackEnd.Models.Request {
     public class LoginRequest {
 
         #region Attributes Properties
+
         /// <summary>
         ///     Attribute to validate email format
         /// </summary>
@@ -19,6 +20,7 @@ namespace RecycleBitBackEnd.Models.Request {
         /// </summary>
         [ValidatePassword]
         public string Password { get; set; }
-        #endregion
+
+        #endregion Attributes Properties
     }
 }

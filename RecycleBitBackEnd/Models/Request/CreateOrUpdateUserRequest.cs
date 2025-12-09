@@ -68,6 +68,7 @@ namespace RecycleBitBackEnd.Models.Request {
         ///     Attribute Address
         /// </summary>
         public AddressDTO Address { get; set; }
-        #endregion
+
+        #endregion Attributes Properties
     }
 }

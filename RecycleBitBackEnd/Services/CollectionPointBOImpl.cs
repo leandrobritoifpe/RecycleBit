@@ -4,7 +4,6 @@ using RecycleBitBackEnd.Models;
 using RecycleBitBackEnd.Models.Dto;
 using RecycleBitBackEnd.Models.Request;
 using RecycleBitBackEnd.Services.Interfaces;
-using RecycleBitBackEnd.Util;
 using RecycleBitBackEnd.Util.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -22,86 +21,78 @@ namespace RecycleBitBackEnd.Services {
         #endregion
 
         #region Constructors
+        public CollectionPointBOImpl() { }
 
+        /// <summary>
+        /// Constructor for the NewUserBOImpl class that initializes the logger and DAO.
+        /// </summary>
+        /// <param name="usersDao"></param>
+        public CollectionPointBOImpl(ICollectionPointDao collectionDao, IAddressBO addressBo) {
+            this.collectionDao = collectionDao ?? throw new ArgumentNullException("collectionDao");
+            this.addressBo = addressBo ?? throw new ArgumentNullException("addressBo");
+        }
         #endregion
 
         #region Public Methods
+
         /// <summary>
-        ///     Method respons
+        ///     Method responsible for creating collection point
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public CompanyDTO CreateCompany(CreateOrUpdateCompanyRequest request) {
-
-            if (collectionDao.GetCompanyByCpnj(request.CNPJ) != null)
-                throw new ProjectException(DictionaryError.CNPJ_EXIST_IN_DATABASE);
-
-            if (collectionDao.GetCompanyByEmail(request.Email) != null)
-                throw new ProjectException(DictionaryError.EMAIL_EXIST_IN_DATABASE);
+        /// <exception cref="ProjectException"></exception>
+        public CollectionPointDTO CreateCollectionPoint(CreateOrUpdateCollectionPoint request) {
 
             ADDRESS Adrres = addressBo.SaveAddress(request.Address);
 
-            COMPANY userInsert = MappingDataCompany(request, Adrres.ADDRESS_ID);
+            COLLECTION_POINT collectionInsert = MappingDataCollectionPoint(request, Adrres.ADDRESS_ID);
 
-            COMPANY companyCreated = collectionDao.CreateCompany(userInsert);
+            COLLECTION_POINT companyCreated = collectionDao.CreateCollectionPoint(collectionInsert);
 
             if (companyCreated == null)
-                throw new ProjectException(DictionaryError.ERROR_CREATE_COMPANY);
+                throw new ProjectException(DictionaryError.ERROR_CREATE_COLLECTION_POINT);
 
-            return ConvertObjectCompanyDTO(companyCreated);
+            return ConvertObjectCollectionPointDTO(companyCreated);
         }
 
         /// <summary>
-        ///     Method per login in the system
+        ///     Method responsible for get collection point by Id
         /// </summary>
-        /// <param name="email"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public CompanyDTO Login(string email, string password) {
-            COMPANY company = collectionDao.Login(email, password);
-            if (company == null)
-                return null;
-            return ConvertObjectCompanyDTO(company);
-        }
-
-        /// <summary>
-        ///     Method responsible for get company by CNPJ
-        /// </summary>
-        /// <param name="cnpj"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         /// <exception cref="ProjectException"></exception>
-        public CompanyDTO GetCompanyByCpnj(string cnpj) {
-            COMPANY company = collectionDao.GetCompanyByCpnj(cnpj);
-            if (company == null)
-                throw new ProjectException(String.Format(DictionaryError.COMPANY_NOT_FOUND, cnpj));
-            return ConvertObjectCompanyDTO(company);
+        public CollectionPointDTO GetCollectionPointById(int id) {
+            COLLECTION_POINT point = collectionDao.GetCollectionPointById(id);
+            if (point == null)
+                throw new ProjectException(String.Format(DictionaryError.COLLETION_POINT__NOT_FOUND, id));
+            return ConvertObjectCollectionPointDTO(point);
         }
 
         /// <summary>
-        ///     Method responsible for getting all companies in the system
-        /// </summary>
-        /// <returns></returns>
-        public List<CompanyDTO> GetAllCompanies() {
-            List<CompanyDTO> companies = new();
-            List<COMPANY> companyList = collectionDao.GetAllCompanies();
-            foreach (COMPANY company in companyList) {
-                try {
-                    companies.Add(ConvertObjectCompanyDTO(company));
-                } catch (Exception ex) {
-                    throw;
-                }
-            }
-            return companies;
-        }
-
-        /// <summary>
-        ///     Method responsible for deleting a company in the system by CNPJ
+        ///  Method responsible for retrieving all collection points by CNPJ
         /// </summary>
         /// <param name="cnpj"></param>
-        /// <exception cref="NotImplementedException"></exception>
-        public string DeleteCompany(string cnpj) {
-            collectionDao.DeleteCompany(cnpj);
+        /// <returns></returns>
+        public List<CollectionPointDTO> GetAllCollectionPointByCnpj(string cnpj) {
+            List<CollectionPointDTO> points = new();
+            List<COLLECTION_POINT> pointListDatabase = collectionDao.GetAllCollectionPointByCnpj(cnpj);
+            foreach (COLLECTION_POINT company in pointListDatabase) {
+                try {
+                    points.Add(ConvertObjectCollectionPointDTO(company));
+                } catch (Exception ex) {
+                    throw ex;
+                }
+            }
+            return points;
+        }
+
+        /// <summary>
+        ///     Method responsible for deleting a collection point by Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public string DeleteCollectionPoint(int id) {
+            collectionDao.DeleteCollectionPoint(id);
             return DictionaryMessageView.DELETE_COMPANY_SUCESS;
         }
 
@@ -111,10 +102,9 @@ namespace RecycleBitBackEnd.Services {
         /// <param name="cnpj"></param>
         /// <param name="request"></param>
         /// <returns></returns>
-        public CompanyDTO EditCompany(string cnpj, CreateOrUpdateCompanyRequest request) {
-            request.CNPJ = request.CNPJ.Replace(".", "").Replace("-", "");
-            COMPANY companyEdit = collectionDao.EditCompany(cnpj, request);
-            return ConvertObjectCompanyDTO(companyEdit);
+        public CollectionPointDTO EditCollectionPoint(int idPoint, CreateOrUpdateCollectionPoint request) {
+            COLLECTION_POINT companyEdit = collectionDao.EditCollectionPoint(idPoint, request);
+            return ConvertObjectCollectionPointDTO(companyEdit);
         }
 
         #endregion
@@ -122,48 +112,46 @@ namespace RecycleBitBackEnd.Services {
         #region Private Methods
 
         /// <summary>
-        ///     Private method responsible for mapping the data from the request to the COMPANY model
+        ///     Method responsible for mapping data from CreateOrUpdateCollectionPoint to Collection Point model
         /// </summary>
         /// <param name="request"></param>
-        /// <param name="adressId"></param>
+        /// <param name="addressId"></param>
         /// <returns></returns>
-        private COMPANY MappingDataCompany(CreateOrUpdateCompanyRequest request, int adressId) {
-            COMPANY companyInsert = new() {
-                CNPJ = request.CNPJ.Replace(".", "").Replace("-", ""),
-                EMAIL = request.Email,
-                PASSWORD = Encriptor.GenerateMD5(request.Password),
-                CORPORATE_NAME = request.CorporateName,
+        private COLLECTION_POINT MappingDataCollectionPoint(CreateOrUpdateCollectionPoint request, int addressId) {
+            COLLECTION_POINT colletcionPoint = new() {
+                NAME = request.Name,
+                DESCRIPTION = request.Description,
+                COMPANY_ID = request.CompanyCNPJ,
                 STATUS = request.Status,
-                ADDRESS_ID = adressId,
-                RESPONSIBLE = request.Responsible,
+                ADDRESS_ID = addressId,
             };
-            return companyInsert;
+            return colletcionPoint;
         }
 
         /// <summary>
         ///     Private method responsible for converting the COMPANY model to the CompanyDTO model
         /// </summary>
-        /// <param name="Company"></param>
+        /// <param name="point"></param>
         /// <returns></returns>
-        private CompanyDTO ConvertObjectCompanyDTO(COMPANY Company) {
-            CompanyDTO companyDto = new() {
-                CorporateName = Company.CORPORATE_NAME,
-                Status = Company.STATUS,
-                Email = Company.EMAIL,
-                AddressId = Company.ADDRESS_ID,
+        private CollectionPointDTO ConvertObjectCollectionPointDTO(COLLECTION_POINT point) {
+            CollectionPointDTO pointDto = new() {
+                Name = point.NAME,
+                Status = point.STATUS,
+                Description = point.DESCRIPTION,
+                CompanyCNPJ = point.COMPANY_ID,
                 Address = new() {
-                    Id = Company.ADDRESS.ADDRESS_ID,
-                    Street = Company.ADDRESS.STREET,
-                    Number = Company.ADDRESS.NUMBER,
-                    Neighborhood = Company.ADDRESS.NEIGHBORHOOD,
-                    City = Company.ADDRESS.CITY,
-                    State = Company.ADDRESS.STATE,
-                    ZipCode = Company.ADDRESS.ZIP_CODE,
-                    Longitude = (double)(Company.ADDRESS.LONGITUDE ?? 0),
-                    Latitude = (double)(Company.ADDRESS.LATITUDE ?? 0)
+                    Id = point.ADDRESS.ADDRESS_ID,
+                    Street = point.ADDRESS.STREET,
+                    Number = point.ADDRESS.NUMBER,
+                    Neighborhood = point.ADDRESS.NEIGHBORHOOD,
+                    City = point.ADDRESS.CITY,
+                    State = point.ADDRESS.STATE,
+                    ZipCode = point.ADDRESS.ZIP_CODE,
+                    Longitude = (double)(point.ADDRESS.LONGITUDE ?? 0),
+                    Latitude = (double)(point.ADDRESS.LATITUDE ?? 0)
                 }
             };
-            return companyDto;
+            return pointDto;
         }
         #endregion
     }

@@ -8,6 +8,7 @@ using Module = Autofac.Module;
 namespace RecycleBitBackEnd.Util.AutoFacModules {
 
     public class ControllerModule : Module {
+
         #region Protected Methods
 
         protected override void Load(ContainerBuilder builder) {

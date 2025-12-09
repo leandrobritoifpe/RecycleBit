@@ -64,9 +64,19 @@
         public static string ERROR_CREATE_COMPANY = "An unexpected error occurred while trying to create the company in the database.";
 
         /// <summary>
+        ///     Attribute ERROR_CREATE_COLLECTION_POINT
+        /// </summary>
+        public static string ERROR_CREATE_COLLECTION_POINT = "An unexpected error occurred while trying to create the collection point in the database.";
+
+        /// <summary>
         ///     Attribute COMPANY_NOT_FOUND
         /// </summary>
         public static string COMPANY_NOT_FOUND = "A Company {0} not found in database.";
+
+        /// <summary>
+        ///     Atrribute COLLETION_POINT__NOT_FOUND
+        /// </summary>
+        public static string COLLETION_POINT__NOT_FOUND = "A Collection Point id {0} not found in database.";
         #endregion
     }
 }

@@ -174,7 +174,7 @@ namespace RecycleBitBackEnd.Controllers {
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [HttpPut]
+        [HttpPost]
         [ActionName("EditUser")]
         [ValidateModel]
         public HttpResponseMessage EditUser([FromBody] EditUserRequest request) {

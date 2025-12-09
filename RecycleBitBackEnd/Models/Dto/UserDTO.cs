@@ -8,6 +8,7 @@ namespace RecycleBitBackEnd.models.dto {
     public class UserDTO {
 
         #region Attributes Properties
+
         /// <summary>
         /// User ID
         /// </summary>
@@ -47,6 +48,7 @@ namespace RecycleBitBackEnd.models.dto {
         ///     Attribute Address
         /// </summary>
         public AddressDTO Address { get; set; }
-        #endregion
+
+        #endregion Attributes Properties
     }
 }

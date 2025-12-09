@@ -1,13 +1,14 @@
-﻿
-using log4net;
+﻿using log4net;
 using RecycleBitBackEnd.Config;
 using RecycleBitBackEnd.Models.Dto;
 using RecycleBitBackEnd.Models.Request;
 using RecycleBitBackEnd.Services.Interfaces;
-using RecycleBitBackEnd.Util.Enums;
 using RecycleBitBackEnd.Util.Exceptions;
 using RecycleBitBackEnd.Util.Filters;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -23,9 +24,12 @@ namespace RecycleBitBackEnd.Controllers {
     public class CollectionPointController : ApiController {
 
         #region Attributes Properties
-        private readonly ICompanyBO companyBO;
+
+        private readonly ICollectionPointBO collectionPointBo;
+        private readonly ICompanyBO companyBo;
         private readonly ILog Logger = LogManager.GetLogger(typeof(CompanyController));
-        #endregion
+
+        #endregion Attributes Properties
 
         #region Constructors
 
@@ -36,14 +40,16 @@ namespace RecycleBitBackEnd.Controllers {
         }
 
         /// <summary>
-        ///     Constructor for the UserController class that initializes the UsersBO service.
+        ///     Constructor for the UserController class with dependency injection.
         /// </summary>
-        /// <param name="usersBO"></param>
+        /// <param name="collectionPointBo"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public CollectionPointController(ICompanyBO conpanyBO) {
-            this.companyBO = conpanyBO ?? throw new ArgumentNullException("conpanyBO");
+        public CollectionPointController(ICollectionPointBO collectionPointBo, ICompanyBO companyBo) {
+            this.collectionPointBo = collectionPointBo ?? throw new ArgumentNullException("collectionPointBo");
+            this.companyBo = companyBo ?? throw new ArgumentNullException("companyBo");
         }
-        #endregion
+
+        #endregion Constructors
 
         #region Methods Public
 
@@ -53,11 +59,11 @@ namespace RecycleBitBackEnd.Controllers {
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        [ActionName("CreateCompany")]
+        [ActionName("CreateCollectionPoint")]
         [ValidateModel]
-        public HttpResponseMessage CreateCompany([FromBody] CreateOrUpdateCompanyRequest request) {
+        public HttpResponseMessage CreateCollectionPoint([FromBody] CreateOrUpdateCollectionPoint request) {
             try {
-                CompanyDTO response = companyBO.CreateCompany(request);
+                CollectionPointDTO response = collectionPointBo.CreateCollectionPoint(request);
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             } catch (ProjectException projEx) {
                 Logger.Error(String.Format(DictionaryError.TEMPLATE_ERROR_LOGGER, DateTime.Now.ToString(BusinessConfig.DEFAULT_OU_DATE_FORMAT), projEx.Message, projEx.StackTrace));
@@ -69,16 +75,16 @@ namespace RecycleBitBackEnd.Controllers {
         }
 
         /// <summary>
-        ///     Method to get a user by id in the system.
+        ///     Mtethod responsible for get collection point by Id
         /// </summary>
-        /// <param name="cnpj"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        [ActionName("GetCompanyByCnpj")]
+        [ActionName("GetCollectionPointById")]
         [ValidateModel]
-        public HttpResponseMessage GetCompanyByCnpj(string cnpj) {
+        public HttpResponseMessage GetCollectionPointById(int id) {
             try {
-                CompanyDTO response = companyBO.GetCompanyByCpnj(cnpj);
+                CollectionPointDTO response = collectionPointBo.GetCollectionPointById(id);
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             } catch (ProjectException projEx) {
                 Logger.Error(String.Format(DictionaryError.TEMPLATE_ERROR_LOGGER, DateTime.Now.ToString(BusinessConfig.DEFAULT_OU_DATE_FORMAT), projEx.Message, projEx.StackTrace));
@@ -95,13 +101,11 @@ namespace RecycleBitBackEnd.Controllers {
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpGet]
-        [ActionName("GetAllCompanies")]
+        [ActionName("GetAllCollectionPointByCnpj")]
         [ValidateModel]
-        public HttpResponseMessage GetAllCompanies(Role role) {
+        public HttpResponseMessage GetAllCollectionPointByCnpj(string cnpj) {
             try {
-                if (role != Role.Administrator)
-                    return Request.CreateResponse(HttpStatusCode.Unauthorized, DictionaryError.ERROR_UNAUTHORIZED);
-                var response = companyBO.GetAllCompanies();
+                List<CollectionPointDTO> response = collectionPointBo.GetAllCollectionPointByCnpj(cnpj);
                 if (response == null || response.Count == 0)
                     return Request.CreateResponse(HttpStatusCode.NoContent, DictionaryError.ERROR_NO_CONTENT);
                 return Request.CreateResponse(HttpStatusCode.OK, response);
@@ -115,20 +119,22 @@ namespace RecycleBitBackEnd.Controllers {
         }
 
         /// <summary>
-        ///     Method Controller responsible for deleting a company in the system.
+        /// Method responsible for deleting a collection point by Id
         /// </summary>
-        /// <param name="cnpjApplicant"></param>
-        /// <param name="cnpjDelete"></param>
-        /// <param name="role"></param>
+        /// <param name="cnpj"></param>
+        /// <param name="idPoint"></param>
         /// <returns></returns>
         [HttpDelete]
-        [ActionName("DeleteCompany")]
+        [ActionName("DeleteCollectionPoint")]
         [ValidateModel]
-        public HttpResponseMessage DeleteCompany(string cnpjApplicant, string cnpjDelete, Role role) {
+        public HttpResponseMessage DeleteCollectionPoint([ValidateCNPJ] string cnpj, [Required] int idPoint) {
             try {
-                if (role != Role.Administrator && !cnpjApplicant.Equals(cnpjDelete))
-                    return Request.CreateResponse(HttpStatusCode.Unauthorized, DictionaryError.ERROR_UNAUTHORIZED);
-                string response = companyBO.DeleteCompany(cnpjDelete);
+                CompanyDTO company = companyBo.GetCompanyByCnpj(cnpj);
+                if (company == null)
+                    return Request.CreateResponse(HttpStatusCode.NoContent, String.Format(DictionaryError.COMPANY_NOT_FOUND, cnpj));
+                if ((company.CollectionPoints != null && company.CollectionPoints.Where(p => p.Id == idPoint).Any()) || company.CollectionPoints == null)
+                    return Request.CreateResponse(HttpStatusCode.NoContent, String.Format(DictionaryError.COLLETION_POINT__NOT_FOUND, idPoint));
+                string response = collectionPointBo.DeleteCollectionPoint(idPoint);
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             } catch (ProjectException projEx) {
                 Logger.Error(String.Format(DictionaryError.TEMPLATE_ERROR_LOGGER, DateTime.Now.ToString(BusinessConfig.DEFAULT_OU_DATE_FORMAT), projEx.Message, projEx.StackTrace));
@@ -146,14 +152,17 @@ namespace RecycleBitBackEnd.Controllers {
         /// <param name="userIdEdit"></param>
         /// <param name="role"></param>
         /// <returns></returns>
-        [HttpPut]
-        [ActionName("EditUser")]
+        [HttpPost]
+        [ActionName("EditCollectionPoint")]
         [ValidateModel]
-        public HttpResponseMessage EditUser([FromBody] EditCompanyRequest request) {
+        public HttpResponseMessage EditCollectionPoint([FromBody] EditColletionPointRequest request) {
             try {
-                if (request.Role != Role.Administrator && !request.cnpjApplicant.Equals(request.cnpjEdit))
-                    return Request.CreateResponse(HttpStatusCode.Unauthorized, DictionaryError.ERROR_UNAUTHORIZED);
-                CompanyDTO response = companyBO.EditCompany(request.cnpjEdit, request.Request);
+                CompanyDTO company = companyBo.GetCompanyByCnpj(request.CompanyCNPJ);
+                if (company == null)
+                    return Request.CreateResponse(HttpStatusCode.NoContent, String.Format(DictionaryError.COMPANY_NOT_FOUND, request.CompanyCNPJ));
+                if ((company.CollectionPoints != null && company.CollectionPoints.Where(p => p.Id == request.IdPoint).Any()) || company.CollectionPoints == null)
+                    return Request.CreateResponse(HttpStatusCode.NoContent, String.Format(DictionaryError.COLLETION_POINT__NOT_FOUND, request.IdPoint));
+                CollectionPointDTO response = collectionPointBo.EditCollectionPoint(request.IdPoint, request.Request);
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             } catch (ProjectException projEx) {
                 Logger.Error(String.Format(DictionaryError.TEMPLATE_ERROR_LOGGER, DateTime.Now.ToString(BusinessConfig.DEFAULT_OU_DATE_FORMAT), projEx.Message, projEx.StackTrace));
@@ -163,6 +172,7 @@ namespace RecycleBitBackEnd.Controllers {
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.GetBaseException().Message);
             }
         }
-        #endregion
+
+        #endregion Methods Public
     }
 }

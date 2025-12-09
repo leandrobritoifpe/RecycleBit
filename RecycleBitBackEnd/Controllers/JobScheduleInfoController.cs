@@ -9,7 +9,6 @@
 //using System.Web.Mvc;
 
 //namespace RecycleBitBackEnd.Controllers {
-
 //    /// <summary>
 //    ///     Class of contorller iinformation references schedulle job
 //    /// </summary>

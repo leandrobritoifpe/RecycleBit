@@ -1,7 +1,9 @@
 ﻿using Autofac;
 
 namespace RecycleBitBackEnd.Util.AutoFacModules {
+
     public class AuthenticationModule : Module {
+
         #region Protected Methods
 
         protected override void Load(ContainerBuilder builder) {

@@ -15,6 +15,7 @@ namespace RecycleBitBackEnd.Services.Interfaces {
         /// <param name="perfil"></param>
         /// <returns></returns>
         ROLE GetRoleById(int perfil);
-        #endregion
+
+        #endregion Public Methods
     }
 }

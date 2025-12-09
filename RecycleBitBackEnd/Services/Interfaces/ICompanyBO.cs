@@ -30,7 +30,7 @@ namespace RecycleBitBackEnd.Services.Interfaces {
         /// </summary>
         /// <param name="cnpj"></param>
         /// <returns></returns>
-        CompanyDTO GetCompanyByCpnj(string cnpj);
+        CompanyDTO GetCompanyByCnpj(string cnpj);
 
         /// <summary>
         ///     Method interface responsible for retrieving a company by email

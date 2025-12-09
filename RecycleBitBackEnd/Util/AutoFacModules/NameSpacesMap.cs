@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 
 namespace RecycleBitBackEnd.Util.AutoFacModules {
+
     public class NameSpacesMap {
         public List<string> MappingInterfaces { get; set; }
 

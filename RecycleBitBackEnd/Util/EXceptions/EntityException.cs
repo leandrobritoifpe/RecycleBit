@@ -4,6 +4,7 @@ using System;
 using System.Data.Entity.Validation;
 
 namespace RecycleBitBackEnd.Util.Exceptions {
+
     /// <summary>
     ///     Class responsible per handling Entity Framework exceptions.
     /// </summary>

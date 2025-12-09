@@ -3,57 +3,47 @@ using RecycleBitBackEnd.Models.Request;
 using System.Collections.Generic;
 
 namespace RecycleBitBackEnd.Dao.Interfaces {
+
+    /// <summary>
+    /// 'Classe interface responsible per instance methods Collection Point
+    /// </summary>
     public interface ICollectionPointDao {
         #region Public Methods
 
         /// <summary>
-        ///     Method responsible for creating a new company in the database
+        ///     method responsible for creating collection point
         /// </summary>
         /// <param name="company"></param>
         /// <returns></returns>
-        COMPANY CreateCompany(COMPANY company);
+        COLLECTION_POINT CreateCollectionPoint(COLLECTION_POINT company);
 
         /// <summary>
-        ///     Method responsible for retrieving all companies from the database
+        ///     Method responsible for get collection point by Id
         /// </summary>
-        /// <param name="cpnj"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        COMPANY GetCompanyByCpnj(string cpnj);
+        COLLECTION_POINT GetCollectionPointById(int id);
 
         /// <summary>
-        ///     Method responsible for retrieving all companies from the database
+        ///     Collection point editing method
         /// </summary>
-        /// <param name="email"></param>
-        /// <returns></returns>
-        COMPANY GetCompanyByEmail(string email);
-
-        /// <summary>
-        ///     Method responsible for retrieving all companies from the database
-        /// </summary>
-        /// <param name="email"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        COMPANY Login(string email, string password);
-
-        /// <summary>
-        ///     Method responsible for retrieving all companies from the database
-        /// </summary>
-        /// <param name="cnpj"></param>
+        /// <param name="id"></param>
         /// <param name="request"></param>
         /// <returns></returns>
-        COMPANY EditCompany(string cnpj, CreateOrUpdateCompanyRequest request);
+        COLLECTION_POINT EditCollectionPoint(int id, CreateOrUpdateCollectionPoint request);
 
         /// <summary>
-        ///     Method interface responsible for retrieving all companies from the database
-        /// </summary>
-        /// <returns></returns>
-        List<COMPANY> GetAllCompanies();
-
-        /// <summary>
-        ///     Method interface responsible for deleting a company in the system by CNPJ
+        ///  Method interface responsible for retrieving all collection points by CNPJ
         /// </summary>
         /// <param name="cnpj"></param>
-        void DeleteCompany(string cnpj);
+        /// <returns></returns>
+        List<COLLECTION_POINT> GetAllCollectionPointByCnpj(string cnpj);
+
+        /// <summary>
+        ///     Method interface responsible per deleting a collection point by Id
+        /// </summary>
+        /// <param name="id"></param>
+        void DeleteCollectionPoint(int id);
         #endregion
     }
 }

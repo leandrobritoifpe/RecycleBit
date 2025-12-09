@@ -1,4 +1,6 @@
-﻿namespace RecycleBitBackEnd.Models.Dto {
+﻿using System.Collections.Generic;
+
+namespace RecycleBitBackEnd.Models.Dto {
 
     /// <summary>
     ///     Class responsible per the Data Transfer Object (DTO) for Company
@@ -41,6 +43,11 @@
         ///     Attribute AddressId
         /// </summary>
         public int AddressId { get; set; }
+
+        /// <summary>
+        ///     Attribute CollectionPoints
+        /// </summary>
+        public List<CollectionPointDTO> CollectionPoints { get; set; }
         #endregion
     }
 }

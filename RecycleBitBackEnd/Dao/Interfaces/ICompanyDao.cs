@@ -3,7 +3,9 @@ using RecycleBitBackEnd.Models.Request;
 using System.Collections.Generic;
 
 namespace RecycleBitBackEnd.Dao.Interfaces {
+
     public interface ICompanyDao {
+
         #region Public Methods
 
         /// <summary>
@@ -54,6 +56,7 @@ namespace RecycleBitBackEnd.Dao.Interfaces {
         /// </summary>
         /// <param name="cnpj"></param>
         void DeleteCompany(string cnpj);
-        #endregion
+
+        #endregion Public Methods
     }
 }

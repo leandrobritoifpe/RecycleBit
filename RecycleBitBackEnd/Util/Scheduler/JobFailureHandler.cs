@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace RecycleBitBackEnd.Util.Scheduler {
+
     public class JobFailureHandler : IJobListener {
         public string Name => "FailJobListener";
         public static int WaitInterval { get; set; }

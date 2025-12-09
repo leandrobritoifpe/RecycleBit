@@ -8,6 +8,7 @@ namespace RecycleBitBackEnd.Util.Filters {
     ///     Class responsible for validating a latitude decimal in degrees in the range [-90, 90].
     /// </summary>
     public class ValidateLatitudeAttribute : ValidationAttribute {
+
         public ValidateLatitudeAttribute() {
             ErrorMessage = "Latitude inválida. Informe um valor decimal entre -90 e +90.";
         }

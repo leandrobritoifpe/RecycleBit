@@ -9,7 +9,6 @@
 //using System.Web.Mvc;
 
 //namespace RecycleBitBackEnd.Controllers {
-
 //    /// <summary>
 //    /// Controller of Logs Page
 //    /// </summary>

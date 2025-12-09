@@ -26,7 +26,6 @@ namespace RecycleBitBackEnd {
     ///    Global initialize application.
     /// </summary>
     public class WebApiApplication : HttpApplication {
-
         private static readonly ILog Logger = LogManager.GetLogger(typeof(WebApiApplication));
         private static readonly IHttpModule Module = new PrometheusHttpRequestModule();
 

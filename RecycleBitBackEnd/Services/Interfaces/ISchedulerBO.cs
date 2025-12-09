@@ -4,7 +4,9 @@ using System;
 using System.Collections.Generic;
 
 namespace RecycleBitBackEnd.Services.Interfaces {
+
     public interface ISchedulerBO {
+
         List<JobModelDTO> ReturnAllJobs(int offsetHours = 0);
 
         IList<JobModelDTO> GetCurrentJobsScheduled(int offsetHours = 0);

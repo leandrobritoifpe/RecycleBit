@@ -12,12 +12,14 @@ namespace RecycleBitBackEnd.Services {
     public class DiagnosticsBOImpl : IDiagnosticsBO {
 
         #region Contructors
+
         /// <summary>
         ///     Method Constructor DiagnosticsBOImpl
         /// </summary>
         public DiagnosticsBOImpl() {
         }
-        #endregion
+
+        #endregion Contructors
 
         /// <summary>
         /// Get communication diagnostic that solution needs to be ready for use
@@ -41,6 +43,7 @@ namespace RecycleBitBackEnd.Services {
                 return false;
             }
         }
-        #endregion
+
+        #endregion Private Methods
     }
 }

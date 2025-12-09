@@ -6,6 +6,7 @@
     public class DiagnosticModel {
 
         #region Attributes Properties
+
         /// <summary>
         /// Database connection status
         /// </summary>
@@ -16,17 +17,20 @@
         /// </summary>
         public bool KeyVaultAccess { get; set; }
 
-        #endregion
+        #endregion Attributes Properties
 
         #region Constructors
+
         /// <summary>
         /// Default constructor
         /// </summary>
         public DiagnosticModel() {
         }
-        #endregion
+
+        #endregion Constructors
 
         #region Public Methods
+
         /// <summary>
         /// Constructor with parameters
         /// </summary>
@@ -34,6 +38,7 @@
         public DiagnosticModel(bool DataBaseAccess) {
             this.DataBaseAccess = DataBaseAccess;
         }
-        #endregion
+
+        #endregion Public Methods
     }
 }

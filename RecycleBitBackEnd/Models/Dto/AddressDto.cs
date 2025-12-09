@@ -9,6 +9,7 @@ namespace RecycleBitBackEnd.Models.Dto {
     public class AddressDTO {
 
         #region Attributes Properties
+
         /// <summary>
         ///     Attribute ZipCode
         /// </summary>
@@ -70,7 +71,9 @@ namespace RecycleBitBackEnd.Models.Dto {
         ///     Attribute Id
         /// </summary>
         public int Id { get; set; }
+
         //public COMPANY Company { get; set; }
-        #endregion
+
+        #endregion Attributes Properties
     }
 }

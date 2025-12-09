@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 namespace RecycleBitBackEnd.Models.Dto {
+
     public class Job {
         public string Name { get; set; }
         public bool RetryConfigured { get; set; }

@@ -76,9 +76,9 @@ namespace RecycleBitBackEnd.Controllers {
         [HttpGet]
         [ActionName("GetCompanyByCnpj")]
         [ValidateModel]
-        public HttpResponseMessage GetCompanyByCnpj(string cnpj) {
+        public HttpResponseMessage GetCompanyByCnpj([ValidateCNPJ] string cnpj) {
             try {
-                CompanyDTO response = companyBO.GetCompanyByCpnj(cnpj);
+                CompanyDTO response = companyBO.GetCompanyByCnpj(cnpj);
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             } catch (ProjectException projEx) {
                 Logger.Error(String.Format(DictionaryError.TEMPLATE_ERROR_LOGGER, DateTime.Now.ToString(BusinessConfig.DEFAULT_OU_DATE_FORMAT), projEx.Message, projEx.StackTrace));
@@ -146,7 +146,7 @@ namespace RecycleBitBackEnd.Controllers {
         /// <param name="userIdEdit"></param>
         /// <param name="role"></param>
         /// <returns></returns>
-        [HttpPut]
+        [HttpPost]
         [ActionName("EditUser")]
         [ValidateModel]
         public HttpResponseMessage EditUser([FromBody] EditCompanyRequest request) {
