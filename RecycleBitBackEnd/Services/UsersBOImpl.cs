@@ -18,13 +18,16 @@ namespace RecycleBitBackEnd.Services {
     public class UsersBOImpl : IUsersBO {
 
         #region Attributes Properties
+
         private readonly IUsersDao usersDao;
         private readonly IRoleBO roleBo;
         private readonly IAddressBO addressBo;
         private readonly ICompanyBO companyBo;
-        #endregion
+
+        #endregion Attributes Properties
 
         #region Constructors
+
         /// <summary>
         /// Default constructor for the NewUserBOImpl class.
         /// </summary>
@@ -40,7 +43,8 @@ namespace RecycleBitBackEnd.Services {
             this.roleBo = roleBo ?? throw new ArgumentNullException("roleBo");
             this.companyBo = companyBo ?? throw new ArgumentNullException("companyBo");
         }
-        #endregion
+
+        #endregion Constructors
 
         #region Public Methods
 
@@ -82,7 +86,6 @@ namespace RecycleBitBackEnd.Services {
         /// <returns></returns>
         /// <exception cref="ProjectException"></exception>
         public LoginResponse Login(string email, string password) {
-
             LoginResponse login = new() {
                 Company = new(),
                 User = new()
@@ -156,7 +159,8 @@ namespace RecycleBitBackEnd.Services {
             USER userEdit = usersDao.EditUser(userIdEdit, request);
             return ConvertObjectUserDTO(userEdit);
         }
-        #endregion
+
+        #endregion Public Methods
 
         #region Private Methods
 
@@ -209,6 +213,7 @@ namespace RecycleBitBackEnd.Services {
             };
             return userDto;
         }
-        #endregion
+
+        #endregion Private Methods
     }
 }

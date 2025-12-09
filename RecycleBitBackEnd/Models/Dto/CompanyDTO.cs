@@ -48,6 +48,7 @@ namespace RecycleBitBackEnd.Models.Dto {
         ///     Attribute CollectionPoints
         /// </summary>
         public List<CollectionPointDTO> CollectionPoints { get; set; }
-        #endregion
+
+        #endregion Attributes Properties
     }
 }

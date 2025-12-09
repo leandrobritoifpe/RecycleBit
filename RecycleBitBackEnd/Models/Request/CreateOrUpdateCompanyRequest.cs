@@ -66,6 +66,7 @@ namespace RecycleBitBackEnd.Models.Request {
         ///     Attribute Status
         /// </summary>
         public bool Status { get; set; }
-        #endregion
+
+        #endregion Attributes Properties
     }
 }

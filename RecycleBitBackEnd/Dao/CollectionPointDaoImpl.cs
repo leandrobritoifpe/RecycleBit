@@ -100,6 +100,6 @@ namespace RecycleBitBackEnd.Dao {
             }
         }
 
-        #endregion
+        #endregion Public Methods
     }
 }

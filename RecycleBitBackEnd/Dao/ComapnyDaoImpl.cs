@@ -28,7 +28,6 @@ namespace RecycleBitBackEnd.Dao {
 
                 COMPANY companyCadaster = context.COMPANY.Where(comp => comp.EMAIL == company.EMAIL && comp.CNPJ == company.CNPJ).FirstOrDefault();
                 return companyCadaster;
-
             } catch (DbEntityValidationException ex) {
                 EntityException.SetLoggerDbEntity(ex);
                 throw ex;
@@ -135,6 +134,6 @@ namespace RecycleBitBackEnd.Dao {
             }
         }
 
-        #endregion
+        #endregion Public Methods
     }
 }

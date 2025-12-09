@@ -9,6 +9,7 @@ namespace RecycleBitBackEnd.Models.Request {
     public class EditUserRequest {
 
         #region Attributes Properties
+
         /// <summary>
         ///     Attribute UserRequest
         /// </summary>
@@ -32,6 +33,7 @@ namespace RecycleBitBackEnd.Models.Request {
         /// </summary>
         [Required]
         public int UserIdEdit { get; set; }
-        #endregion
+
+        #endregion Attributes Properties
     }
 }

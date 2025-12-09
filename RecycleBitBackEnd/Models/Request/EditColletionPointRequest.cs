@@ -27,6 +27,6 @@ namespace RecycleBitBackEnd.Models.Request {
         [Required]
         public int IdPoint { get; set; }
 
-        #endregion
+        #endregion Attributes Properties
     }
 }

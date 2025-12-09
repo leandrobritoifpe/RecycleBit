@@ -36,6 +36,7 @@
         ///     Atttribute CompanyCNPJ
         /// </summary>
         public string CompanyCNPJ { get; set; }
-        #endregion
+
+        #endregion Attributes Properties
     }
 }

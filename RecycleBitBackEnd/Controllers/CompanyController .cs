@@ -1,5 +1,4 @@
-﻿
-using log4net;
+﻿using log4net;
 using RecycleBitBackEnd.Config;
 using RecycleBitBackEnd.Models.Dto;
 using RecycleBitBackEnd.Models.Request;
@@ -23,9 +22,11 @@ namespace RecycleBitBackEnd.Controllers {
     public class CompanyController : ApiController {
 
         #region Attributes Properties
+
         private readonly ICompanyBO companyBO;
         private readonly ILog Logger = LogManager.GetLogger(typeof(CompanyController));
-        #endregion
+
+        #endregion Attributes Properties
 
         #region Constructors
 
@@ -43,7 +44,8 @@ namespace RecycleBitBackEnd.Controllers {
         public CompanyController(ICompanyBO conpanyBO) {
             this.companyBO = conpanyBO ?? throw new ArgumentNullException("conpanyBO");
         }
-        #endregion
+
+        #endregion Constructors
 
         #region Methods Public
 
@@ -163,6 +165,7 @@ namespace RecycleBitBackEnd.Controllers {
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.GetBaseException().Message);
             }
         }
-        #endregion
+
+        #endregion Methods Public
     }
 }

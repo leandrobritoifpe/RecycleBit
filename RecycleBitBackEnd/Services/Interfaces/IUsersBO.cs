@@ -11,6 +11,7 @@ namespace RecycleBitBackEnd.Services.Interfaces {
     public interface IUsersBO {
 
         #region Public Methods
+
         /// <summary>
         ///     Method interface responsible for creating a new user in the system
         /// </summary>
@@ -53,6 +54,7 @@ namespace RecycleBitBackEnd.Services.Interfaces {
         /// <param name="request"></param>
         /// <returns></returns>
         UserDTO EditUser(int userIdEdit, CreateOrUpdateUserRequest request);
-        #endregion
+
+        #endregion Public Methods
     }
 }

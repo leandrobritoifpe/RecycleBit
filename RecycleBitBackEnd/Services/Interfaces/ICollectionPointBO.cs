@@ -10,6 +10,7 @@ namespace RecycleBitBackEnd.Services.Interfaces {
     public interface ICollectionPointBO {
 
         #region Public Methods
+
         /// <summary>
         ///     Method interface responsible for creating or updating a Company
         /// </summary>
@@ -45,6 +46,6 @@ namespace RecycleBitBackEnd.Services.Interfaces {
         /// <returns></returns>
         CollectionPointDTO EditCollectionPoint(int id, CreateOrUpdateCollectionPoint request);
 
-        #endregion
+        #endregion Public Methods
     }
 }

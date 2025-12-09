@@ -10,6 +10,7 @@ namespace RecycleBitBackEnd.Util {
     public class Encriptor {
 
         #region Public Methods
+
         /// <summary>
         ///     Method responsible per encrypting a password using Base64
         /// </summary>
@@ -49,6 +50,7 @@ namespace RecycleBitBackEnd.Util {
                 return sb.ToString();
             }
         }
-        #endregion
+
+        #endregion Public Methods
     }
 }

@@ -16,12 +16,16 @@ namespace RecycleBitBackEnd.Services {
     public class CollectionPointBOImpl : ICollectionPointBO {
 
         #region Attribute Propeties
+
         private readonly ICollectionPointDao collectionDao;
         private readonly IAddressBO addressBo;
-        #endregion
+
+        #endregion Attribute Propeties
 
         #region Constructors
-        public CollectionPointBOImpl() { }
+
+        public CollectionPointBOImpl() {
+        }
 
         /// <summary>
         /// Constructor for the NewUserBOImpl class that initializes the logger and DAO.
@@ -31,7 +35,8 @@ namespace RecycleBitBackEnd.Services {
             this.collectionDao = collectionDao ?? throw new ArgumentNullException("collectionDao");
             this.addressBo = addressBo ?? throw new ArgumentNullException("addressBo");
         }
-        #endregion
+
+        #endregion Constructors
 
         #region Public Methods
 
@@ -42,7 +47,6 @@ namespace RecycleBitBackEnd.Services {
         /// <returns></returns>
         /// <exception cref="ProjectException"></exception>
         public CollectionPointDTO CreateCollectionPoint(CreateOrUpdateCollectionPoint request) {
-
             ADDRESS Adrres = addressBo.SaveAddress(request.Address);
 
             COLLECTION_POINT collectionInsert = MappingDataCollectionPoint(request, Adrres.ADDRESS_ID);
@@ -107,7 +111,7 @@ namespace RecycleBitBackEnd.Services {
             return ConvertObjectCollectionPointDTO(companyEdit);
         }
 
-        #endregion
+        #endregion Public Methods
 
         #region Private Methods
 
@@ -153,6 +157,7 @@ namespace RecycleBitBackEnd.Services {
             };
             return pointDto;
         }
-        #endregion
+
+        #endregion Private Methods
     }
 }

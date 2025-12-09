@@ -18,12 +18,16 @@ namespace RecycleBitBackEnd.Services {
     public class CompanyBOImpl : ICompanyBO {
 
         #region Attribute Propeties
+
         private readonly ICompanyDao companyDao;
         private readonly IAddressBO addressBo;
-        #endregion
+
+        #endregion Attribute Propeties
 
         #region Constructors
-        public CompanyBOImpl() { }
+
+        public CompanyBOImpl() {
+        }
 
         /// <summary>
         /// Constructor for the NewUserBOImpl class that initializes the logger and DAO.
@@ -33,9 +37,11 @@ namespace RecycleBitBackEnd.Services {
             this.companyDao = companyDao ?? throw new ArgumentNullException("companyDao");
             this.addressBo = addressBo ?? throw new ArgumentNullException("addressBo");
         }
-        #endregion
+
+        #endregion Constructors
 
         #region Public Methods
+
         /// <summary>
         ///     Method respons
         /// </summary>
@@ -43,7 +49,6 @@ namespace RecycleBitBackEnd.Services {
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
         public CompanyDTO CreateCompany(CreateOrUpdateCompanyRequest request) {
-
             if (companyDao.GetCompanyByCpnj(request.CNPJ) != null)
                 throw new ProjectException(DictionaryError.CNPJ_EXIST_IN_DATABASE);
 
@@ -127,7 +132,7 @@ namespace RecycleBitBackEnd.Services {
             return ConvertObjectCompanyDTO(companyEdit);
         }
 
-        #endregion
+        #endregion Public Methods
 
         #region Private Methods
 
@@ -198,6 +203,7 @@ namespace RecycleBitBackEnd.Services {
             }
             return companyDto;
         }
-        #endregion
+
+        #endregion Private Methods
     }
 }

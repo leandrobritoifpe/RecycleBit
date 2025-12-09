@@ -8,6 +8,7 @@ namespace RecycleBitBackEnd.Dao.Interfaces {
     /// 'Classe interface responsible per instance methods Collection Point
     /// </summary>
     public interface ICollectionPointDao {
+
         #region Public Methods
 
         /// <summary>
@@ -44,6 +45,7 @@ namespace RecycleBitBackEnd.Dao.Interfaces {
         /// </summary>
         /// <param name="id"></param>
         void DeleteCollectionPoint(int id);
-        #endregion
+
+        #endregion Public Methods
     }
 }

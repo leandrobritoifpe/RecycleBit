@@ -10,6 +10,7 @@ namespace RecycleBitBackEnd.Services.Interfaces {
     public interface ICompanyBO {
 
         #region Public Methods
+
         /// <summary>
         ///     Method interface responsible for creating or updating a Company
         /// </summary>
@@ -52,6 +53,6 @@ namespace RecycleBitBackEnd.Services.Interfaces {
         /// <returns></returns>
         CompanyDTO EditCompany(string cnpj, CreateOrUpdateCompanyRequest request);
 
-        #endregion
+        #endregion Public Methods
     }
 }

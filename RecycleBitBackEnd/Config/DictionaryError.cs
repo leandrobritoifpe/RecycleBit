@@ -6,6 +6,7 @@
     public static class DictionaryError {
 
         #region Attribute Messages Error
+
         /// <summary>
         ///     Attribute IS_VALUE_NOT_NULL
         /// </summary>
@@ -45,9 +46,11 @@
         ///     Attrbute ERROR_NO_CONTENT
         /// </summary>
         public static string ERROR_NO_CONTENT = "Não foi encontrado nenhum resultado para a solicitação requisitada";
-        #endregion
+
+        #endregion Attribute Messages Error
 
         #region Attribute Template Logs
+
         /// <summary>
         ///     Attribute TEMPLATE_ERROR_LOGGER
         /// </summary>
@@ -77,6 +80,7 @@
         ///     Atrribute COLLETION_POINT__NOT_FOUND
         /// </summary>
         public static string COLLETION_POINT__NOT_FOUND = "A Collection Point id {0} not found in database.";
-        #endregion
+
+        #endregion Attribute Template Logs
     }
 }
